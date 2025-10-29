@@ -333,7 +333,7 @@ public class SquareController : MonoBehaviour, IPlayerController
     // ???
     private void Move()
     {
-        if (!canMove) return;
+        // if (!canMove) return;
         float accel = speedAcceleration;
         float decel = SpeedDeceleration;
         float turnAccel = TurningSpeedAcceleration;
