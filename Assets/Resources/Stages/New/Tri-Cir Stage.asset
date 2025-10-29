@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be35d7407d4eb545885102775eb30e6, type: 3}
-  m_Name: 000_AJS
+  m_Name: Tri-Cir Stage
   m_EditorClassIdentifier: 
   Id: 5
   minX: -16.85
-  maxX: 91.2
+  maxX: 190.84
   minY: -12
   maxY: 8
   isShapeLockStage: 0
