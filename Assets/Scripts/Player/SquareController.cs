@@ -270,7 +270,7 @@ public class SquareController : MonoBehaviour, IPlayerController
         // UpdateWallJumpState(); // 벽점프 지속시간 중 관리용
         if (!isDashing)
         {
-            WallJump();
+            // WallJump();
             Jump();
             CornerCorrection();
             ApplyGravity();
