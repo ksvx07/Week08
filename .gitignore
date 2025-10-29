@@ -106,6 +106,13 @@ InitTestScene*.unity*
 /Assets/vInspector/
 /Assets/vRuler/
 /Assets/vTabs/
+/Assets/vFavorites.meta
+/Assets/vFolders.meta
+/Assets/vHierarchy.meta
+/Assets/vInspector.meta
+/Assets/vRuler.meta
+/Assets/vTabs.meta
+
 /Assets/Plugins/CodeStage/
 /Assets/Plugins.meta
 /Assets/Plugins/*.meta
