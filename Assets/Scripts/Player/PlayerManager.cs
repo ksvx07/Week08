@@ -245,6 +245,8 @@ public class PlayerManager : MonoBehaviour
 
     public void OnPlayerDead()
     {
+
+
         playerDataLog.PlayerDeadLog();
         if (isSelectUIActive)
         {

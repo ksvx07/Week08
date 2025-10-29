@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using UnityEngine;
-
+using System.Text;
 public enum LogLevel
 {
     Debug, // 디버깅용
@@ -34,7 +34,7 @@ public class GameLog : MonoBehaviour
     [InfoBox("원하는 파일 이름을 설정하세요", InfoBoxType.Warning, VisibleIf = "IsLogFileNameEmpty")]
     [InfoBox("사용할 수 없는 특수문자(<, >, :, \", /, \\, |, ?, *)가 포함되어 있습니다.", InfoBoxType.Error, VisibleIf = "IsFileNameInvalid")]
     [ShowIf("setFileName")]
-    private string logFileName = null;
+    public string logFileName = null;
 
     private string logFilePath;
     public string LogFilePath => logFilePath;
@@ -55,7 +55,7 @@ public class GameLog : MonoBehaviour
 
     private void OnValidate()
     {
-        if(enableFileLogging == false)
+        if (enableFileLogging == false)
         {
             setFileName = false;
         }
@@ -247,4 +247,20 @@ public class GameLog : MonoBehaviour
     }
     //
     #endregion
+
+    private string filePath;
+
+    private void Start()
+    {
+        string exeDir = Path.GetDirectoryName(Application.dataPath);
+        string logDir = Path.Combine(exeDir, "GameLog");
+        Directory.CreateDirectory(logDir);
+        string fileName = $"{logFileName}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}";
+        filePath = Path.Combine(logDir, $"{fileName}.csv");
+    }
+
+    public void SaveStats(string header, string data)
+    {
+        File.WriteAllText(filePath, header + "\n" + data, Encoding.UTF8);
+    }
 }

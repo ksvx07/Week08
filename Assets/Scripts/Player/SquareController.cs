@@ -164,55 +164,6 @@ public class SquareController : MonoBehaviour, IPlayerController
     private void Update()
     {
         TimeCounters();
-        CheckWallGrab();
-    }
-
-    // 벽 잡기 상태 체크
-    private void CheckWallGrab()
-    {
-        // 벽을 잡고 있는 상태 확인
-        if (!IsGrounded && (isTouchingWallRight || isTouchingWallLeft))
-        {
-            isWallGrabbing = true;
-
-            // 반대 방향 입력 확인
-            bool pressingAwayFromWall = false;
-            if (isTouchingWallRight && moveInput.x < -0.1f)
-                pressingAwayFromWall = true;
-            else if (isTouchingWallLeft && moveInput.x > 0.1f)
-                pressingAwayFromWall = true;
-
-            if (pressingAwayFromWall)
-            {
-                wallDetachCounter += Time.deltaTime;
-                if (wallDetachCounter >= wallDetachTime)
-                {
-                    DetachFromWall();
-                }
-            }
-            else
-            {
-                wallDetachCounter = 0f;
-            }
-        }
-        else
-        {
-            isWallGrabbing = false;
-            wallDetachCounter = 0f;
-        }
-    }
-    // 벽에서 떨어지기
-    private void DetachFromWall()
-    {
-        isWallGrabbing = false;
-        wallDetachCounter = 0f;
-
-        // 벽에서 살짝 밀어내기 (선택사항)
-        float pushForce = 2f;
-        if (isTouchingWallRight)
-            rb.linearVelocity = new Vector2(-pushForce, rb.linearVelocity.y);
-        else if (isTouchingWallLeft)
-            rb.linearVelocity = new Vector2(pushForce, rb.linearVelocity.y);
     }
 
     // ?��? ??????
@@ -333,7 +284,7 @@ public class SquareController : MonoBehaviour, IPlayerController
     // ???
     private void Move()
     {
-        if (!canMove) return;
+        // if (!canMove) return;
         float accel = speedAcceleration;
         float decel = SpeedDeceleration;
         float turnAccel = TurningSpeedAcceleration;
