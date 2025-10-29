@@ -97,3 +97,29 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+.vscode
+
+
+/Assets/vFavorites/
+/Assets/vFolders/
+/Assets/vHierarchy
+/Assets/vInspector/
+/Assets/vRuler/
+/Assets/vTabs/
+/Assets/vFavorites.meta
+/Assets/vFolders.meta
+/Assets/vHierarchy.meta
+/Assets/vInspector.meta
+/Assets/vRuler.meta
+/Assets/vTabs.meta
+
+/Assets/Plugins/CodeStage/
+/Assets/Plugins.meta
+/Assets/Plugins/*.meta
+/ProjectSettings/
+Assets/vFavorites.meta
+Assets/vFolders.meta
+Assets/vHierarchy.meta
+Assets/vInspector.meta
+Assets/vRuler.meta
+Assets/vTabs.meta
