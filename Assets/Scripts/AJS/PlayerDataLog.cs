@@ -58,6 +58,7 @@ public class PlayerDataLog : MonoBehaviour
     private int deadAmount;
     private int modeSwitchAmount;
     private int quickSwitchAmount;
+    private float totalGamePlayTime = 0f; // 전체 게임 플레이 시간(전역)
     private Dictionary<PlayerShape, float> shapePlayTimes = new Dictionary<PlayerShape, float>();
     private Dictionary<PlayerShape, int> shapeChangeCounts = new Dictionary<PlayerShape, int>();
     private Dictionary<PlayerShape, float> maxShapeStayTimes = new Dictionary<PlayerShape, float>();
@@ -78,6 +79,9 @@ public class PlayerDataLog : MonoBehaviour
         if (shapePlayTimes.ContainsKey(currentShape))
         {
             float deltaTime = Time.unscaledDeltaTime;
+            // 전체 게임 시간 누적
+            totalGamePlayTime += deltaTime;
+
             shapePlayTimes[currentShape] += deltaTime;
 
             // 현재 스테이지/체크포인트의 모양별 유지 시간을 누적
@@ -92,6 +96,8 @@ public class PlayerDataLog : MonoBehaviour
                 currentCheckpointLog.totalPlayTime += deltaTime;
             }
         }
+
+
     }
 
     public void PlayerLogStart(PlayerShape initialShape)
@@ -255,6 +261,8 @@ public class PlayerDataLog : MonoBehaviour
     // =================================================================
     //                     결과 출력 함수 확장
     // =================================================================
+
+
     private void PlayerLogResult()
     {
         // StringBuilder를 사용해 여러 줄의 문자열을 효율적으로 만듭니다.
@@ -427,5 +435,82 @@ public class PlayerDataLog : MonoBehaviour
             UpdateMaxStayTime(currentShape);
         }
         PlayerLogResult();
+        SavePlayerLogToCSV();
     }
+
+    // CSV 저장 함수
+    private void SavePlayerLogToCSV()
+    {
+        string header =
+        "Total_Deaths," +
+        "Total_Transforms," +
+        "Total_PlayTime,";
+        string data =
+        $"{deadAmount}," +
+        $"{quickSwitchAmount}," +
+        $"{totalGamePlayTime:F3},";
+
+        if (allStageLogs.Count > 0)
+        {
+            foreach (var stagePair in allStageLogs)
+            {
+                StageLogData stageData = stagePair.Value;
+                // 해당 스테이지의 체크포인트별 기록 출력
+                if (stageData.checkpointStats.Count > 0)
+                {
+                    foreach (var checkpointPair in stageData.checkpointStats)
+                    {
+                        string checkpointId = checkpointPair.Key;
+                        LogStats stats = checkpointPair.Value;
+
+                        header +=
+                        $"CP{checkpointId}_Deaths," +
+                        $"CP{checkpointId}_Transforms," +
+                        $"CP{checkpointId}_PlayTime,";
+
+                        data +=
+                        $"{stats.deadAmount}," +
+                        $"{stats.quickSwitchAmount}," +
+                        $"{stats.totalPlayTime:F3},";
+                    }
+                }
+            }
+        }
+        GameLog.Instance.SaveStats(header.TrimEnd(','), data.TrimEnd(','));
+    }
+
+
+    [Header("Autosave")]
+    [SerializeField] private bool autosaveEnabled = true;
+    float autosaveIntervalSeconds = 1f;
+    private Coroutine autosaveRoutine;
+
+    private void OnEnable()
+    {
+        if (autosaveEnabled && autosaveRoutine == null)
+        {
+            autosaveRoutine = StartCoroutine(AutoSaveLoop());
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (autosaveRoutine != null)
+        {
+            StopCoroutine(autosaveRoutine);
+            autosaveRoutine = null;
+        }
+        // 비활성화 시 마지막으로 한 번 더 저장
+        SavePlayerLogToCSV();
+    }
+
+    private System.Collections.IEnumerator AutoSaveLoop()
+    {
+        while (true)
+        {
+            yield return new WaitForSecondsRealtime(Mathf.Max(1f, autosaveIntervalSeconds));
+            SavePlayerLogToCSV();
+        }
+    }
+
 }
