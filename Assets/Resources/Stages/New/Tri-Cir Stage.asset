@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Tri-Cir Stage
   m_EditorClassIdentifier: 
   Id: 5
-  minX: -16.85
-  maxX: 190.84
-  minY: -12
-  maxY: 8
+  minX: 358.06122
+  maxX: 565.75085
+  minY: -36.61382
+  maxY: -16.613813
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1

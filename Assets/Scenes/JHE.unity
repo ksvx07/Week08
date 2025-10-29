@@ -3904,7 +3904,7 @@ MonoBehaviour:
   enableFileLogging: 1
   minimumLogLevel: 0
   setFileName: 1
-  logFileName: "\uC5C4"
+  logFileName: tester
 --- !u!1 &1705947940
 GameObject:
   m_ObjectHideFlags: 0
