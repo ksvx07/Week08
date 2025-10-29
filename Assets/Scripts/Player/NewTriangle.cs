@@ -674,6 +674,22 @@ public class NewTriangle : MonoBehaviour, IPlayerController
 
         swingJoint.enabled = true;
         rb.gravityScale = swingGravityScale;
+        Vector2 baseDirection = (anchorPoint - (Vector2)transform.position).normalized;
+
+        Vector2 rotatedDirection;
+        if (facingDirection > 0)
+        {
+            // +90도 회전 (시계 반대 방향)
+            rotatedDirection = new Vector2(baseDirection.y, -baseDirection.x);
+        }
+        else
+        {
+            // -90도 회전 (시계 방향)
+            rotatedDirection = new Vector2(-baseDirection.y, baseDirection.x);
+        }
+
+        rb.linearVelocity = rotatedDirection * rb.linearVelocity.magnitude;
+
     }
 
     public void StopSwing()
