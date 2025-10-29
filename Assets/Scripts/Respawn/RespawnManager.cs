@@ -87,8 +87,12 @@ public class RespawnManager : MonoBehaviour
 
     }
 
+    bool dead = false;
+
     public void PlayerDead()
     {
+        if (dead) return;
+        dead = true;
         if (!ValidatePlayer()) return;
         PlayerManager.Instance.PlayerSetActive(false);
         PlayerManager.Instance.OnPlayerDead();
@@ -103,6 +107,7 @@ public class RespawnManager : MonoBehaviour
 
     private void RespawnPlayer()
     {
+        dead = false;
         PlayerManager.Instance.SetCanChangeTimeScale(true);
         ResetPlayerPhysics();
         SpawnPlayerAtCheckpoint();
