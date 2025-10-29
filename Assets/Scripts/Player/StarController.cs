@@ -248,7 +248,7 @@ public class StarController : MonoBehaviour, IPlayerController
         }
 
         rb.linearVelocity = newVel;
-        Debug.Log("Wall Climbing");
+        // Debug.Log("Wall Climbing");
     }
 
 
@@ -452,7 +452,7 @@ public class StarController : MonoBehaviour, IPlayerController
                 {
                     //if (selectedWallNormal != null)
                     // +y로 linearVelocity 설정
-                    Debug.Log("Jump!");
+                    // Debug.Log("Jump!");
                     isJumping = true;
                     wallClimbDisableCounter = wallClimbDisableTime; // 벽 등반 비활성화
 
@@ -507,7 +507,7 @@ public class StarController : MonoBehaviour, IPlayerController
             wallClimbDisableCounter = wallClimbDisableTime; // 벽 등반 비활성화
             rb.linearVelocity = avgNormal * starWallJumpSpeed;
             jumpBufferCounter = 0;
-            Debug.Log("Wall Jump");
+            // Debug.Log("Wall Jump");
         }
     }
 
