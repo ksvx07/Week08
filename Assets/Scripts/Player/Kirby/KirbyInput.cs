@@ -29,7 +29,7 @@ public class KirbyInput : MonoBehaviour
     #region Input Event Handler
     private void EnableInput()
     {
-        _inputs.Player.Enable(); // ������ ��� �׼Ǹ� Ȱ��ȭ
+        _inputs.Player.Enable();
         _inputs.Player.Move.performed += OnMoveInput;
         _inputs.Player.Move.canceled += OnMoveInput;
         _inputs.Player.Jump.performed += OnJumpClicked;
@@ -42,7 +42,7 @@ public class KirbyInput : MonoBehaviour
         _inputs.Player.Move.canceled -= OnMoveInput;
         _inputs.Player.Jump.performed -= OnJumpClicked;
         _inputs.Player.Dash.performed -= OnTurboClicked;
-        _inputs.Player.Disable(); // ��� �׼Ǹ� ��Ȱ��ȭ
+        _inputs.Player.Disable();
         _playerMove.DirectionX = 0f;
     }
 
@@ -50,15 +50,17 @@ public class KirbyInput : MonoBehaviour
 
     void OnJumpClicked(InputAction.CallbackContext context)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         _playerJump.OnJumpClicked();
     }
     void OnTurboClicked(InputAction.CallbackContext context)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         _playerMove.OnTurboModePressed();
     }
     void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (PlayerManager.Instance.IsHold) return;
+        if (PlayerManager.Instance.IsSelectMode == true) return;
 
         _playerMove.OnMoveInput(context.ReadValue<Vector2>());
     }

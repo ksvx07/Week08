@@ -135,7 +135,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""caa3bf3d-71bd-4d2a-9e4c-9b71fbd093a8"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -146,7 +146,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""15526cad-b5bf-4431-b2d1-0e37ac7f7f62"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -157,7 +157,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""c2e52a43-a87e-488c-8b0c-da6d1a51226f"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -168,35 +168,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""1675d0c9-a63d-4b47-92ce-cae11191114a"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f5bfd7b7-169a-45df-8927-d88752c2852c"",
-                    ""path"": ""<Gamepad>/dpad"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""43829863-7210-4ab6-b5c7-4c9ec7318873"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -211,19 +189,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fd1ea7b0-021e-4a6a-9b13-b8108e14fd3b"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""4b06ce23-eae0-4767-84e5-6bfc1de70d7b"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -233,8 +200,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b481491f-3371-49bd-8fa2-b78cca4eb541"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""id"": ""c2e6674d-ceac-4477-a158-e2f166c81fef"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -245,11 +212,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""UI"",
+            ""name"": ""SwitchMode"",
             ""id"": ""e142499f-d016-4315-a8c5-9a3f1230dd8c"",
             ""actions"": [
                 {
-                    ""name"": ""SelectMode"",
+                    ""name"": ""SwitchModeStart"",
                     ""type"": ""Button"",
                     ""id"": ""ec5f559a-98e6-436d-b349-67a679262710"",
                     ""expectedControlType"": """",
@@ -258,18 +225,126 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SelectPlayer"",
-                    ""type"": ""Value"",
-                    ""id"": ""f79f3a47-ac9a-4e54-8c08-6325c58e9bda"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""name"": ""SelectCircle"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ab261b8-5b0a-4174-b9be-b84208dd85ac"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""QuickSwitch"",
+                    ""name"": ""SelectTriangle"",
+                    ""type"": ""Button"",
+                    ""id"": ""35edaca5-0bdc-4d33-a44f-f3d31bb105af"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectStar"",
+                    ""type"": ""Button"",
+                    ""id"": ""62a768fe-b2ab-4b8a-8c66-66e6e29ea27a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectSquare"",
+                    ""type"": ""Button"",
+                    ""id"": ""539faab6-dd23-412b-92fe-0a28ccfc15e2"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ace45573-8401-4c92-bdc4-ae86b281bee6"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchModeStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2f0e4606-0d39-4ba2-ae19-91b1d4a43b16"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectCircle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1797d653-d680-40dc-8af1-bf15a581b24a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectTriangle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36f837d3-6066-47a1-af36-9cc223f0336b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectStar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae54379a-e77f-409a-adfe-a19bb3e0f899"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSquare"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""SwitchMouse"",
+            ""id"": ""f4299fd9-a1d8-49bd-b72f-412f1cc3c27b"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchModeStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ce82029-21e0-42ea-917c-8b174cc1059d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchModeEnd"",
+                    ""type"": ""Button"",
+                    ""id"": ""a14b24db-33fc-406a-b3ed-2fe2686ff4f6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseDelta"",
                     ""type"": ""Value"",
-                    ""id"": ""08df15ac-9c5b-4081-ae81-2364a3124a4a"",
+                    ""id"": ""b6f1289f-d360-482f-8bf6-f850973ab283"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -279,157 +354,36 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""ace45573-8401-4c92-bdc4-ae86b281bee6"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""3ca72cd6-61bf-41b3-994b-90a75ce79a72"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SelectMode"",
+                    ""action"": ""SwitchModeStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b21e2380-60f1-4e8a-acff-c6821f7fb5a2"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""id"": ""e491515c-2ba4-430c-a73f-6e1c4aba0910"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SelectMode"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""c2a32c9c-6cae-48e0-959f-3dd3e6ac8416"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectPlayer"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""6a647b6c-69a9-409c-897b-781afeb0e7a3"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectPlayer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""84b9379b-7305-44d4-b562-47293c04a2ed"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectPlayer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""b86f9a79-c2ad-4959-8424-060b432ed566"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectPlayer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""48f55a2b-a540-44ec-bfed-abc2e60085e9"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectPlayer"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6f447466-fac1-474a-bc91-9c12de2debe6"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectPlayer"",
+                    ""action"": ""SwitchModeEnd"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""97732997-ee5c-4c93-8977-1ee5ca310361"",
-                    ""path"": ""<Gamepad>/dpad"",
+                    ""id"": ""c6d65335-f2e9-468f-a1b0-0a789d125d36"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SelectPlayer"",
+                    ""action"": ""MouseDelta"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""2D Vector"",
-                    ""id"": ""e5c3b01d-3c95-4d5c-aca7-c22bfaf46085"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""QuickSwitch"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""e84afe7b-7318-46f1-8833-87f68c54f12b"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""QuickSwitch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""de0f582b-dd5e-43ee-9393-428cb86a587a"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""QuickSwitch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""9b656844-805b-4ef1-ac84-0f6cff5aaaaf"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""QuickSwitch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""8283d9b3-ceb3-40dc-8e9d-f9c6dbacad2f"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""QuickSwitch"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -441,17 +395,25 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_SelectMode = m_UI.FindAction("SelectMode", throwIfNotFound: true);
-        m_UI_SelectPlayer = m_UI.FindAction("SelectPlayer", throwIfNotFound: true);
-        m_UI_QuickSwitch = m_UI.FindAction("QuickSwitch", throwIfNotFound: true);
+        // SwitchMode
+        m_SwitchMode = asset.FindActionMap("SwitchMode", throwIfNotFound: true);
+        m_SwitchMode_SwitchModeStart = m_SwitchMode.FindAction("SwitchModeStart", throwIfNotFound: true);
+        m_SwitchMode_SelectCircle = m_SwitchMode.FindAction("SelectCircle", throwIfNotFound: true);
+        m_SwitchMode_SelectTriangle = m_SwitchMode.FindAction("SelectTriangle", throwIfNotFound: true);
+        m_SwitchMode_SelectStar = m_SwitchMode.FindAction("SelectStar", throwIfNotFound: true);
+        m_SwitchMode_SelectSquare = m_SwitchMode.FindAction("SelectSquare", throwIfNotFound: true);
+        // SwitchMouse
+        m_SwitchMouse = asset.FindActionMap("SwitchMouse", throwIfNotFound: true);
+        m_SwitchMouse_SwitchModeStart = m_SwitchMouse.FindAction("SwitchModeStart", throwIfNotFound: true);
+        m_SwitchMouse_SwitchModeEnd = m_SwitchMouse.FindAction("SwitchModeEnd", throwIfNotFound: true);
+        m_SwitchMouse_MouseDelta = m_SwitchMouse.FindAction("MouseDelta", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SwitchMode.enabled, "This will cause a leak and performance issues, PlayerInput.SwitchMode.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SwitchMouse.enabled, "This will cause a leak and performance issues, PlayerInput.SwitchMouse.Disable() has not been called.");
     }
 
     /// <summary>
@@ -642,39 +604,49 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
 
-    // UI
-    private readonly InputActionMap m_UI;
-    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_SelectMode;
-    private readonly InputAction m_UI_SelectPlayer;
-    private readonly InputAction m_UI_QuickSwitch;
+    // SwitchMode
+    private readonly InputActionMap m_SwitchMode;
+    private List<ISwitchModeActions> m_SwitchModeActionsCallbackInterfaces = new List<ISwitchModeActions>();
+    private readonly InputAction m_SwitchMode_SwitchModeStart;
+    private readonly InputAction m_SwitchMode_SelectCircle;
+    private readonly InputAction m_SwitchMode_SelectTriangle;
+    private readonly InputAction m_SwitchMode_SelectStar;
+    private readonly InputAction m_SwitchMode_SelectSquare;
     /// <summary>
-    /// Provides access to input actions defined in input action map "UI".
+    /// Provides access to input actions defined in input action map "SwitchMode".
     /// </summary>
-    public struct UIActions
+    public struct SwitchModeActions
     {
         private @PlayerInput m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public SwitchModeActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "UI/SelectMode".
+        /// Provides access to the underlying input action "SwitchMode/SwitchModeStart".
         /// </summary>
-        public InputAction @SelectMode => m_Wrapper.m_UI_SelectMode;
+        public InputAction @SwitchModeStart => m_Wrapper.m_SwitchMode_SwitchModeStart;
         /// <summary>
-        /// Provides access to the underlying input action "UI/SelectPlayer".
+        /// Provides access to the underlying input action "SwitchMode/SelectCircle".
         /// </summary>
-        public InputAction @SelectPlayer => m_Wrapper.m_UI_SelectPlayer;
+        public InputAction @SelectCircle => m_Wrapper.m_SwitchMode_SelectCircle;
         /// <summary>
-        /// Provides access to the underlying input action "UI/QuickSwitch".
+        /// Provides access to the underlying input action "SwitchMode/SelectTriangle".
         /// </summary>
-        public InputAction @QuickSwitch => m_Wrapper.m_UI_QuickSwitch;
+        public InputAction @SelectTriangle => m_Wrapper.m_SwitchMode_SelectTriangle;
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMode/SelectStar".
+        /// </summary>
+        public InputAction @SelectStar => m_Wrapper.m_SwitchMode_SelectStar;
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMode/SelectSquare".
+        /// </summary>
+        public InputAction @SelectSquare => m_Wrapper.m_SwitchMode_SelectSquare;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public InputActionMap Get() { return m_Wrapper.m_SwitchMode; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -682,9 +654,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="UIActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="SwitchModeActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(SwitchModeActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -692,20 +664,26 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="UIActions" />
-        public void AddCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions" />
+        public void AddCallbacks(ISwitchModeActions instance)
         {
-            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @SelectMode.started += instance.OnSelectMode;
-            @SelectMode.performed += instance.OnSelectMode;
-            @SelectMode.canceled += instance.OnSelectMode;
-            @SelectPlayer.started += instance.OnSelectPlayer;
-            @SelectPlayer.performed += instance.OnSelectPlayer;
-            @SelectPlayer.canceled += instance.OnSelectPlayer;
-            @QuickSwitch.started += instance.OnQuickSwitch;
-            @QuickSwitch.performed += instance.OnQuickSwitch;
-            @QuickSwitch.canceled += instance.OnQuickSwitch;
+            if (instance == null || m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Add(instance);
+            @SwitchModeStart.started += instance.OnSwitchModeStart;
+            @SwitchModeStart.performed += instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled += instance.OnSwitchModeStart;
+            @SelectCircle.started += instance.OnSelectCircle;
+            @SelectCircle.performed += instance.OnSelectCircle;
+            @SelectCircle.canceled += instance.OnSelectCircle;
+            @SelectTriangle.started += instance.OnSelectTriangle;
+            @SelectTriangle.performed += instance.OnSelectTriangle;
+            @SelectTriangle.canceled += instance.OnSelectTriangle;
+            @SelectStar.started += instance.OnSelectStar;
+            @SelectStar.performed += instance.OnSelectStar;
+            @SelectStar.canceled += instance.OnSelectStar;
+            @SelectSquare.started += instance.OnSelectSquare;
+            @SelectSquare.performed += instance.OnSelectSquare;
+            @SelectSquare.canceled += instance.OnSelectSquare;
         }
 
         /// <summary>
@@ -714,27 +692,33 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="UIActions" />
-        private void UnregisterCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions" />
+        private void UnregisterCallbacks(ISwitchModeActions instance)
         {
-            @SelectMode.started -= instance.OnSelectMode;
-            @SelectMode.performed -= instance.OnSelectMode;
-            @SelectMode.canceled -= instance.OnSelectMode;
-            @SelectPlayer.started -= instance.OnSelectPlayer;
-            @SelectPlayer.performed -= instance.OnSelectPlayer;
-            @SelectPlayer.canceled -= instance.OnSelectPlayer;
-            @QuickSwitch.started -= instance.OnQuickSwitch;
-            @QuickSwitch.performed -= instance.OnQuickSwitch;
-            @QuickSwitch.canceled -= instance.OnQuickSwitch;
+            @SwitchModeStart.started -= instance.OnSwitchModeStart;
+            @SwitchModeStart.performed -= instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled -= instance.OnSwitchModeStart;
+            @SelectCircle.started -= instance.OnSelectCircle;
+            @SelectCircle.performed -= instance.OnSelectCircle;
+            @SelectCircle.canceled -= instance.OnSelectCircle;
+            @SelectTriangle.started -= instance.OnSelectTriangle;
+            @SelectTriangle.performed -= instance.OnSelectTriangle;
+            @SelectTriangle.canceled -= instance.OnSelectTriangle;
+            @SelectStar.started -= instance.OnSelectStar;
+            @SelectStar.performed -= instance.OnSelectStar;
+            @SelectStar.canceled -= instance.OnSelectStar;
+            @SelectSquare.started -= instance.OnSelectSquare;
+            @SelectSquare.performed -= instance.OnSelectSquare;
+            @SelectSquare.canceled -= instance.OnSelectSquare;
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="UIActions.UnregisterCallbacks(IUIActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SwitchModeActions.UnregisterCallbacks(ISwitchModeActions)" />.
         /// </summary>
-        /// <seealso cref="UIActions.UnregisterCallbacks(IUIActions)" />
-        public void RemoveCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions.UnregisterCallbacks(ISwitchModeActions)" />
+        public void RemoveCallbacks(ISwitchModeActions instance)
         {
-            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -744,21 +728,139 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
-        /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
-        /// <seealso cref="UIActions.UnregisterCallbacks(IUIActions)" />
-        public void SetCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions.AddCallbacks(ISwitchModeActions)" />
+        /// <seealso cref="SwitchModeActions.RemoveCallbacks(ISwitchModeActions)" />
+        /// <seealso cref="SwitchModeActions.UnregisterCallbacks(ISwitchModeActions)" />
+        public void SetCallbacks(ISwitchModeActions instance)
         {
-            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SwitchModeActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="UIActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SwitchModeActions" /> instance referencing this action map.
     /// </summary>
-    public UIActions @UI => new UIActions(this);
+    public SwitchModeActions @SwitchMode => new SwitchModeActions(this);
+
+    // SwitchMouse
+    private readonly InputActionMap m_SwitchMouse;
+    private List<ISwitchMouseActions> m_SwitchMouseActionsCallbackInterfaces = new List<ISwitchMouseActions>();
+    private readonly InputAction m_SwitchMouse_SwitchModeStart;
+    private readonly InputAction m_SwitchMouse_SwitchModeEnd;
+    private readonly InputAction m_SwitchMouse_MouseDelta;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "SwitchMouse".
+    /// </summary>
+    public struct SwitchMouseActions
+    {
+        private @PlayerInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public SwitchMouseActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMouse/SwitchModeStart".
+        /// </summary>
+        public InputAction @SwitchModeStart => m_Wrapper.m_SwitchMouse_SwitchModeStart;
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMouse/SwitchModeEnd".
+        /// </summary>
+        public InputAction @SwitchModeEnd => m_Wrapper.m_SwitchMouse_SwitchModeEnd;
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMouse/MouseDelta".
+        /// </summary>
+        public InputAction @MouseDelta => m_Wrapper.m_SwitchMouse_MouseDelta;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_SwitchMouse; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="SwitchMouseActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(SwitchMouseActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="SwitchMouseActions" />
+        public void AddCallbacks(ISwitchMouseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Add(instance);
+            @SwitchModeStart.started += instance.OnSwitchModeStart;
+            @SwitchModeStart.performed += instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled += instance.OnSwitchModeStart;
+            @SwitchModeEnd.started += instance.OnSwitchModeEnd;
+            @SwitchModeEnd.performed += instance.OnSwitchModeEnd;
+            @SwitchModeEnd.canceled += instance.OnSwitchModeEnd;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="SwitchMouseActions" />
+        private void UnregisterCallbacks(ISwitchMouseActions instance)
+        {
+            @SwitchModeStart.started -= instance.OnSwitchModeStart;
+            @SwitchModeStart.performed -= instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled -= instance.OnSwitchModeStart;
+            @SwitchModeEnd.started -= instance.OnSwitchModeEnd;
+            @SwitchModeEnd.performed -= instance.OnSwitchModeEnd;
+            @SwitchModeEnd.canceled -= instance.OnSwitchModeEnd;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SwitchMouseActions.UnregisterCallbacks(ISwitchMouseActions)" />.
+        /// </summary>
+        /// <seealso cref="SwitchMouseActions.UnregisterCallbacks(ISwitchMouseActions)" />
+        public void RemoveCallbacks(ISwitchMouseActions instance)
+        {
+            if (m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="SwitchMouseActions.AddCallbacks(ISwitchMouseActions)" />
+        /// <seealso cref="SwitchMouseActions.RemoveCallbacks(ISwitchMouseActions)" />
+        /// <seealso cref="SwitchMouseActions.UnregisterCallbacks(ISwitchMouseActions)" />
+        public void SetCallbacks(ISwitchMouseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SwitchMouseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="SwitchMouseActions" /> instance referencing this action map.
+    /// </summary>
+    public SwitchMouseActions @SwitchMouse => new SwitchMouseActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -789,32 +891,75 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SwitchMode" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
-    /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
-    public interface IUIActions
+    /// <seealso cref="SwitchModeActions.AddCallbacks(ISwitchModeActions)" />
+    /// <seealso cref="SwitchModeActions.RemoveCallbacks(ISwitchModeActions)" />
+    public interface ISwitchModeActions
     {
         /// <summary>
-        /// Method invoked when associated input action "SelectMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SwitchModeStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectMode(InputAction.CallbackContext context);
+        void OnSwitchModeStart(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SelectPlayer" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SelectCircle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectPlayer(InputAction.CallbackContext context);
+        void OnSelectCircle(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "QuickSwitch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SelectTriangle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnQuickSwitch(InputAction.CallbackContext context);
+        void OnSelectTriangle(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SelectStar" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelectStar(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SelectSquare" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelectSquare(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SwitchMouse" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="SwitchMouseActions.AddCallbacks(ISwitchMouseActions)" />
+    /// <seealso cref="SwitchMouseActions.RemoveCallbacks(ISwitchMouseActions)" />
+    public interface ISwitchMouseActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "SwitchModeStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchModeStart(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchModeEnd" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchModeEnd(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
 }
