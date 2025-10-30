@@ -2301,11 +2301,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 583206826164738521, guid: f820d91a78f64f145bcfffef78841070, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 692
+      value: 696.544
       objectReference: {fileID: 0}
     - target: {fileID: 583206826164738521, guid: f820d91a78f64f145bcfffef78841070, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 58.396
       objectReference: {fileID: 0}
     - target: {fileID: 583206826164738521, guid: f820d91a78f64f145bcfffef78841070, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2344,7 +2344,8 @@ PrefabInstance:
       value: LJEStage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1356078096357375428, guid: f820d91a78f64f145bcfffef78841070, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f820d91a78f64f145bcfffef78841070, type: 3}
