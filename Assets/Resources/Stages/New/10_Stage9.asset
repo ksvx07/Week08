@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 10_Stage9
   m_EditorClassIdentifier: 
   Id: 5
-  minX: 639.3
-  maxX: 708.45435
-  minY: 95.84799
-  maxY: 123.8
+  minX: 661.89294
+  maxX: 731.0473
+  minY: 224.3
+  maxY: 251
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1
