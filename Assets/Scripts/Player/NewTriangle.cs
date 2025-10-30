@@ -540,7 +540,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     }
     private int maxDashCount = 1;
     public int dashCount { get; set; }
-    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount)
+    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
         // Debug.Log("Set Velocity Called");
         col = GetComponent<PolygonCollider2D>();
@@ -552,6 +552,18 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         rb.gravityScale = 0f;
         rb.linearVelocity = new Vector2(newVelX, newVelY);
         dashCount = currentDashCount;
+        if (facingRight)
+        {
+            facingDirection = 1;
+            transform.localScale = originalScale;
+        }
+        else
+        {
+            facingDirection = -1;
+            Vector3 flippedScale = originalScale;
+            flippedScale.x = -originalScale.x;
+            transform.localScale = flippedScale;
+        }
     }
 
 

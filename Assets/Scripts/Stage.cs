@@ -3,6 +3,7 @@ using UnityEngine;
 public enum SwitchDirection
 {
     LeftAndRight, // 좌우 방향을 하나로 통합
+    RightToLeft,  // 오른쪽에서 왼쪽으로
     TopToBottom,  // 위에서 아래로
     BottomToTop  // 아래서 위로
 }
@@ -37,7 +38,11 @@ public class Stage : MonoBehaviour
                 // 오른쪽을 '다음(Next)' 방향으로 간주합니다.
                 shouldGoNext = player.position.x > transform.position.x;
                 break;
-
+            case SwitchDirection.RightToLeft:
+                // 플레이어의 x좌표가 경계의 중심보다 크면 '오른쪽'으로 나간 것.
+                // 오른쪽을 '다음(Next)' 방향으로 간주합니다.
+                shouldGoNext = player.position.x < transform.position.x;
+                break;
             case SwitchDirection.BottomToTop:
                 // 플레이어의 y좌표가 경계의 중심보다 크면 '위쪽'으로 나간 것.
                 // 위쪽을 '다음(Next)' 방향으로 간주합니다.

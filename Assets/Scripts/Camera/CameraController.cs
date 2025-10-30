@@ -65,43 +65,60 @@ public class CameraController : MonoBehaviour
         Vector3 camPos = transform.position;
         Vector3 playerPos = Player.position;
 
+        // --- Y축 오프셋 적용 (맵 위/아래 바운드 기준) ---
+        float camHeight = Cam.orthographicSize * 2f;
+        float mapBottom = Clamp._minY;
+        float mapTop = Clamp._maxY;
+
+        float offsetY = 0f;
+
+        // 맵 하단에 가까우면 위쪽 여유 더 확보
+        float bottomDist = playerPos.y - mapBottom;
+        if (bottomDist < camHeight / 4f)
+            offsetY = camHeight / 4f - bottomDist;
+
+        // 맵 상단에 가까우면 아래쪽 여유 더 확보
+        float topDist = mapTop - playerPos.y;
+        if (topDist < camHeight / 4f)
+            offsetY = -(camHeight / 4f - topDist);
+
+        Vector3 targetPos = new Vector3(playerPos.x, playerPos.y + offsetY, camPos.z);
+
         float newX = camPos.x;
         float newY = camPos.y;
 
-        // --- X축 ---
-        float deltaX = playerPos.x - camPos.x;
+        // --- X축 DeadZone/SoftZone 처리 ---
+        float deltaX = targetPos.x - camPos.x;
         float absDeltaX = Mathf.Abs(deltaX);
 
         if (absDeltaX > deadZoneSize.x + softZoneSize.x)
-        {
-            // DeadZone + SoftZone 밖 = 플레이어 중앙에 오도록 SmoothDamp
-            newX = Mathf.SmoothDamp(camPos.x, playerPos.x, ref _velocity.x, SmoothTime);
-        }
+            newX = Mathf.SmoothDamp(camPos.x, targetPos.x, ref _velocity.x, SmoothTime);
         else if (absDeltaX > deadZoneSize.x)
         {
-            // DeadZone 밖, SoftZone 안 = 천천히 따라감
-            float factor = (absDeltaX - deadZoneSize.x) / softZoneSize.x; // 0~1 비율
-            newX += deltaX * factor * 0.1f; 
+            float factor = (absDeltaX - deadZoneSize.x) / softZoneSize.x;
+            newX += deltaX * factor * 0.1f;
         }
         else
-        {
-            // DeadZone 안 = 거의 움직이지 않음
             newX += deltaX * 0.05f;
-        }
 
-        // --- Y축 ---
-        float deltaY = playerPos.y - camPos.y;
+        // --- Y축 DeadZone/SoftZone 처리 ---
+        float deltaY = targetPos.y - camPos.y;
         float absDeltaY = Mathf.Abs(deltaY);
 
         if (absDeltaY > deadZoneSize.y + softZoneSize.y)
-        {
-            newY = Mathf.SmoothDamp(camPos.y, playerPos.y, ref _velocity.y, SmoothTime);
-        }
+            newY = Mathf.SmoothDamp(camPos.y, targetPos.y, ref _velocity.y, SmoothTime);
         else if (absDeltaY > deadZoneSize.y)
         {
-            float factor = (absDeltaY - deadZoneSize.y) / deadZoneSize.y;
+            float factor = (absDeltaY - deadZoneSize.y) / softZoneSize.y;
             newY += deltaY * factor * 0.1f;
         }
+        else
+            newY += deltaY * 0.05f;
+
+        // --- 카메라 Clamp 적용 ---
+        float camWidth = camHeight * Cam.aspect;
+        newX = Mathf.Clamp(newX, Clamp._minX + camWidth / 2f, Clamp._maxX - camWidth / 2f);
+        newY = Mathf.Clamp(newY, mapBottom + camHeight / 2f, mapTop - camHeight / 2f);
 
         return new Vector3(newX, newY, camPos.z);
     }

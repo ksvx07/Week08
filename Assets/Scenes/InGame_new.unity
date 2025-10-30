@@ -30998,7 +30998,7 @@ MonoBehaviour:
   enableFileLogging: 1
   minimumLogLevel: 0
   setFileName: 1
-  logFileName: "\uC9C4\uC131 \uC2A4\uD53C\uB4DC\uB7F0 2"
+  logFileName: TESTER
 --- !u!1001 &1692636310
 PrefabInstance:
   m_ObjectHideFlags: 0
