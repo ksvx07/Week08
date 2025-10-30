@@ -83,18 +83,18 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.SelectMouse.Enable();
-        inputActions.SelectMouse.SwitchModeStart.performed += OnSwitchTogglePerform;
-        inputActions.SelectMouse.SwitchModeEnd.performed += OnSwitchModeEndPerform;
-        inputActions.SelectMouse.MouseDelta.performed += OnMouseDelta;
+        inputActions.SwitchMouse.Enable();
+        inputActions.SwitchMouse.SwitchModeStart.performed += OnSwitchTogglePerform;
+        inputActions.SwitchMouse.SwitchModeEnd.performed += OnSwitchModeEndPerform;
+        inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
     }
 
     private void OnDisable()
     {
-        inputActions.SelectMouse.SwitchModeStart.performed -= OnSwitchTogglePerform;
-        inputActions.SelectMouse.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
-        inputActions.SelectMouse.MouseDelta.performed -= OnMouseDelta;
-        inputActions.SelectMouse.Disable();
+        inputActions.SwitchMouse.SwitchModeStart.performed -= OnSwitchTogglePerform;
+        inputActions.SwitchMouse.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
+        inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
+        inputActions.SwitchMouse.Disable();
     }
     private void Update()
     {

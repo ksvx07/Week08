@@ -159,7 +159,7 @@
             ]
         },
         {
-            "name": "UI",
+            "name": "SwitchMode",
             "id": "e142499f-d016-4315-a8c5-9a3f1230dd8c",
             "actions": [
                 {
@@ -193,24 +193,6 @@
                     "name": "QuickSwitch",
                     "type": "Value",
                     "id": "08df15ac-9c5b-4081-ae81-2364a3124a4a",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "SwitchModeCancel",
-                    "type": "Button",
-                    "id": "71eaa4c2-cc6b-4492-9f8c-27032fa2e392",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "MouseDelta",
-                    "type": "Value",
-                    "id": "7b19f47a-e464-4ef0-86a4-f5b0a6b9006c",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -382,33 +364,11 @@
                     "action": "QuickSwitch",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "3a869629-f1af-4955-9c28-fe5c6f3ce92a",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchModeCancel",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0d8762b5-4a1f-466e-a7c3-c1591b6ae761",
-                    "path": "<Mouse>/delta",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "MouseDelta",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 }
             ]
         },
         {
-            "name": "SelectMouse",
+            "name": "SwitchMouse",
             "id": "f4299fd9-a1d8-49bd-b72f-412f1cc3c27b",
             "actions": [
                 {

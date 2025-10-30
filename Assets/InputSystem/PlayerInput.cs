@@ -245,7 +245,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""UI"",
+            ""name"": ""SwitchMode"",
             ""id"": ""e142499f-d016-4315-a8c5-9a3f1230dd8c"",
             ""actions"": [
                 {
@@ -279,24 +279,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""QuickSwitch"",
                     ""type"": ""Value"",
                     ""id"": ""08df15ac-9c5b-4081-ae81-2364a3124a4a"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""SwitchModeCancel"",
-                    ""type"": ""Button"",
-                    ""id"": ""71eaa4c2-cc6b-4492-9f8c-27032fa2e392"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""MouseDelta"",
-                    ""type"": ""Value"",
-                    ""id"": ""7b19f47a-e464-4ef0-86a4-f5b0a6b9006c"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -468,33 +450,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""QuickSwitch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3a869629-f1af-4955-9c28-fe5c6f3ce92a"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SwitchModeCancel"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0d8762b5-4a1f-466e-a7c3-c1591b6ae761"",
-                    ""path"": ""<Mouse>/delta"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MouseDelta"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
                 }
             ]
         },
         {
-            ""name"": ""SelectMouse"",
+            ""name"": ""SwitchMouse"",
             ""id"": ""f4299fd9-a1d8-49bd-b72f-412f1cc3c27b"",
             ""actions"": [
                 {
@@ -580,26 +540,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_SwitchModeStart = m_UI.FindAction("SwitchModeStart", throwIfNotFound: true);
-        m_UI_SwitchModeEnd = m_UI.FindAction("SwitchModeEnd", throwIfNotFound: true);
-        m_UI_SelectPlayer = m_UI.FindAction("SelectPlayer", throwIfNotFound: true);
-        m_UI_QuickSwitch = m_UI.FindAction("QuickSwitch", throwIfNotFound: true);
-        m_UI_SwitchModeCancel = m_UI.FindAction("SwitchModeCancel", throwIfNotFound: true);
-        m_UI_MouseDelta = m_UI.FindAction("MouseDelta", throwIfNotFound: true);
-        // SelectMouse
-        m_SelectMouse = asset.FindActionMap("SelectMouse", throwIfNotFound: true);
-        m_SelectMouse_SwitchModeStart = m_SelectMouse.FindAction("SwitchModeStart", throwIfNotFound: true);
-        m_SelectMouse_SwitchModeEnd = m_SelectMouse.FindAction("SwitchModeEnd", throwIfNotFound: true);
-        m_SelectMouse_MouseDelta = m_SelectMouse.FindAction("MouseDelta", throwIfNotFound: true);
+        // SwitchMode
+        m_SwitchMode = asset.FindActionMap("SwitchMode", throwIfNotFound: true);
+        m_SwitchMode_SwitchModeStart = m_SwitchMode.FindAction("SwitchModeStart", throwIfNotFound: true);
+        m_SwitchMode_SwitchModeEnd = m_SwitchMode.FindAction("SwitchModeEnd", throwIfNotFound: true);
+        m_SwitchMode_SelectPlayer = m_SwitchMode.FindAction("SelectPlayer", throwIfNotFound: true);
+        m_SwitchMode_QuickSwitch = m_SwitchMode.FindAction("QuickSwitch", throwIfNotFound: true);
+        // SwitchMouse
+        m_SwitchMouse = asset.FindActionMap("SwitchMouse", throwIfNotFound: true);
+        m_SwitchMouse_SwitchModeStart = m_SwitchMouse.FindAction("SwitchModeStart", throwIfNotFound: true);
+        m_SwitchMouse_SwitchModeEnd = m_SwitchMouse.FindAction("SwitchModeEnd", throwIfNotFound: true);
+        m_SwitchMouse_MouseDelta = m_SwitchMouse.FindAction("MouseDelta", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_SelectMouse.enabled, "This will cause a leak and performance issues, PlayerInput.SelectMouse.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SwitchMode.enabled, "This will cause a leak and performance issues, PlayerInput.SwitchMode.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SwitchMouse.enabled, "This will cause a leak and performance issues, PlayerInput.SwitchMouse.Disable() has not been called.");
     }
 
     /// <summary>
@@ -790,54 +748,44 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
 
-    // UI
-    private readonly InputActionMap m_UI;
-    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_SwitchModeStart;
-    private readonly InputAction m_UI_SwitchModeEnd;
-    private readonly InputAction m_UI_SelectPlayer;
-    private readonly InputAction m_UI_QuickSwitch;
-    private readonly InputAction m_UI_SwitchModeCancel;
-    private readonly InputAction m_UI_MouseDelta;
+    // SwitchMode
+    private readonly InputActionMap m_SwitchMode;
+    private List<ISwitchModeActions> m_SwitchModeActionsCallbackInterfaces = new List<ISwitchModeActions>();
+    private readonly InputAction m_SwitchMode_SwitchModeStart;
+    private readonly InputAction m_SwitchMode_SwitchModeEnd;
+    private readonly InputAction m_SwitchMode_SelectPlayer;
+    private readonly InputAction m_SwitchMode_QuickSwitch;
     /// <summary>
-    /// Provides access to input actions defined in input action map "UI".
+    /// Provides access to input actions defined in input action map "SwitchMode".
     /// </summary>
-    public struct UIActions
+    public struct SwitchModeActions
     {
         private @PlayerInput m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public SwitchModeActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "UI/SwitchModeStart".
+        /// Provides access to the underlying input action "SwitchMode/SwitchModeStart".
         /// </summary>
-        public InputAction @SwitchModeStart => m_Wrapper.m_UI_SwitchModeStart;
+        public InputAction @SwitchModeStart => m_Wrapper.m_SwitchMode_SwitchModeStart;
         /// <summary>
-        /// Provides access to the underlying input action "UI/SwitchModeEnd".
+        /// Provides access to the underlying input action "SwitchMode/SwitchModeEnd".
         /// </summary>
-        public InputAction @SwitchModeEnd => m_Wrapper.m_UI_SwitchModeEnd;
+        public InputAction @SwitchModeEnd => m_Wrapper.m_SwitchMode_SwitchModeEnd;
         /// <summary>
-        /// Provides access to the underlying input action "UI/SelectPlayer".
+        /// Provides access to the underlying input action "SwitchMode/SelectPlayer".
         /// </summary>
-        public InputAction @SelectPlayer => m_Wrapper.m_UI_SelectPlayer;
+        public InputAction @SelectPlayer => m_Wrapper.m_SwitchMode_SelectPlayer;
         /// <summary>
-        /// Provides access to the underlying input action "UI/QuickSwitch".
+        /// Provides access to the underlying input action "SwitchMode/QuickSwitch".
         /// </summary>
-        public InputAction @QuickSwitch => m_Wrapper.m_UI_QuickSwitch;
-        /// <summary>
-        /// Provides access to the underlying input action "UI/SwitchModeCancel".
-        /// </summary>
-        public InputAction @SwitchModeCancel => m_Wrapper.m_UI_SwitchModeCancel;
-        /// <summary>
-        /// Provides access to the underlying input action "UI/MouseDelta".
-        /// </summary>
-        public InputAction @MouseDelta => m_Wrapper.m_UI_MouseDelta;
+        public InputAction @QuickSwitch => m_Wrapper.m_SwitchMode_QuickSwitch;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public InputActionMap Get() { return m_Wrapper.m_SwitchMode; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -845,9 +793,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="UIActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="SwitchModeActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(SwitchModeActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -855,11 +803,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="UIActions" />
-        public void AddCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions" />
+        public void AddCallbacks(ISwitchModeActions instance)
         {
-            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Add(instance);
             @SwitchModeStart.started += instance.OnSwitchModeStart;
             @SwitchModeStart.performed += instance.OnSwitchModeStart;
             @SwitchModeStart.canceled += instance.OnSwitchModeStart;
@@ -872,12 +820,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @QuickSwitch.started += instance.OnQuickSwitch;
             @QuickSwitch.performed += instance.OnQuickSwitch;
             @QuickSwitch.canceled += instance.OnQuickSwitch;
-            @SwitchModeCancel.started += instance.OnSwitchModeCancel;
-            @SwitchModeCancel.performed += instance.OnSwitchModeCancel;
-            @SwitchModeCancel.canceled += instance.OnSwitchModeCancel;
-            @MouseDelta.started += instance.OnMouseDelta;
-            @MouseDelta.performed += instance.OnMouseDelta;
-            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -886,8 +828,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="UIActions" />
-        private void UnregisterCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions" />
+        private void UnregisterCallbacks(ISwitchModeActions instance)
         {
             @SwitchModeStart.started -= instance.OnSwitchModeStart;
             @SwitchModeStart.performed -= instance.OnSwitchModeStart;
@@ -901,21 +843,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @QuickSwitch.started -= instance.OnQuickSwitch;
             @QuickSwitch.performed -= instance.OnQuickSwitch;
             @QuickSwitch.canceled -= instance.OnQuickSwitch;
-            @SwitchModeCancel.started -= instance.OnSwitchModeCancel;
-            @SwitchModeCancel.performed -= instance.OnSwitchModeCancel;
-            @SwitchModeCancel.canceled -= instance.OnSwitchModeCancel;
-            @MouseDelta.started -= instance.OnMouseDelta;
-            @MouseDelta.performed -= instance.OnMouseDelta;
-            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="UIActions.UnregisterCallbacks(IUIActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SwitchModeActions.UnregisterCallbacks(ISwitchModeActions)" />.
         /// </summary>
-        /// <seealso cref="UIActions.UnregisterCallbacks(IUIActions)" />
-        public void RemoveCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions.UnregisterCallbacks(ISwitchModeActions)" />
+        public void RemoveCallbacks(ISwitchModeActions instance)
         {
-            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -925,55 +861,55 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
-        /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
-        /// <seealso cref="UIActions.UnregisterCallbacks(IUIActions)" />
-        public void SetCallbacks(IUIActions instance)
+        /// <seealso cref="SwitchModeActions.AddCallbacks(ISwitchModeActions)" />
+        /// <seealso cref="SwitchModeActions.RemoveCallbacks(ISwitchModeActions)" />
+        /// <seealso cref="SwitchModeActions.UnregisterCallbacks(ISwitchModeActions)" />
+        public void SetCallbacks(ISwitchModeActions instance)
         {
-            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SwitchModeActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SwitchModeActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="UIActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SwitchModeActions" /> instance referencing this action map.
     /// </summary>
-    public UIActions @UI => new UIActions(this);
+    public SwitchModeActions @SwitchMode => new SwitchModeActions(this);
 
-    // SelectMouse
-    private readonly InputActionMap m_SelectMouse;
-    private List<ISelectMouseActions> m_SelectMouseActionsCallbackInterfaces = new List<ISelectMouseActions>();
-    private readonly InputAction m_SelectMouse_SwitchModeStart;
-    private readonly InputAction m_SelectMouse_SwitchModeEnd;
-    private readonly InputAction m_SelectMouse_MouseDelta;
+    // SwitchMouse
+    private readonly InputActionMap m_SwitchMouse;
+    private List<ISwitchMouseActions> m_SwitchMouseActionsCallbackInterfaces = new List<ISwitchMouseActions>();
+    private readonly InputAction m_SwitchMouse_SwitchModeStart;
+    private readonly InputAction m_SwitchMouse_SwitchModeEnd;
+    private readonly InputAction m_SwitchMouse_MouseDelta;
     /// <summary>
-    /// Provides access to input actions defined in input action map "SelectMouse".
+    /// Provides access to input actions defined in input action map "SwitchMouse".
     /// </summary>
-    public struct SelectMouseActions
+    public struct SwitchMouseActions
     {
         private @PlayerInput m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public SelectMouseActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public SwitchMouseActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "SelectMouse/SwitchModeStart".
+        /// Provides access to the underlying input action "SwitchMouse/SwitchModeStart".
         /// </summary>
-        public InputAction @SwitchModeStart => m_Wrapper.m_SelectMouse_SwitchModeStart;
+        public InputAction @SwitchModeStart => m_Wrapper.m_SwitchMouse_SwitchModeStart;
         /// <summary>
-        /// Provides access to the underlying input action "SelectMouse/SwitchModeEnd".
+        /// Provides access to the underlying input action "SwitchMouse/SwitchModeEnd".
         /// </summary>
-        public InputAction @SwitchModeEnd => m_Wrapper.m_SelectMouse_SwitchModeEnd;
+        public InputAction @SwitchModeEnd => m_Wrapper.m_SwitchMouse_SwitchModeEnd;
         /// <summary>
-        /// Provides access to the underlying input action "SelectMouse/MouseDelta".
+        /// Provides access to the underlying input action "SwitchMouse/MouseDelta".
         /// </summary>
-        public InputAction @MouseDelta => m_Wrapper.m_SelectMouse_MouseDelta;
+        public InputAction @MouseDelta => m_Wrapper.m_SwitchMouse_MouseDelta;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_SelectMouse; }
+        public InputActionMap Get() { return m_Wrapper.m_SwitchMouse; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -981,9 +917,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="SelectMouseActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="SwitchMouseActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(SelectMouseActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(SwitchMouseActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -991,11 +927,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="SelectMouseActions" />
-        public void AddCallbacks(ISelectMouseActions instance)
+        /// <seealso cref="SwitchMouseActions" />
+        public void AddCallbacks(ISwitchMouseActions instance)
         {
-            if (instance == null || m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Add(instance);
             @SwitchModeStart.started += instance.OnSwitchModeStart;
             @SwitchModeStart.performed += instance.OnSwitchModeStart;
             @SwitchModeStart.canceled += instance.OnSwitchModeStart;
@@ -1013,8 +949,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="SelectMouseActions" />
-        private void UnregisterCallbacks(ISelectMouseActions instance)
+        /// <seealso cref="SwitchMouseActions" />
+        private void UnregisterCallbacks(ISwitchMouseActions instance)
         {
             @SwitchModeStart.started -= instance.OnSwitchModeStart;
             @SwitchModeStart.performed -= instance.OnSwitchModeStart;
@@ -1028,12 +964,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SelectMouseActions.UnregisterCallbacks(ISelectMouseActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SwitchMouseActions.UnregisterCallbacks(ISwitchMouseActions)" />.
         /// </summary>
-        /// <seealso cref="SelectMouseActions.UnregisterCallbacks(ISelectMouseActions)" />
-        public void RemoveCallbacks(ISelectMouseActions instance)
+        /// <seealso cref="SwitchMouseActions.UnregisterCallbacks(ISwitchMouseActions)" />
+        public void RemoveCallbacks(ISwitchMouseActions instance)
         {
-            if (m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -1043,21 +979,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="SelectMouseActions.AddCallbacks(ISelectMouseActions)" />
-        /// <seealso cref="SelectMouseActions.RemoveCallbacks(ISelectMouseActions)" />
-        /// <seealso cref="SelectMouseActions.UnregisterCallbacks(ISelectMouseActions)" />
-        public void SetCallbacks(ISelectMouseActions instance)
+        /// <seealso cref="SwitchMouseActions.AddCallbacks(ISwitchMouseActions)" />
+        /// <seealso cref="SwitchMouseActions.RemoveCallbacks(ISwitchMouseActions)" />
+        /// <seealso cref="SwitchMouseActions.UnregisterCallbacks(ISwitchMouseActions)" />
+        public void SetCallbacks(ISwitchMouseActions instance)
         {
-            foreach (var item in m_Wrapper.m_SelectMouseActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_SwitchMouseActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_SwitchMouseActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="SelectMouseActions" /> instance referencing this action map.
+    /// Provides a new <see cref="SwitchMouseActions" /> instance referencing this action map.
     /// </summary>
-    public SelectMouseActions @SelectMouse => new SelectMouseActions(this);
+    public SwitchMouseActions @SwitchMouse => new SwitchMouseActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -1088,11 +1024,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnDash(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SwitchMode" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="UIActions.AddCallbacks(IUIActions)" />
-    /// <seealso cref="UIActions.RemoveCallbacks(IUIActions)" />
-    public interface IUIActions
+    /// <seealso cref="SwitchModeActions.AddCallbacks(ISwitchModeActions)" />
+    /// <seealso cref="SwitchModeActions.RemoveCallbacks(ISwitchModeActions)" />
+    public interface ISwitchModeActions
     {
         /// <summary>
         /// Method invoked when associated input action "SwitchModeStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
@@ -1122,27 +1058,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnQuickSwitch(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "SwitchModeCancel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSwitchModeCancel(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouseDelta(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SelectMouse" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SwitchMouse" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="SelectMouseActions.AddCallbacks(ISelectMouseActions)" />
-    /// <seealso cref="SelectMouseActions.RemoveCallbacks(ISelectMouseActions)" />
-    public interface ISelectMouseActions
+    /// <seealso cref="SwitchMouseActions.AddCallbacks(ISwitchMouseActions)" />
+    /// <seealso cref="SwitchMouseActions.RemoveCallbacks(ISwitchMouseActions)" />
+    public interface ISwitchMouseActions
     {
         /// <summary>
         /// Method invoked when associated input action "SwitchModeStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
