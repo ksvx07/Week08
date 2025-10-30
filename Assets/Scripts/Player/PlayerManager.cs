@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
     private Coroutine pannelActive;
 
     #region Mouse 
+    private bool isMouseSelectMode;
     private Vector2 mouseDeltaAccumulator; // 마우스 델타 값을 누적할 변수
     [SerializeField] private float mouseDeadZone = 20f;       // 마우스가 이 거리 이상 움직여야 인식
     [Tooltip("마우스 누적값의 최대 반경입니다.")]
@@ -83,18 +84,24 @@ public class PlayerManager : MonoBehaviour
 
     private void OnEnable()
     {
-        inputActions.SwitchMouse.Enable();
-        inputActions.SwitchMouse.SwitchModeStart.performed += OnSwitchTogglePerform;
-        inputActions.SwitchMouse.SwitchModeEnd.performed += OnSwitchModeEndPerform;
-        inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
+        if (isMouseSelectMode == true)
+        {
+            inputActions.SwitchMouse.Enable();
+            inputActions.SwitchMouse.SwitchModeStart.performed += OnSwitchTogglePerform;
+            inputActions.SwitchMouse.SwitchModeEnd.performed += OnSwitchModeEndPerform;
+            inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
+        }
     }
 
     private void OnDisable()
     {
-        inputActions.SwitchMouse.SwitchModeStart.performed -= OnSwitchTogglePerform;
-        inputActions.SwitchMouse.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
-        inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
-        inputActions.SwitchMouse.Disable();
+        if (isMouseSelectMode == true)
+        {
+            inputActions.SwitchMouse.SwitchModeStart.performed -= OnSwitchTogglePerform;
+            inputActions.SwitchMouse.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
+            inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
+            inputActions.SwitchMouse.Disable();
+        }
     }
     private void Update()
     {
@@ -106,123 +113,6 @@ public class PlayerManager : MonoBehaviour
 
     private bool changingShape = false;
 
-
-    private void OffNewSwitch(InputAction.CallbackContext context)
-    {
-        foreach (var control in context.action.controls)
-        {
-            if (control.name == "w" && control.IsPressed() && !wPressed)
-            {
-                selectShape = PlayerShape.Circle;
-                wPressed = true;
-            }
-            else if (control.name == "s" && control.IsPressed() && !sPressed)
-            {
-                selectShape = PlayerShape.Square;
-                sPressed = true;
-            }
-            else if (control.name == "a" && control.IsPressed() && !aPressed)
-            {
-                selectShape = PlayerShape.Triangle;
-                aPressed = true;
-            }
-            else if (control.name == "d" && control.IsPressed() && !dPressed)
-            {
-                selectShape = PlayerShape.Star;
-                dPressed = true;
-            }
-
-            if (control.name == "w" && !control.IsPressed())
-            {
-                wPressed = false;
-            }
-            if (control.name == "s" && !control.IsPressed())
-            {
-                sPressed = false;
-            }
-            if (control.name == "a" && !control.IsPressed())
-            {
-                aPressed = false;
-            }
-            if (control.name == "d" && !control.IsPressed())
-            {
-                dPressed = false;
-            }
-
-            if (control.IsPressed())
-            {
-                return;
-            }
-        }
-
-        if (!canChangeTimeScale) return;
-
-        if (changingShape)
-        {
-            changingShape = false;
-            ActiveSelectShape(CurrentShape, selectShape);
-            // 잠금된 도형이 아니면 로그 기록
-            if (ShapeUnlockSystem.IsUnlocked(selectShape) == true)
-            {
-                playerDataLog.OnPlayerQuickSwitch(selectShape); // Hack : 게임 Log 용
-            }
-            DeActiveSelectUI();
-        }
-    }
-
-    private bool wPressed = false;
-    private bool sPressed = false;
-    private bool aPressed = false;
-    private bool dPressed = false;
-
-    private void OnNewSwitch(InputAction.CallbackContext context)
-    {
-        changingShape = true;
-        OnSwithModeStart();
-
-        foreach (var control in context.action.controls)
-        {
-            if (control.name == "w" && control.IsPressed() && !wPressed)
-            {
-                selectShape = PlayerShape.Circle;
-                wPressed = true;
-            }
-            else if (control.name == "s" && control.IsPressed() && !sPressed)
-            {
-                selectShape = PlayerShape.Square;
-                sPressed = true;
-            }
-            else if (control.name == "a" && control.IsPressed() && !aPressed)
-            {
-                selectShape = PlayerShape.Triangle;
-                aPressed = true;
-            }
-            else if (control.name == "d" && control.IsPressed() && !dPressed)
-            {
-                selectShape = PlayerShape.Star;
-                dPressed = true;
-            }
-
-            if (control.name == "w" && !control.IsPressed())
-            {
-                wPressed = false;
-            }
-            if (control.name == "s" && !control.IsPressed())
-            {
-                sPressed = false;
-            }
-            if (control.name == "a" && !control.IsPressed())
-            {
-                aPressed = false;
-            }
-            if (control.name == "d" && !control.IsPressed())
-            {
-                dPressed = false;
-            }
-        }
-
-        HighLightSelectShape(selectShape);
-    }
 
     private void InitChangingShape()
     {
@@ -265,7 +155,6 @@ public class PlayerManager : MonoBehaviour
 
     public void OnSwithModeStart()
     {
-        Debug.Log("start");
         IsSelectMode = true;
         SlowTimeScale();
 
@@ -280,7 +169,6 @@ public class PlayerManager : MonoBehaviour
 
     private void OnSwitmModeEnd()
     {
-        Debug.Log("end");
         IsSelectMode = false;
         DeActiveSelectUI();
         ActiveSelectShape(CurrentShape, selectShape);
@@ -288,7 +176,6 @@ public class PlayerManager : MonoBehaviour
 
     private void OnSwitchModeCancel()
     {
-        Debug.Log(2);
         IsSelectMode = false;
         DeActiveSelectUI();
     }
@@ -322,6 +209,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     #endregion
+
     public void OnPlayerDead()
     {
         playerDataLog.PlayerDeadLog();
