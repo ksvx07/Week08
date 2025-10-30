@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 3104059573463282345}
   - component: {fileID: 1551941228560346063}
   m_Layer: 6
-  m_Name: Stage 3 Tilemap
+  m_Name: Stage 3 Tilemap 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
