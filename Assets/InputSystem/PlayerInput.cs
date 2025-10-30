@@ -135,7 +135,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""caa3bf3d-71bd-4d2a-9e4c-9b71fbd093a8"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -146,7 +146,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""15526cad-b5bf-4431-b2d1-0e37ac7f7f62"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -157,7 +157,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""c2e52a43-a87e-488c-8b0c-da6d1a51226f"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -168,7 +168,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""1675d0c9-a63d-4b47-92ce-cae11191114a"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -223,7 +223,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4b06ce23-eae0-4767-84e5-6bfc1de70d7b"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -249,9 +249,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""e142499f-d016-4315-a8c5-9a3f1230dd8c"",
             ""actions"": [
                 {
-                    ""name"": ""SelectMode"",
+                    ""name"": ""SwitchModeActive"",
                     ""type"": ""Button"",
                     ""id"": ""ec5f559a-98e6-436d-b349-67a679262710"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchModeEnd"",
+                    ""type"": ""Button"",
+                    ""id"": ""9573dbc9-320c-40ec-9595-f31b81928d0c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -280,11 +289,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ace45573-8401-4c92-bdc4-ae86b281bee6"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SelectMode"",
+                    ""action"": ""SwitchModeActive"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -295,7 +304,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SelectMode"",
+                    ""action"": ""SwitchModeActive"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4f60680-6244-45d8-9bef-40c7f652a749"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchModeEnd"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -443,7 +463,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_SelectMode = m_UI.FindAction("SelectMode", throwIfNotFound: true);
+        m_UI_SwitchModeActive = m_UI.FindAction("SwitchModeActive", throwIfNotFound: true);
+        m_UI_SwitchModeEnd = m_UI.FindAction("SwitchModeEnd", throwIfNotFound: true);
         m_UI_SelectPlayer = m_UI.FindAction("SelectPlayer", throwIfNotFound: true);
         m_UI_QuickSwitch = m_UI.FindAction("QuickSwitch", throwIfNotFound: true);
     }
@@ -645,7 +666,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_SelectMode;
+    private readonly InputAction m_UI_SwitchModeActive;
+    private readonly InputAction m_UI_SwitchModeEnd;
     private readonly InputAction m_UI_SelectPlayer;
     private readonly InputAction m_UI_QuickSwitch;
     /// <summary>
@@ -660,9 +682,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "UI/SelectMode".
+        /// Provides access to the underlying input action "UI/SwitchModeActive".
         /// </summary>
-        public InputAction @SelectMode => m_Wrapper.m_UI_SelectMode;
+        public InputAction @SwitchModeActive => m_Wrapper.m_UI_SwitchModeActive;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/SwitchModeEnd".
+        /// </summary>
+        public InputAction @SwitchModeEnd => m_Wrapper.m_UI_SwitchModeEnd;
         /// <summary>
         /// Provides access to the underlying input action "UI/SelectPlayer".
         /// </summary>
@@ -697,9 +723,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @SelectMode.started += instance.OnSelectMode;
-            @SelectMode.performed += instance.OnSelectMode;
-            @SelectMode.canceled += instance.OnSelectMode;
+            @SwitchModeActive.started += instance.OnSwitchModeActive;
+            @SwitchModeActive.performed += instance.OnSwitchModeActive;
+            @SwitchModeActive.canceled += instance.OnSwitchModeActive;
+            @SwitchModeEnd.started += instance.OnSwitchModeEnd;
+            @SwitchModeEnd.performed += instance.OnSwitchModeEnd;
+            @SwitchModeEnd.canceled += instance.OnSwitchModeEnd;
             @SelectPlayer.started += instance.OnSelectPlayer;
             @SelectPlayer.performed += instance.OnSelectPlayer;
             @SelectPlayer.canceled += instance.OnSelectPlayer;
@@ -717,9 +746,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UIActions" />
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @SelectMode.started -= instance.OnSelectMode;
-            @SelectMode.performed -= instance.OnSelectMode;
-            @SelectMode.canceled -= instance.OnSelectMode;
+            @SwitchModeActive.started -= instance.OnSwitchModeActive;
+            @SwitchModeActive.performed -= instance.OnSwitchModeActive;
+            @SwitchModeActive.canceled -= instance.OnSwitchModeActive;
+            @SwitchModeEnd.started -= instance.OnSwitchModeEnd;
+            @SwitchModeEnd.performed -= instance.OnSwitchModeEnd;
+            @SwitchModeEnd.canceled -= instance.OnSwitchModeEnd;
             @SelectPlayer.started -= instance.OnSelectPlayer;
             @SelectPlayer.performed -= instance.OnSelectPlayer;
             @SelectPlayer.canceled -= instance.OnSelectPlayer;
@@ -796,12 +828,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         /// <summary>
-        /// Method invoked when associated input action "SelectMode" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SwitchModeActive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectMode(InputAction.CallbackContext context);
+        void OnSwitchModeActive(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchModeEnd" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchModeEnd(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SelectPlayer" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

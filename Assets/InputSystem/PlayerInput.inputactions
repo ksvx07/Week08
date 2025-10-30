@@ -49,7 +49,7 @@
                 {
                     "name": "up",
                     "id": "caa3bf3d-71bd-4d2a-9e4c-9b71fbd093a8",
-                    "path": "<Keyboard>/upArrow",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -60,7 +60,7 @@
                 {
                     "name": "down",
                     "id": "15526cad-b5bf-4431-b2d1-0e37ac7f7f62",
-                    "path": "<Keyboard>/downArrow",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -71,7 +71,7 @@
                 {
                     "name": "left",
                     "id": "c2e52a43-a87e-488c-8b0c-da6d1a51226f",
-                    "path": "<Keyboard>/leftArrow",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -82,7 +82,7 @@
                 {
                     "name": "right",
                     "id": "1675d0c9-a63d-4b47-92ce-cae11191114a",
-                    "path": "<Keyboard>/rightArrow",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -137,7 +137,7 @@
                 {
                     "name": "",
                     "id": "4b06ce23-eae0-4767-84e5-6bfc1de70d7b",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -163,9 +163,18 @@
             "id": "e142499f-d016-4315-a8c5-9a3f1230dd8c",
             "actions": [
                 {
-                    "name": "SelectMode",
+                    "name": "SwitchModeActive",
                     "type": "Button",
                     "id": "ec5f559a-98e6-436d-b349-67a679262710",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchModeEnd",
+                    "type": "Button",
+                    "id": "9573dbc9-320c-40ec-9595-f31b81928d0c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -194,11 +203,11 @@
                 {
                     "name": "",
                     "id": "ace45573-8401-4c92-bdc4-ae86b281bee6",
-                    "path": "<Keyboard>/q",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SelectMode",
+                    "action": "SwitchModeActive",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -209,7 +218,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SelectMode",
+                    "action": "SwitchModeActive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d4f60680-6244-45d8-9bef-40c7f652a749",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchModeEnd",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

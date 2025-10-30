@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -40,6 +41,11 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float transformTimeScale = 0.02f;
     private Coroutine pannelActive;
 
+    #region Mouse 
+    private Vector2 mouseStartPosition; // 우클릭을 시작한 마우스 위치
+    [SerializeField] private float mouseDeadZone = 50f;       // 마우스가 이 거리 이상 움직여야 인식
+    #endregion
+
     #region 게임 로그용
     PlayerDataLog playerDataLog;
     #endregion
@@ -68,26 +74,33 @@ public class PlayerManager : MonoBehaviour
         playerDataLog.PlayerLogStart(startShape); // Log 데이터 수집 시작
         ActiveStartPlayer(startShape);
         InitChangingShape();
+
+        // 시스템 마우스 커서 숨기기
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnEnable()
     {
         inputActions.UI.Enable();
-        inputActions.UI.QuickSwitch.performed += OnNewSwitch;
-        inputActions.UI.QuickSwitch.canceled += OffNewSwitch;
+        inputActions.UI.SwitchModeActive.performed += OnSwitchModeClicked;
+        inputActions.UI.SwitchModeEnd.performed += OnSwitchModeEnd;
     }
 
     private void OnDisable()
     {
-        inputActions.UI.QuickSwitch.performed -= OnNewSwitch;
-        inputActions.UI.QuickSwitch.canceled -= OffNewSwitch;
+        inputActions.UI.SwitchModeActive.performed -= OnSwitchModeClicked;
+        inputActions.UI.SwitchModeEnd.performed -= OnSwitchModeEnd;
         inputActions.UI.Disable();
     }
-
+    private void Update()
+    {
+        ToOriginalTimeScale();
+        UpdateMouseSelection();
+    }
 
     #region InputAction 콜백 함수
 
-    private Vector2 prevInputVector;
     private bool changingShape = false;
 
 
@@ -138,7 +151,9 @@ public class PlayerManager : MonoBehaviour
                 return;
             }
         }
+
         if (!canChangeTimeScale) return;
+
         if (changingShape)
         {
             changingShape = false;
@@ -212,7 +227,49 @@ public class PlayerManager : MonoBehaviour
     private void InitChangingShape()
     {
         changingShape = false;
-        prevInputVector = Vector2.zero;
+    }
+
+    #endregion
+
+    #region Mouse
+    private void OnSwitchModeClicked(InputAction.CallbackContext context)
+    {
+        OnSwithModeStart();
+    }
+
+    private void OnSwitchModeEnd(InputAction.CallbackContext context)
+    {
+        if (isSelectUIActive == false) return;
+        
+        DeActiveSelectUI();
+        ActiveSelectShape(CurrentShape, selectShape);
+    }
+
+    private void UpdateMouseSelection()
+    {
+        if (isSelectUIActive == false) return;
+
+        Vector2 mouseOffset = (Vector2)Input.mousePosition - mouseStartPosition;
+
+        // 마우스가 deadZone보다 적게 움직였으면 아무것도 선택하지 않음
+        if (mouseOffset.magnitude < mouseDeadZone)
+        {
+            return;
+        }
+
+        PlayerShape mouseSelecteShape = CurrentShape;
+        float angle = Vector2.SignedAngle(Vector2.up, mouseOffset);
+
+        // 각도를 기반으로 상하좌우 결정
+        if (angle > -45 && angle <= 45) mouseSelecteShape = PlayerShape.Circle; // 상
+        else if (angle > 135 || angle <= -135) mouseSelecteShape = PlayerShape.Square; // 하
+        else if (angle > 45 && angle <= 135) mouseSelecteShape = PlayerShape.Triangle; // 좌
+        else if (angle > -135 && angle <= -45) mouseSelecteShape = PlayerShape.Star; ; // 우
+
+        Debug.Log($"선택된 모양: {mouseSelecteShape.ToString()}, 각도: {angle}");
+
+        selectShape = mouseSelecteShape;
+        HighLightSelectShape(selectShape);
     }
 
     #endregion
@@ -336,12 +393,18 @@ public class PlayerManager : MonoBehaviour
         CurrentShape = newShape;
     }
 
-
     #region Switch Mode UI 함수
     private void AcitveSelectUI()
     {
         if (!StageManager.Instance.unlockAll)
             return;
+
+        // 시스템 마우스 커서 숨기기
+        Cursor.visible = false;
+
+        // 현재 마우스 위치를 시작점으로 저장
+        mouseStartPosition = Input.mousePosition;
+
         HighLightSelectShape(selectShape);
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(_currentPlayerPrefab.transform.position);
         selectPlayerPanel.GetComponent<RectTransform>().position = screenPosition;
@@ -398,12 +461,6 @@ public class PlayerManager : MonoBehaviour
         IsTimeSlow = false;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
-    }
-
-    private void Update()
-    {
-        ToOriginalTimeScale();
-        // ScaleDownOverTime();
     }
 
     private void ToOriginalTimeScale()

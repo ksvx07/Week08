@@ -31738,6 +31738,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1318149768}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
+      propertyPath: mouseDeadZone
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: selectPlayerPanel
       value: 
       objectReference: {fileID: 2888391955349680281}
