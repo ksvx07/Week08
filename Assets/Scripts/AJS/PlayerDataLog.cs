@@ -90,10 +90,19 @@ public class PlayerDataLog : MonoBehaviour
                 currentStageLog.stageTotalStats.shapeDetails[currentShape].playTime += deltaTime;
                 currentStageLog.stageTotalStats.totalPlayTime += deltaTime;
             }
+            else
+            {
+                Debug.Log("현재 스테이지 로그가 설정되지 않았습니다.");
+            }
             if (currentCheckpointLog != null)
             {
                 currentCheckpointLog.shapeDetails[currentShape].playTime += deltaTime;
                 currentCheckpointLog.totalPlayTime += deltaTime;
+            }
+            else
+            {
+                Debug.Log("현재 스테이지 로그가 설정되지 않았습니다.");
+
             }
         }
 
@@ -135,7 +144,7 @@ public class PlayerDataLog : MonoBehaviour
             allStageLogs[stageId] = new StageLogData(stageId);
         }
         currentStageLog = allStageLogs[stageId];
-        currentCheckpointLog = null; // 스테이지가 바뀌면 현재 체크포인트는 리셋
+        // currentCheckpointLog = null; // 스테이지가 바뀌면 현재 체크포인트는 리셋
         GameLog.Info($"스테이지 [{stageId}] 진입");
     }
 
