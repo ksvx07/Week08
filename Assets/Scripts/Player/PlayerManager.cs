@@ -403,7 +403,7 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         ToOriginalTimeScale();
-        ScaleDownOverTime();
+        // ScaleDownOverTime();
     }
 
     private void ToOriginalTimeScale()
@@ -426,7 +426,7 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator ScaleOverTime()
     {
         selectPlayerPanel.SetActive(true);
-        // selectPlayerPanel.transform.localScale = Vector3.zero;
+        selectPlayerPanel.transform.localScale = Vector3.zero;
 
         Vector3 initialScale = selectPlayerPanel.transform.localScale;
         float elapsedTime = 0f;
