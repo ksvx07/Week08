@@ -292,6 +292,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""7b19f47a-e464-4ef0-86a4-f5b0a6b9006c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -470,6 +479,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchModeCancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0d8762b5-4a1f-466e-a7c3-c1591b6ae761"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -488,6 +508,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI_SelectPlayer = m_UI.FindAction("SelectPlayer", throwIfNotFound: true);
         m_UI_QuickSwitch = m_UI.FindAction("QuickSwitch", throwIfNotFound: true);
         m_UI_SwitchModeCancel = m_UI.FindAction("SwitchModeCancel", throwIfNotFound: true);
+        m_UI_MouseDelta = m_UI.FindAction("MouseDelta", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -692,6 +713,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_SelectPlayer;
     private readonly InputAction m_UI_QuickSwitch;
     private readonly InputAction m_UI_SwitchModeCancel;
+    private readonly InputAction m_UI_MouseDelta;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -723,6 +745,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/SwitchModeCancel".
         /// </summary>
         public InputAction @SwitchModeCancel => m_Wrapper.m_UI_SwitchModeCancel;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/MouseDelta".
+        /// </summary>
+        public InputAction @MouseDelta => m_Wrapper.m_UI_MouseDelta;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -764,6 +790,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SwitchModeCancel.started += instance.OnSwitchModeCancel;
             @SwitchModeCancel.performed += instance.OnSwitchModeCancel;
             @SwitchModeCancel.canceled += instance.OnSwitchModeCancel;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -790,6 +819,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SwitchModeCancel.started -= instance.OnSwitchModeCancel;
             @SwitchModeCancel.performed -= instance.OnSwitchModeCancel;
             @SwitchModeCancel.canceled -= instance.OnSwitchModeCancel;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
         }
 
         /// <summary>
@@ -894,5 +926,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSwitchModeCancel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseDelta(InputAction.CallbackContext context);
     }
 }

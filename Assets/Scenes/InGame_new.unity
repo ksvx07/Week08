@@ -29934,9 +29934,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d745e5190d54e842acf55a32340739d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableFileLogging: 1
+  enableFileLogging: 0
   minimumLogLevel: 0
-  setFileName: 1
+  setFileName: 0
   logFileName: "\uC9C4\uC131 \uC2A4\uD53C\uB4DC\uB7F0 2"
 --- !u!1001 &1692636310
 PrefabInstance:
@@ -31739,12 +31739,16 @@ PrefabInstance:
       objectReference: {fileID: 1318149768}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: mouseDeadZone
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: selectPlayerPanel
       value: 
       objectReference: {fileID: 2888391955349680281}
+    - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
+      propertyPath: maxMouseDragDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: 'shapes.Array.data[0]'
       value: 
@@ -31777,6 +31781,10 @@ PrefabInstance:
       propertyPath: 'pannels.Array.data[3]'
       value: 
       objectReference: {fileID: 3316286845769201726}
+    - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
+      propertyPath: maxAccumulatedMouseDistance
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 7826722241867851921, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: m_Name
       value: PlayerManager

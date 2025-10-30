@@ -43,8 +43,10 @@ public class PlayerManager : MonoBehaviour
     private Coroutine pannelActive;
 
     #region Mouse 
-    private Vector2 mouseStartPosition; // 우클릭을 시작한 마우스 위치
-    [SerializeField] private float mouseDeadZone = 50f;       // 마우스가 이 거리 이상 움직여야 인식
+    private Vector2 mouseDeltaAccumulator; // 마우스 델타 값을 누적할 변수
+    [SerializeField] private float mouseDeadZone = 20f;       // 마우스가 이 거리 이상 움직여야 인식
+    [Tooltip("마우스 누적값의 최대 반경입니다.")]
+    [SerializeField] private float maxAccumulatedMouseDistance = 100f; //
     #endregion
 
     #region 게임 로그용
@@ -86,12 +88,14 @@ public class PlayerManager : MonoBehaviour
         inputActions.UI.Enable();
         inputActions.UI.SwitchModeStart.performed += OnSwitchTogglePerform;
         inputActions.UI.SwitchModeEnd.performed += OnSwitchModeEndPerform;
+        inputActions.UI.MouseDelta.performed += OnMouseDelta;
     }
 
     private void OnDisable()
     {
         inputActions.UI.SwitchModeStart.performed -= OnSwitchTogglePerform;
         inputActions.UI.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
+        inputActions.UI.MouseDelta.performed -= OnMouseDelta;
         inputActions.UI.Disable();
     }
     private void Update()
@@ -251,12 +255,24 @@ public class PlayerManager : MonoBehaviour
         OnSwitmModeEnd();
     }
 
+    private void OnMouseDelta(InputAction.CallbackContext context)
+    {
+        // 선택 모드일 때만 델타 값을 누적합니다.
+        if (IsSelectMode)
+        {
+            mouseDeltaAccumulator += context.ReadValue<Vector2>();
+            mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
+        }
+    }
 
     public void OnSwithModeStart()
     {
         Debug.Log("start");
         IsSelectMode = true;
         SlowTimeScale();
+
+        // 누적 변수를 0으로 초기화
+        mouseDeltaAccumulator = Vector2.zero;
 
         if (!isSelectUIActive)
         {
@@ -284,7 +300,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (isSelectUIActive == false) return;
 
-        Vector2 mouseOffset = (Vector2)Input.mousePosition - mouseStartPosition;
+        Vector2 mouseOffset = mouseDeltaAccumulator;
 
         // 마우스가 deadZone보다 적게 움직였으면 아무것도 선택하지 않음
         if (mouseOffset.magnitude < mouseDeadZone)
@@ -293,7 +309,7 @@ public class PlayerManager : MonoBehaviour
         }
 
         PlayerShape mouseSelecteShape = CurrentShape;
-        float angle = Vector2.SignedAngle(Vector2.up, mouseOffset);
+        float angle = Vector2.SignedAngle(Vector2.up, mouseOffset.normalized);
 
         // 각도를 기반으로 상하좌우 결정
         if (angle > -45 && angle <= 45) mouseSelecteShape = PlayerShape.Circle; // 상
@@ -402,13 +418,6 @@ public class PlayerManager : MonoBehaviour
     {
         if (!StageManager.Instance.unlockAll)
             return;
-
-        // 시스템 마우스 커서 숨기기
-        Cursor.visible = false;
-
-        // 현재 마우스 위치를 시작점으로 저장
-        mouseStartPosition = Input.mousePosition;
-
         HighLightSelectShape(selectShape);
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(_currentPlayerPrefab.transform.position);
         selectPlayerPanel.GetComponent<RectTransform>().position = screenPosition;
