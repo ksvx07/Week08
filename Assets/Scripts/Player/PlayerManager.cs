@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -40,6 +41,16 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float transformTimeScale = 0.02f;
     private Coroutine pannelActive;
 
+    #region Mouse 
+    [Header("마우스 조작키")]
+    [SerializeField]
+    private bool isMouseSelectMode;
+    private Vector2 mouseDeltaAccumulator; // 마우스 델타 값을 누적할 변수
+    [SerializeField] private float mouseDeadZone = 20f;       // 마우스가 이 거리 이상 움직여야 인식
+    [Tooltip("마우스 누적값의 최대 반경입니다.")]
+    [SerializeField] private float maxAccumulatedMouseDistance = 100f; //
+    #endregion
+
     #region 게임 로그용
     PlayerDataLog playerDataLog;
     #endregion
@@ -68,185 +79,215 @@ public class PlayerManager : MonoBehaviour
         playerDataLog.PlayerLogStart(startShape); // Log 데이터 수집 시작
         ActiveStartPlayer(startShape);
         InitChangingShape();
+
+        // 시스템 마우스 커서 숨기기
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void OnEnable()
     {
-        inputActions.UI.Enable();
-        inputActions.UI.QuickSwitch.performed += OnNewSwitch;
-        inputActions.UI.QuickSwitch.canceled += OffNewSwitch;
+        if (isMouseSelectMode == true)
+        {
+            inputActions.SwitchMouse.Enable();
+            inputActions.SwitchMouse.SwitchModeStart.performed += OnMouseSwitchTogglePerform;
+            inputActions.SwitchMouse.SwitchModeEnd.performed += OnMouseSwitchModeEndPerform;
+            inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
+        }
+        else
+        {
+            inputActions.SwitchMode.Enable();
+            inputActions.SwitchMode.SwitchModeStart.performed += OnSwitchTogglePerform;
+
+            inputActions.SwitchMode.SelectCircle.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Circle);
+            inputActions.SwitchMode.SelectSquare.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Square);
+            inputActions.SwitchMode.SelectTriangle.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Triangle);
+            inputActions.SwitchMode.SelectStar.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Star);
+        }
     }
 
     private void OnDisable()
     {
-        inputActions.UI.QuickSwitch.performed -= OnNewSwitch;
-        inputActions.UI.QuickSwitch.canceled -= OffNewSwitch;
-        inputActions.UI.Disable();
-    }
+        if (isMouseSelectMode == true)
+        {
+            inputActions.SwitchMouse.SwitchModeStart.performed -= OnMouseSwitchTogglePerform;
+            inputActions.SwitchMouse.SwitchModeEnd.performed -= OnMouseSwitchModeEndPerform;
+            inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
+            inputActions.SwitchMouse.Disable();
+        }
+        else
+        {
+            inputActions.SwitchMode.SwitchModeStart.performed -= OnSwitchTogglePerform;
 
+            inputActions.SwitchMode.SelectCircle.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Circle);
+            inputActions.SwitchMode.SelectSquare.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Square);
+            inputActions.SwitchMode.SelectTriangle.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Triangle);
+            inputActions.SwitchMode.SelectStar.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Star);
+
+            inputActions.SwitchMode.Disable();
+        }
+    }
+    private void Update()
+    {
+        ToOriginalTimeScale();
+        if (isMouseSelectMode == true)
+        {
+            UpdateMouseSelection();
+        }
+    }
 
     #region InputAction 콜백 함수
 
-    private Vector2 prevInputVector;
     private bool changingShape = false;
-
-
-    private void OffNewSwitch(InputAction.CallbackContext context)
-    {
-        foreach (var control in context.action.controls)
-        {
-            if (control.name == "w" && control.IsPressed() && !wPressed)
-            {
-                selectShape = PlayerShape.Circle;
-                wPressed = true;
-            }
-            else if (control.name == "s" && control.IsPressed() && !sPressed)
-            {
-                selectShape = PlayerShape.Square;
-                sPressed = true;
-            }
-            else if (control.name == "a" && control.IsPressed() && !aPressed)
-            {
-                selectShape = PlayerShape.Triangle;
-                aPressed = true;
-            }
-            else if (control.name == "d" && control.IsPressed() && !dPressed)
-            {
-                selectShape = PlayerShape.Star;
-                dPressed = true;
-            }
-
-            if (control.name == "w" && !control.IsPressed())
-            {
-                wPressed = false;
-            }
-            if (control.name == "s" && !control.IsPressed())
-            {
-                sPressed = false;
-            }
-            if (control.name == "a" && !control.IsPressed())
-            {
-                aPressed = false;
-            }
-            if (control.name == "d" && !control.IsPressed())
-            {
-                dPressed = false;
-            }
-
-            if (control.IsPressed())
-            {
-                return;
-            }
-        }
-        if (!canChangeTimeScale) return;
-        if (changingShape)
-        {
-            changingShape = false;
-            ActiveSelectShape(CurrentShape, selectShape);
-            // 잠금된 도형이 아니면 로그 기록
-            if (ShapeUnlockSystem.IsUnlocked(selectShape) == true)
-            {
-                playerDataLog.OnPlayerQuickSwitch(selectShape); // Hack : 게임 Log 용
-            }
-            DeActiveSelectUI();
-        }
-    }
-
-    private bool wPressed = false;
-    private bool sPressed = false;
-    private bool aPressed = false;
-    private bool dPressed = false;
-
-    private void OnNewSwitch(InputAction.CallbackContext context)
-    {
-        changingShape = true;
-        OnSwithModeStart();
-
-        foreach (var control in context.action.controls)
-        {
-            if (control.name == "w" && control.IsPressed() && !wPressed)
-            {
-                selectShape = PlayerShape.Circle;
-                wPressed = true;
-            }
-            else if (control.name == "s" && control.IsPressed() && !sPressed)
-            {
-                selectShape = PlayerShape.Square;
-                sPressed = true;
-            }
-            else if (control.name == "a" && control.IsPressed() && !aPressed)
-            {
-                selectShape = PlayerShape.Triangle;
-                aPressed = true;
-            }
-            else if (control.name == "d" && control.IsPressed() && !dPressed)
-            {
-                selectShape = PlayerShape.Star;
-                dPressed = true;
-            }
-
-            if (control.name == "w" && !control.IsPressed())
-            {
-                wPressed = false;
-            }
-            if (control.name == "s" && !control.IsPressed())
-            {
-                sPressed = false;
-            }
-            if (control.name == "a" && !control.IsPressed())
-            {
-                aPressed = false;
-            }
-            if (control.name == "d" && !control.IsPressed())
-            {
-                dPressed = false;
-            }
-        }
-
-        HighLightSelectShape(selectShape);
-    }
-
-
 
 
     private void InitChangingShape()
     {
         changingShape = false;
-        prevInputVector = Vector2.zero;
     }
-
     #endregion
 
-    public void OnSwithModeStart()
+    #region SelectMode Input Action
+    private void OnSwitchTogglePerform(InputAction.CallbackContext context)
     {
+        // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
+        if (IsSelectMode == false)
+        {
+            OnSwithModeStart();
+        }
+        // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
+        else
+        {
+            OnSwitchModeEnd();
+        }
+    }
+
+    private void SelectShapeOnSwithcMode(PlayerShape newShape)
+    {
+        if (IsSelectMode == false) return;
+
+        switch (newShape)
+        {
+            case PlayerShape.Circle: selectShape = PlayerShape.Circle; break;
+            case PlayerShape.Triangle: selectShape = PlayerShape.Triangle; break;
+            case PlayerShape.Star: selectShape = PlayerShape.Star; break;
+            case PlayerShape.Square: selectShape = PlayerShape.Square; break;
+        }
+        selectShape = newShape;
+        HighLightSelectShape(selectShape);
+    }
+
+    private void OnSwithModeStart()
+    {
+        IsSelectMode = true;
         SlowTimeScale();
 
         if (!isSelectUIActive)
         {
-            // IsHold = true;
             AcitveSelectUI();
         }
     }
 
-    // public void OnSwitchModeEnd()
-    // {
-    //     if (isSelectUIActive)
-    //     {
-    //         DeActiveSelectUI();
-    //         ActiveSelectShape(CurrentShape, selectShape);
+    private void OnSwitchModeEnd()
+    {
+        IsSelectMode = false;
+        DeActiveSelectUI();
+        ActiveSelectShape(CurrentShape, selectShape);
+    }
 
-    //         // 잠금된 도형이 아니면 로그 기록
-    //         if (ShapeUnlockSystem.IsUnlocked(selectShape) == true)
-    //         {
-    //             playerDataLog.OnPlayerModeSwitch(selectShape); // Hack : 게임 Log 용
-    //         }
-    //     }
-    // }
+    #endregion
+
+    #region Mouse Select Mode
+    private void OnMouseSwitchTogglePerform(InputAction.CallbackContext context)
+    {
+        // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
+        if (IsSelectMode == false)
+        {
+            OnMouseSwithModeStart();
+        }
+        // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
+        else
+        {
+            OnMouseSwitchModeCancel();
+        }
+    }
+
+    private void OnMouseSwitchModeEndPerform(InputAction.CallbackContext context)
+    {
+        if (IsSelectMode == false) return;
+
+        OnMouseSwitchModeEnd();
+    }
+
+    private void OnMouseDelta(InputAction.CallbackContext context)
+    {
+        // 선택 모드일 때만 델타 값을 누적합니다.
+        if (IsSelectMode)
+        {
+            mouseDeltaAccumulator += context.ReadValue<Vector2>();
+            mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
+        }
+    }
+
+    private void OnMouseSwithModeStart()
+    {
+        IsSelectMode = true;
+        SlowTimeScale();
+
+        // 누적 변수를 0으로 초기화
+        mouseDeltaAccumulator = Vector2.zero;
+
+        if (!isSelectUIActive)
+        {
+            AcitveSelectUI();
+        }
+    }
+
+    private void OnMouseSwitchModeEnd()
+    {
+        IsSelectMode = false;
+        DeActiveSelectUI();
+        ActiveSelectShape(CurrentShape, selectShape);
+    }
+
+    private void OnMouseSwitchModeCancel()
+    {
+        IsSelectMode = false;
+        DeActiveSelectUI();
+    }
+
+
+    private void UpdateMouseSelection()
+    {
+        if (isSelectUIActive == false) return;
+
+        Vector2 mouseOffset = mouseDeltaAccumulator;
+
+        // 마우스가 deadZone보다 적게 움직였으면 아무것도 선택하지 않음
+        if (mouseOffset.magnitude < mouseDeadZone)
+        {
+            return;
+        }
+
+        PlayerShape mouseSelecteShape = CurrentShape;
+        float angle = Vector2.SignedAngle(Vector2.up, mouseOffset.normalized);
+
+        // 각도를 기반으로 상하좌우 결정
+        if (angle > -45 && angle <= 45) mouseSelecteShape = PlayerShape.Circle; // 상
+        else if (angle > 135 || angle <= -135) mouseSelecteShape = PlayerShape.Square; // 하
+        else if (angle > 45 && angle <= 135) mouseSelecteShape = PlayerShape.Triangle; // 좌
+        else if (angle > -135 && angle <= -45) mouseSelecteShape = PlayerShape.Star; ; // 우
+
+        Debug.Log($"선택된 모양: {mouseSelecteShape.ToString()}, 각도: {angle}");
+
+        selectShape = mouseSelecteShape;
+        HighLightSelectShape(selectShape);
+    }
+
+    #endregion
 
     public void OnPlayerDead()
     {
-
-
         playerDataLog.PlayerDeadLog();
         if (isSelectUIActive)
         {
@@ -277,8 +318,6 @@ public class PlayerManager : MonoBehaviour
     // 새 모양으로 변신하기
     private void ActiveSelectShape(PlayerShape oldShape, PlayerShape newShape)
     {
-        OriginalTimeScale();
-
         // 잠금된 도형으로 변경 불가능
         if (ShapeUnlockSystem.IsUnlocked(newShape) == false)
         {
@@ -338,7 +377,6 @@ public class PlayerManager : MonoBehaviour
         CurrentShape = newShape;
     }
 
-
     #region Switch Mode UI 함수
     private void AcitveSelectUI()
     {
@@ -359,6 +397,8 @@ public class PlayerManager : MonoBehaviour
 
     private void DeActiveSelectUI()
     {
+        OriginalTimeScale();
+
         if (pannelActive != null)
         {
             ScaleDownOverTime();
@@ -400,12 +440,6 @@ public class PlayerManager : MonoBehaviour
         IsTimeSlow = false;
         Time.timeScale = 1f;
         Time.fixedDeltaTime = 0.02f * Time.timeScale;
-    }
-
-    private void Update()
-    {
-        ToOriginalTimeScale();
-        // ScaleDownOverTime();
     }
 
     private void ToOriginalTimeScale()

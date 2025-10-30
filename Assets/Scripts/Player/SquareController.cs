@@ -138,12 +138,13 @@ public class SquareController : MonoBehaviour, IPlayerController
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        if (PlayerManager.Instance.IsHold) return;
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         moveInput = ctx.ReadValue<Vector2>();
     }
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         jumpBufferCounter = jumpBufferTime;
         isFastFalling = false;
     }
@@ -155,6 +156,7 @@ public class SquareController : MonoBehaviour, IPlayerController
 
     private void OnDash(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         Dash();
     }
 
