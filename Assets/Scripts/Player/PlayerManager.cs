@@ -293,12 +293,13 @@ public class PlayerManager : MonoBehaviour
         Transform lastPos = oldPlayerPrefab.transform;
         Vector2 lastVelocity = oldPlayerPrefab.GetComponent<Rigidbody2D>().linearVelocity;
         int lastDashCount = oldPlayerPrefab.GetComponent<IPlayerController>().dashCount;
+        bool facingRight = oldPlayerPrefab.transform.localScale.x > 0;
         oldPlayerPrefab.SetActive(false);
 
         _currentPlayerPrefab = shapes[(int)newShape];
         _currentPlayerPrefab.transform.position = lastPos.position;
         _currentPlayerPrefab.SetActive(true);
-        _currentPlayerPrefab.GetComponent<IPlayerController>().OnEnableSetVelocity(lastVelocity.x, lastVelocity.y, lastDashCount);
+        _currentPlayerPrefab.GetComponent<IPlayerController>().OnEnableSetVelocity(lastVelocity.x, lastVelocity.y, lastDashCount, facingRight);
 
         CurrentShape = selectShape;
         InitChangingShape();
@@ -326,12 +327,13 @@ public class PlayerManager : MonoBehaviour
         Transform lastPos = oldPlayerPrefab.transform;
         Vector2 lastVelocity = oldPlayerPrefab.GetComponent<Rigidbody2D>().linearVelocity;
         int lastDashCount = oldPlayerPrefab.GetComponent<IPlayerController>().dashCount;
+        bool facingRight = oldPlayerPrefab.transform.localScale.x > 0;
         oldPlayerPrefab.SetActive(false);
 
         _currentPlayerPrefab = shapes[(int)newShape];
         _currentPlayerPrefab.transform.position = lastPos.position;
         _currentPlayerPrefab.SetActive(true);
-        _currentPlayerPrefab.GetComponent<IPlayerController>().OnEnableSetVelocity(lastVelocity.x, lastVelocity.y, lastDashCount);
+        _currentPlayerPrefab.GetComponent<IPlayerController>().OnEnableSetVelocity(lastVelocity.x, lastVelocity.y, lastDashCount, facingRight);
 
         CurrentShape = newShape;
     }

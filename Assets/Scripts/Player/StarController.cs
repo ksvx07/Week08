@@ -43,6 +43,7 @@ public class StarController : MonoBehaviour, IPlayerController
     [SerializeField] private float wallClimbDisableTime = 0.2f; // 점프 후 벽 등반 비활성화 시간
     // [SerializeField] private float starNormalMaxSpeed = 8f;
 
+    private Vector3 originalScale;
 
     [SerializeField] private GameObject abilityOnObject;
     [SerializeField] private GameObject abilityOffObject;
@@ -73,6 +74,7 @@ public class StarController : MonoBehaviour, IPlayerController
         rb = GetComponent<Rigidbody2D>();
         currentGravity = jumpDcceleration;
         wallLayer = LayerMask.GetMask("Ground");
+        originalScale = transform.localScale;
 
         hitWalls = new RaycastHit2D[rayCount];
         rayDirs = new Vector2[rayCount];
@@ -329,6 +331,7 @@ public class StarController : MonoBehaviour, IPlayerController
     //         rb.linearVelocity = new Vector2(newX, rb.linearVelocity.y);
     //     }
     // }
+    private int facingDirection = 1;
 
     private void StarMove()
     {
@@ -341,6 +344,19 @@ public class StarController : MonoBehaviour, IPlayerController
             decel *= airDecelMulti;
             turnAccel *= airAccelMulti;
         }
+        if (moveInput.x > 0)
+        {
+            facingDirection = 1;
+            transform.localScale = originalScale;
+        }
+        else if (moveInput.x < 0)
+        {
+            facingDirection = -1;
+            Vector3 flippedScale = originalScale;
+            flippedScale.x = -originalScale.x;
+            transform.localScale = flippedScale;
+        }
+
         if (moveInput.x != 0)
         {
             if (Mathf.Sign(rb.linearVelocity.x) == Mathf.Sign(moveInput.x))
@@ -542,5 +558,17 @@ public class StarController : MonoBehaviour, IPlayerController
         rb.gravityScale = 0f; // �߷��� ���� ó��
 
         rb.linearVelocity = new Vector2(newVelX, newVelY);
+        if (facingRight)
+        {
+            facingDirection = 1;
+            transform.localScale = originalScale;
+        }
+        else
+        {
+            facingDirection = -1;
+            Vector3 flippedScale = originalScale;
+            flippedScale.x = -originalScale.x;
+            transform.localScale = flippedScale;
+        }
     }
 }
