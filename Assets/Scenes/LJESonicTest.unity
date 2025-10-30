@@ -6084,6 +6084,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6477948969865331379}
     m_Modifications:
+    - target: {fileID: 550420012694630757, guid: f820d91a78f64f145bcfffef78841070, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 90.5
+      objectReference: {fileID: 0}
     - target: {fileID: 583206826164738521, guid: f820d91a78f64f145bcfffef78841070, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6128,12 +6132,24 @@ PrefabInstance:
       propertyPath: m_Creator
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3490949741156903432, guid: f820d91a78f64f145bcfffef78841070, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 90.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7705799146447950222, guid: f820d91a78f64f145bcfffef78841070, type: 3}
       propertyPath: m_Name
       value: LJEStage
       objectReference: {fileID: 0}
+    - target: {fileID: 8896289064998346478, guid: f820d91a78f64f145bcfffef78841070, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 84.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3865217986301252547, guid: f820d91a78f64f145bcfffef78841070, type: 3}
+    - {fileID: 2862971934976258215, guid: f820d91a78f64f145bcfffef78841070, type: 3}
+    - {fileID: 4030071976620526465, guid: f820d91a78f64f145bcfffef78841070, type: 3}
+    - {fileID: 508574072916872210, guid: f820d91a78f64f145bcfffef78841070, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f820d91a78f64f145bcfffef78841070, type: 3}
