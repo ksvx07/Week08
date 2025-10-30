@@ -124,6 +124,8 @@ public class StarController : MonoBehaviour, IPlayerController
 
     private void OnDash(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
+
         if (abilityOnObject.activeSelf)
         {
             // isActiveAbility = false;

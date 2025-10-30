@@ -223,7 +223,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4b06ce23-eae0-4767-84e5-6bfc1de70d7b"",
-                    ""path"": ""<Keyboard>/leftShift"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -249,7 +249,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ""id"": ""e142499f-d016-4315-a8c5-9a3f1230dd8c"",
             ""actions"": [
                 {
-                    ""name"": ""SwitchModeActive"",
+                    ""name"": ""SwitchModeStart"",
                     ""type"": ""Button"",
                     ""id"": ""ec5f559a-98e6-436d-b349-67a679262710"",
                     ""expectedControlType"": """",
@@ -283,6 +283,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""SwitchModeCancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""71eaa4c2-cc6b-4492-9f8c-27032fa2e392"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -293,7 +302,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchModeActive"",
+                    ""action"": ""SwitchModeStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -304,7 +313,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwitchModeActive"",
+                    ""action"": ""SwitchModeStart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -450,6 +459,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""QuickSwitch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3a869629-f1af-4955-9c28-fe5c6f3ce92a"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchModeCancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -463,10 +483,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_SwitchModeActive = m_UI.FindAction("SwitchModeActive", throwIfNotFound: true);
+        m_UI_SwitchModeStart = m_UI.FindAction("SwitchModeStart", throwIfNotFound: true);
         m_UI_SwitchModeEnd = m_UI.FindAction("SwitchModeEnd", throwIfNotFound: true);
         m_UI_SelectPlayer = m_UI.FindAction("SelectPlayer", throwIfNotFound: true);
         m_UI_QuickSwitch = m_UI.FindAction("QuickSwitch", throwIfNotFound: true);
+        m_UI_SwitchModeCancel = m_UI.FindAction("SwitchModeCancel", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -666,10 +687,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
-    private readonly InputAction m_UI_SwitchModeActive;
+    private readonly InputAction m_UI_SwitchModeStart;
     private readonly InputAction m_UI_SwitchModeEnd;
     private readonly InputAction m_UI_SelectPlayer;
     private readonly InputAction m_UI_QuickSwitch;
+    private readonly InputAction m_UI_SwitchModeCancel;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -682,9 +704,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public UIActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "UI/SwitchModeActive".
+        /// Provides access to the underlying input action "UI/SwitchModeStart".
         /// </summary>
-        public InputAction @SwitchModeActive => m_Wrapper.m_UI_SwitchModeActive;
+        public InputAction @SwitchModeStart => m_Wrapper.m_UI_SwitchModeStart;
         /// <summary>
         /// Provides access to the underlying input action "UI/SwitchModeEnd".
         /// </summary>
@@ -697,6 +719,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/QuickSwitch".
         /// </summary>
         public InputAction @QuickSwitch => m_Wrapper.m_UI_QuickSwitch;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/SwitchModeCancel".
+        /// </summary>
+        public InputAction @SwitchModeCancel => m_Wrapper.m_UI_SwitchModeCancel;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -723,9 +749,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
-            @SwitchModeActive.started += instance.OnSwitchModeActive;
-            @SwitchModeActive.performed += instance.OnSwitchModeActive;
-            @SwitchModeActive.canceled += instance.OnSwitchModeActive;
+            @SwitchModeStart.started += instance.OnSwitchModeStart;
+            @SwitchModeStart.performed += instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled += instance.OnSwitchModeStart;
             @SwitchModeEnd.started += instance.OnSwitchModeEnd;
             @SwitchModeEnd.performed += instance.OnSwitchModeEnd;
             @SwitchModeEnd.canceled += instance.OnSwitchModeEnd;
@@ -735,6 +761,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @QuickSwitch.started += instance.OnQuickSwitch;
             @QuickSwitch.performed += instance.OnQuickSwitch;
             @QuickSwitch.canceled += instance.OnQuickSwitch;
+            @SwitchModeCancel.started += instance.OnSwitchModeCancel;
+            @SwitchModeCancel.performed += instance.OnSwitchModeCancel;
+            @SwitchModeCancel.canceled += instance.OnSwitchModeCancel;
         }
 
         /// <summary>
@@ -746,9 +775,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UIActions" />
         private void UnregisterCallbacks(IUIActions instance)
         {
-            @SwitchModeActive.started -= instance.OnSwitchModeActive;
-            @SwitchModeActive.performed -= instance.OnSwitchModeActive;
-            @SwitchModeActive.canceled -= instance.OnSwitchModeActive;
+            @SwitchModeStart.started -= instance.OnSwitchModeStart;
+            @SwitchModeStart.performed -= instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled -= instance.OnSwitchModeStart;
             @SwitchModeEnd.started -= instance.OnSwitchModeEnd;
             @SwitchModeEnd.performed -= instance.OnSwitchModeEnd;
             @SwitchModeEnd.canceled -= instance.OnSwitchModeEnd;
@@ -758,6 +787,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @QuickSwitch.started -= instance.OnQuickSwitch;
             @QuickSwitch.performed -= instance.OnQuickSwitch;
             @QuickSwitch.canceled -= instance.OnQuickSwitch;
+            @SwitchModeCancel.started -= instance.OnSwitchModeCancel;
+            @SwitchModeCancel.performed -= instance.OnSwitchModeCancel;
+            @SwitchModeCancel.canceled -= instance.OnSwitchModeCancel;
         }
 
         /// <summary>
@@ -828,12 +860,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         /// <summary>
-        /// Method invoked when associated input action "SwitchModeActive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SwitchModeStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSwitchModeActive(InputAction.CallbackContext context);
+        void OnSwitchModeStart(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SwitchModeEnd" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -855,5 +887,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnQuickSwitch(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchModeCancel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchModeCancel(InputAction.CallbackContext context);
     }
 }

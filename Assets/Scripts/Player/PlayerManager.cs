@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -83,14 +84,14 @@ public class PlayerManager : MonoBehaviour
     private void OnEnable()
     {
         inputActions.UI.Enable();
-        inputActions.UI.SwitchModeActive.performed += OnSwitchModeClicked;
-        inputActions.UI.SwitchModeEnd.performed += OnSwitchModeEnd;
+        inputActions.UI.SwitchModeStart.performed += OnSwitchTogglePerform;
+        inputActions.UI.SwitchModeEnd.performed += OnSwitchModeEndPerform;
     }
 
     private void OnDisable()
     {
-        inputActions.UI.SwitchModeActive.performed -= OnSwitchModeClicked;
-        inputActions.UI.SwitchModeEnd.performed -= OnSwitchModeEnd;
+        inputActions.UI.SwitchModeStart.performed -= OnSwitchTogglePerform;
+        inputActions.UI.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
         inputActions.UI.Disable();
     }
     private void Update()
@@ -221,9 +222,6 @@ public class PlayerManager : MonoBehaviour
         HighLightSelectShape(selectShape);
     }
 
-
-
-
     private void InitChangingShape()
     {
         changingShape = false;
@@ -232,18 +230,55 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region Mouse
-    private void OnSwitchModeClicked(InputAction.CallbackContext context)
+    private void OnSwitchTogglePerform(InputAction.CallbackContext context)
     {
-        OnSwithModeStart();
+        // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
+        if (IsSelectMode == false)
+        {
+            OnSwithModeStart();
+        }
+        // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
+        else
+        {
+            OnSwitchModeCancel();
+        }
     }
 
-    private void OnSwitchModeEnd(InputAction.CallbackContext context)
+    private void OnSwitchModeEndPerform(InputAction.CallbackContext context)
     {
-        if (isSelectUIActive == false) return;
-        
+        if (IsSelectMode == false) return;
+
+        OnSwitmModeEnd();
+    }
+
+
+    public void OnSwithModeStart()
+    {
+        Debug.Log("start");
+        IsSelectMode = true;
+        SlowTimeScale();
+
+        if (!isSelectUIActive)
+        {
+            AcitveSelectUI();
+        }
+    }
+
+    private void OnSwitmModeEnd()
+    {
+        Debug.Log("end");
+        IsSelectMode = false;
         DeActiveSelectUI();
         ActiveSelectShape(CurrentShape, selectShape);
     }
+
+    private void OnSwitchModeCancel()
+    {
+        Debug.Log(2);
+        IsSelectMode = false;
+        DeActiveSelectUI();
+    }
+
 
     private void UpdateMouseSelection()
     {
@@ -273,37 +308,8 @@ public class PlayerManager : MonoBehaviour
     }
 
     #endregion
-
-    public void OnSwithModeStart()
-    {
-        SlowTimeScale();
-
-        if (!isSelectUIActive)
-        {
-            // IsHold = true;
-            AcitveSelectUI();
-        }
-    }
-
-    // public void OnSwitchModeEnd()
-    // {
-    //     if (isSelectUIActive)
-    //     {
-    //         DeActiveSelectUI();
-    //         ActiveSelectShape(CurrentShape, selectShape);
-
-    //         // 잠금된 도형이 아니면 로그 기록
-    //         if (ShapeUnlockSystem.IsUnlocked(selectShape) == true)
-    //         {
-    //             playerDataLog.OnPlayerModeSwitch(selectShape); // Hack : 게임 Log 용
-    //         }
-    //     }
-    // }
-
     public void OnPlayerDead()
     {
-
-
         playerDataLog.PlayerDeadLog();
         if (isSelectUIActive)
         {
@@ -334,8 +340,6 @@ public class PlayerManager : MonoBehaviour
     // 새 모양으로 변신하기
     private void ActiveSelectShape(PlayerShape oldShape, PlayerShape newShape)
     {
-        OriginalTimeScale();
-
         // 잠금된 도형으로 변경 불가능
         if (ShapeUnlockSystem.IsUnlocked(newShape) == false)
         {
@@ -420,6 +424,8 @@ public class PlayerManager : MonoBehaviour
 
     private void DeActiveSelectUI()
     {
+        OriginalTimeScale();
+
         if (pannelActive != null)
         {
             ScaleDownOverTime();

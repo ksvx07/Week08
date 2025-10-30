@@ -183,6 +183,8 @@ public class NewTriangle : MonoBehaviour, IPlayerController
 
     private void OnSwing(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
+
         if (!toggleSwing)
         {
             if (isSwinging)

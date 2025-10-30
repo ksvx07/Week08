@@ -54,6 +54,7 @@ public class KirbyInput : MonoBehaviour
     }
     void OnTurboClicked(InputAction.CallbackContext context)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         _playerMove.OnTurboModePressed();
     }
     void OnMoveInput(InputAction.CallbackContext context)

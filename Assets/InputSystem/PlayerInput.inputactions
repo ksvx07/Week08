@@ -137,7 +137,7 @@
                 {
                     "name": "",
                     "id": "4b06ce23-eae0-4767-84e5-6bfc1de70d7b",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -163,7 +163,7 @@
             "id": "e142499f-d016-4315-a8c5-9a3f1230dd8c",
             "actions": [
                 {
-                    "name": "SwitchModeActive",
+                    "name": "SwitchModeStart",
                     "type": "Button",
                     "id": "ec5f559a-98e6-436d-b349-67a679262710",
                     "expectedControlType": "",
@@ -197,6 +197,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "SwitchModeCancel",
+                    "type": "Button",
+                    "id": "71eaa4c2-cc6b-4492-9f8c-27032fa2e392",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -207,7 +216,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchModeActive",
+                    "action": "SwitchModeStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -218,7 +227,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchModeActive",
+                    "action": "SwitchModeStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -364,6 +373,17 @@
                     "action": "QuickSwitch",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3a869629-f1af-4955-9c28-fe5c6f3ce92a",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchModeCancel",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
