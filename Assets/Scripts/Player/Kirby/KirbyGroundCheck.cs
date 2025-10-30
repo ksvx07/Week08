@@ -5,13 +5,13 @@ public class KirbyGroundCheck : MonoBehaviour
     private bool onGround;
 
     [Header("Collider Settings")]
-    [SerializeField][Tooltip("¶¥ Ã¼Å©ÇÒ Raycast ±æÀÌ")] private float groundLength = 0.95f;
-    [SerializeField][Tooltip("¶¥ Ã¼Å©ÇÒ µÎ RaycastÀÇ °Å¸®")] private Vector3 colliderOffset;
+    [SerializeField][Tooltip("Raycast ê¸¸ì´")] private float groundLength = 0.95f;
+    [SerializeField][Tooltip("Raycast ì˜¤í”„ì…‹")] private Vector3 colliderOffset;
     [Header("Layer Masks")]
-    [SerializeField][Tooltip("¶¥ ÆÇÁ¤ Layer")] private LayerMask groundLayer;
+    [SerializeField][Tooltip("ë°”ë‹¥ Layer")] private LayerMask groundLayer;
     private void Update()
     {
-        // 2°³ÀÇ RayCaste¸¦ ¹ß»çÇØ, Player°¡ ¶¥ À§¿¡ ÀÖ´ÂÁö ÆÄ¾ÇÇÏ±â
+        
         onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
     }
     private void OnDrawGizmos()
@@ -22,6 +22,6 @@ public class KirbyGroundCheck : MonoBehaviour
         Gizmos.DrawLine(transform.position - colliderOffset, transform.position - colliderOffset + Vector3.down * groundLength);
     }
 
-    // ¹Ù´Ú ¿©ºÎ, º¸³¾ °ø°³ ÇÔ¼ö
+    // ë°”ë‹¥ ì—¬ë¶€, ì™¸ë¶€ì—ì„œ ì ‘ê·¼ ê°€ëŠ¥í•œ í•¨ìˆ˜
     public bool GetOnGround() { return onGround; }
 }
