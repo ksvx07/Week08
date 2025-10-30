@@ -134,7 +134,7 @@ public class GameLog : MonoBehaviour
             string fileName;
             if (setFileName && !string.IsNullOrEmpty(logFileName))
             {
-                fileName = $"{logFileName}_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt";
+                fileName = $"{logFileName}_{DateTime.Now:yyyy-MM-dd_HH:mm:ss}.txt";
             }
             else
             {
@@ -142,7 +142,7 @@ public class GameLog : MonoBehaviour
                 {
                     Debug.LogWarning("로그 파일 이름이 없어 기본 이름으로 생성됩니다.");
                 }
-                fileName = $"GameLog_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.txt";
+                fileName = $"GameLog_{DateTime.Now:yyyy-MM-dd_HH:mm:ss}.txt";
             }
 
             logFilePath = Path.Combine(logDir, fileName);
