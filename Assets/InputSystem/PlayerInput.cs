@@ -135,10 +135,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""up"",
                     ""id"": ""caa3bf3d-71bd-4d2a-9e4c-9b71fbd093a8"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";ArrowKey"",
+                    ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -146,10 +146,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""down"",
                     ""id"": ""15526cad-b5bf-4431-b2d1-0e37ac7f7f62"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";ArrowKey"",
+                    ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -157,10 +157,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""left"",
                     ""id"": ""c2e52a43-a87e-488c-8b0c-da6d1a51226f"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";ArrowKey"",
+                    ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -168,65 +168,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""right"",
                     ""id"": ""1675d0c9-a63d-4b47-92ce-cae11191114a"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";ArrowKey"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""WASD"",
-                    ""id"": ""099d8250-fc74-4fa9-9a5e-31fe4ffd539f"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""bd020402-60be-4a43-81e6-a9f9a734a87f"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";WASD"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""79dc71e8-86be-44fc-b769-d6776012ff8e"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";WASD"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""9bcfe4e5-d4b7-4f59-b7dd-7dfd8b470b70"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";WASD"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""4e200196-19cb-4248-a1bd-79a77a3ef503"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";WASD"",
+                    ""groups"": """",
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -255,7 +200,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bce9f5ac-ee56-4d0d-888a-b25108b5e980"",
+                    ""id"": ""c2e6674d-ceac-4477-a158-e2f166c81fef"",
                     ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -282,7 +227,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""SelectCircle"",
                     ""type"": ""Button"",
-                    ""id"": ""ce765a4a-d77e-4953-b14c-2e2001baa638"",
+                    ""id"": ""6ab261b8-5b0a-4174-b9be-b84208dd85ac"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -291,16 +236,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""SelectTriangle"",
                     ""type"": ""Button"",
-                    ""id"": ""428f4344-3ec7-4371-ab55-0319745fff14"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""SelectSquare"",
-                    ""type"": ""Button"",
-                    ""id"": ""f193828e-6fc7-4f05-9b58-b0c7a6ba43c6"",
+                    ""id"": ""35edaca5-0bdc-4d33-a44f-f3d31bb105af"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -309,7 +245,16 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""SelectStar"",
                     ""type"": ""Button"",
-                    ""id"": ""8d5a66fa-71dc-438d-ac9f-163324e7ff2c"",
+                    ""id"": ""62a768fe-b2ab-4b8a-8c66-66e6e29ea27a"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SelectSquare"",
+                    ""type"": ""Button"",
+                    ""id"": ""539faab6-dd23-412b-92fe-0a28ccfc15e2"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -330,7 +275,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""fcc48477-afbd-4270-9be9-f2d777813c7e"",
+                    ""id"": ""2f0e4606-0d39-4ba2-ae19-91b1d4a43b16"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -341,7 +286,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1326aebc-358c-4f70-a407-573caf519232"",
+                    ""id"": ""1797d653-d680-40dc-8af1-bf15a581b24a"",
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -352,23 +297,23 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""04a483d5-e23d-4480-aea3-60af81a68328"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""SelectSquare"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""361c9087-664e-493b-92e2-764ab4233619"",
+                    ""id"": ""36f837d3-6066-47a1-af36-9cc223f0336b"",
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SelectStar"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae54379a-e77f-409a-adfe-a19bb3e0f899"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectSquare"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -443,30 +388,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": [
-        {
-            ""name"": ""WASD"",
-            ""bindingGroup"": ""WASD"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Keyboard>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""ArrowKey"",
-            ""bindingGroup"": ""ArrowKey"",
-            ""devices"": [
-                {
-                    ""devicePath"": ""<Keyboard>"",
-                    ""isOptional"": false,
-                    ""isOR"": false
-                }
-            ]
-        }
-    ]
+    ""controlSchemes"": []
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
@@ -478,8 +400,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_SwitchMode_SwitchModeStart = m_SwitchMode.FindAction("SwitchModeStart", throwIfNotFound: true);
         m_SwitchMode_SelectCircle = m_SwitchMode.FindAction("SelectCircle", throwIfNotFound: true);
         m_SwitchMode_SelectTriangle = m_SwitchMode.FindAction("SelectTriangle", throwIfNotFound: true);
-        m_SwitchMode_SelectSquare = m_SwitchMode.FindAction("SelectSquare", throwIfNotFound: true);
         m_SwitchMode_SelectStar = m_SwitchMode.FindAction("SelectStar", throwIfNotFound: true);
+        m_SwitchMode_SelectSquare = m_SwitchMode.FindAction("SelectSquare", throwIfNotFound: true);
         // SwitchMouse
         m_SwitchMouse = asset.FindActionMap("SwitchMouse", throwIfNotFound: true);
         m_SwitchMouse_SwitchModeStart = m_SwitchMouse.FindAction("SwitchModeStart", throwIfNotFound: true);
@@ -688,8 +610,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_SwitchMode_SwitchModeStart;
     private readonly InputAction m_SwitchMode_SelectCircle;
     private readonly InputAction m_SwitchMode_SelectTriangle;
-    private readonly InputAction m_SwitchMode_SelectSquare;
     private readonly InputAction m_SwitchMode_SelectStar;
+    private readonly InputAction m_SwitchMode_SelectSquare;
     /// <summary>
     /// Provides access to input actions defined in input action map "SwitchMode".
     /// </summary>
@@ -714,13 +636,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @SelectTriangle => m_Wrapper.m_SwitchMode_SelectTriangle;
         /// <summary>
-        /// Provides access to the underlying input action "SwitchMode/SelectSquare".
-        /// </summary>
-        public InputAction @SelectSquare => m_Wrapper.m_SwitchMode_SelectSquare;
-        /// <summary>
         /// Provides access to the underlying input action "SwitchMode/SelectStar".
         /// </summary>
         public InputAction @SelectStar => m_Wrapper.m_SwitchMode_SelectStar;
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMode/SelectSquare".
+        /// </summary>
+        public InputAction @SelectSquare => m_Wrapper.m_SwitchMode_SelectSquare;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -756,12 +678,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SelectTriangle.started += instance.OnSelectTriangle;
             @SelectTriangle.performed += instance.OnSelectTriangle;
             @SelectTriangle.canceled += instance.OnSelectTriangle;
-            @SelectSquare.started += instance.OnSelectSquare;
-            @SelectSquare.performed += instance.OnSelectSquare;
-            @SelectSquare.canceled += instance.OnSelectSquare;
             @SelectStar.started += instance.OnSelectStar;
             @SelectStar.performed += instance.OnSelectStar;
             @SelectStar.canceled += instance.OnSelectStar;
+            @SelectSquare.started += instance.OnSelectSquare;
+            @SelectSquare.performed += instance.OnSelectSquare;
+            @SelectSquare.canceled += instance.OnSelectSquare;
         }
 
         /// <summary>
@@ -782,12 +704,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @SelectTriangle.started -= instance.OnSelectTriangle;
             @SelectTriangle.performed -= instance.OnSelectTriangle;
             @SelectTriangle.canceled -= instance.OnSelectTriangle;
-            @SelectSquare.started -= instance.OnSelectSquare;
-            @SelectSquare.performed -= instance.OnSelectSquare;
-            @SelectSquare.canceled -= instance.OnSelectSquare;
             @SelectStar.started -= instance.OnSelectStar;
             @SelectStar.performed -= instance.OnSelectStar;
             @SelectStar.canceled -= instance.OnSelectStar;
+            @SelectSquare.started -= instance.OnSelectSquare;
+            @SelectSquare.performed -= instance.OnSelectSquare;
+            @SelectSquare.canceled -= instance.OnSelectSquare;
         }
 
         /// <summary>
@@ -939,32 +861,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="SwitchMouseActions" /> instance referencing this action map.
     /// </summary>
     public SwitchMouseActions @SwitchMouse => new SwitchMouseActions(this);
-    private int m_WASDSchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme WASDScheme
-    {
-        get
-        {
-            if (m_WASDSchemeIndex == -1) m_WASDSchemeIndex = asset.FindControlSchemeIndex("WASD");
-            return asset.controlSchemes[m_WASDSchemeIndex];
-        }
-    }
-    private int m_ArrowKeySchemeIndex = -1;
-    /// <summary>
-    /// Provides access to the input control scheme.
-    /// </summary>
-    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
-    public InputControlScheme ArrowKeyScheme
-    {
-        get
-        {
-            if (m_ArrowKeySchemeIndex == -1) m_ArrowKeySchemeIndex = asset.FindControlSchemeIndex("ArrowKey");
-            return asset.controlSchemes[m_ArrowKeySchemeIndex];
-        }
-    }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -1023,19 +919,19 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelectTriangle(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "SelectSquare" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSelectSquare(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "SelectStar" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSelectStar(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SelectSquare" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelectSquare(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SwitchMouse" which allows adding and removing callbacks.
