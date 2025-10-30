@@ -31739,7 +31739,7 @@ PrefabInstance:
       objectReference: {fileID: 1318149768}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: mouseDeadZone
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: selectPlayerPanel
@@ -31783,7 +31783,7 @@ PrefabInstance:
       objectReference: {fileID: 3316286845769201726}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: maxAccumulatedMouseDistance
-      value: 150
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7826722241867851921, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: m_Name
@@ -32406,6 +32406,10 @@ PrefabInstance:
       propertyPath: playerDataLog
       value: 
       objectReference: {fileID: 1073592792}
+    - target: {fileID: 7186000537919112133, guid: 26fb14a1aedbc894a87698ada2ef42fc, type: 3}
+      propertyPath: toggleSwing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7186000537919112133, guid: 26fb14a1aedbc894a87698ada2ef42fc, type: 3}
       propertyPath: playerDataLog
       value: 

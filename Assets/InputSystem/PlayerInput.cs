@@ -492,6 +492,85 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SelectMouse"",
+            ""id"": ""f4299fd9-a1d8-49bd-b72f-412f1cc3c27b"",
+            ""actions"": [
+                {
+                    ""name"": ""SwitchModeStart"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ce82029-21e0-42ea-917c-8b174cc1059d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchModeEnd"",
+                    ""type"": ""Button"",
+                    ""id"": ""a14b24db-33fc-406a-b3ed-2fe2686ff4f6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MouseDelta"",
+                    ""type"": ""Value"",
+                    ""id"": ""b6f1289f-d360-482f-8bf6-f850973ab283"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3ca72cd6-61bf-41b3-994b-90a75ce79a72"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchModeStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7779194-71d9-4ecc-8c33-da751d8900e9"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchModeStart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e491515c-2ba4-430c-a73f-6e1c4aba0910"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchModeEnd"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c6d65335-f2e9-468f-a1b0-0a789d125d36"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseDelta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -509,12 +588,18 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_UI_QuickSwitch = m_UI.FindAction("QuickSwitch", throwIfNotFound: true);
         m_UI_SwitchModeCancel = m_UI.FindAction("SwitchModeCancel", throwIfNotFound: true);
         m_UI_MouseDelta = m_UI.FindAction("MouseDelta", throwIfNotFound: true);
+        // SelectMouse
+        m_SelectMouse = asset.FindActionMap("SelectMouse", throwIfNotFound: true);
+        m_SelectMouse_SwitchModeStart = m_SelectMouse.FindAction("SwitchModeStart", throwIfNotFound: true);
+        m_SelectMouse_SwitchModeEnd = m_SelectMouse.FindAction("SwitchModeEnd", throwIfNotFound: true);
+        m_SelectMouse_MouseDelta = m_SelectMouse.FindAction("MouseDelta", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_SelectMouse.enabled, "This will cause a leak and performance issues, PlayerInput.SelectMouse.Disable() has not been called.");
     }
 
     /// <summary>
@@ -855,6 +940,124 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // SelectMouse
+    private readonly InputActionMap m_SelectMouse;
+    private List<ISelectMouseActions> m_SelectMouseActionsCallbackInterfaces = new List<ISelectMouseActions>();
+    private readonly InputAction m_SelectMouse_SwitchModeStart;
+    private readonly InputAction m_SelectMouse_SwitchModeEnd;
+    private readonly InputAction m_SelectMouse_MouseDelta;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "SelectMouse".
+    /// </summary>
+    public struct SelectMouseActions
+    {
+        private @PlayerInput m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public SelectMouseActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "SelectMouse/SwitchModeStart".
+        /// </summary>
+        public InputAction @SwitchModeStart => m_Wrapper.m_SelectMouse_SwitchModeStart;
+        /// <summary>
+        /// Provides access to the underlying input action "SelectMouse/SwitchModeEnd".
+        /// </summary>
+        public InputAction @SwitchModeEnd => m_Wrapper.m_SelectMouse_SwitchModeEnd;
+        /// <summary>
+        /// Provides access to the underlying input action "SelectMouse/MouseDelta".
+        /// </summary>
+        public InputAction @MouseDelta => m_Wrapper.m_SelectMouse_MouseDelta;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_SelectMouse; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="SelectMouseActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(SelectMouseActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="SelectMouseActions" />
+        public void AddCallbacks(ISelectMouseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Add(instance);
+            @SwitchModeStart.started += instance.OnSwitchModeStart;
+            @SwitchModeStart.performed += instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled += instance.OnSwitchModeStart;
+            @SwitchModeEnd.started += instance.OnSwitchModeEnd;
+            @SwitchModeEnd.performed += instance.OnSwitchModeEnd;
+            @SwitchModeEnd.canceled += instance.OnSwitchModeEnd;
+            @MouseDelta.started += instance.OnMouseDelta;
+            @MouseDelta.performed += instance.OnMouseDelta;
+            @MouseDelta.canceled += instance.OnMouseDelta;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="SelectMouseActions" />
+        private void UnregisterCallbacks(ISelectMouseActions instance)
+        {
+            @SwitchModeStart.started -= instance.OnSwitchModeStart;
+            @SwitchModeStart.performed -= instance.OnSwitchModeStart;
+            @SwitchModeStart.canceled -= instance.OnSwitchModeStart;
+            @SwitchModeEnd.started -= instance.OnSwitchModeEnd;
+            @SwitchModeEnd.performed -= instance.OnSwitchModeEnd;
+            @SwitchModeEnd.canceled -= instance.OnSwitchModeEnd;
+            @MouseDelta.started -= instance.OnMouseDelta;
+            @MouseDelta.performed -= instance.OnMouseDelta;
+            @MouseDelta.canceled -= instance.OnMouseDelta;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SelectMouseActions.UnregisterCallbacks(ISelectMouseActions)" />.
+        /// </summary>
+        /// <seealso cref="SelectMouseActions.UnregisterCallbacks(ISelectMouseActions)" />
+        public void RemoveCallbacks(ISelectMouseActions instance)
+        {
+            if (m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="SelectMouseActions.AddCallbacks(ISelectMouseActions)" />
+        /// <seealso cref="SelectMouseActions.RemoveCallbacks(ISelectMouseActions)" />
+        /// <seealso cref="SelectMouseActions.UnregisterCallbacks(ISelectMouseActions)" />
+        public void SetCallbacks(ISelectMouseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SelectMouseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SelectMouseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="SelectMouseActions" /> instance referencing this action map.
+    /// </summary>
+    public SelectMouseActions @SelectMouse => new SelectMouseActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -926,6 +1129,35 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSwitchModeCancel(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMouseDelta(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "SelectMouse" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="SelectMouseActions.AddCallbacks(ISelectMouseActions)" />
+    /// <seealso cref="SelectMouseActions.RemoveCallbacks(ISelectMouseActions)" />
+    public interface ISelectMouseActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "SwitchModeStart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchModeStart(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SwitchModeEnd" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSwitchModeEnd(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "MouseDelta" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

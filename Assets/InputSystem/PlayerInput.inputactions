@@ -406,6 +406,85 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SelectMouse",
+            "id": "f4299fd9-a1d8-49bd-b72f-412f1cc3c27b",
+            "actions": [
+                {
+                    "name": "SwitchModeStart",
+                    "type": "Button",
+                    "id": "6ce82029-21e0-42ea-917c-8b174cc1059d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchModeEnd",
+                    "type": "Button",
+                    "id": "a14b24db-33fc-406a-b3ed-2fe2686ff4f6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MouseDelta",
+                    "type": "Value",
+                    "id": "b6f1289f-d360-482f-8bf6-f850973ab283",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3ca72cd6-61bf-41b3-994b-90a75ce79a72",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchModeStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7779194-71d9-4ecc-8c33-da751d8900e9",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchModeStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e491515c-2ba4-430c-a73f-6e1c4aba0910",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchModeEnd",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c6d65335-f2e9-468f-a1b0-0a789d125d36",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MouseDelta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
