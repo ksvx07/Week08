@@ -313,12 +313,13 @@ public class KirbyController : MonoBehaviour, IPlayerController
     public int dashCount { get; set; }
 
     // 플레이어 상태 전환 시 속도 설정
-    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount)
+    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
         _rb = GetComponent<Rigidbody2D>();
         _groundCheck = GetComponent<KirbyGroundCheck>();
         _rb.linearVelocity = new Vector2(newVelX, newVelY);
         dashCount = currentDashCount;
+        transform.localScale = new Vector3(facingRight ? 1 : -1, 1, 1);
     }
     #endregion
 }
