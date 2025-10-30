@@ -526,7 +526,7 @@ public class StarController : MonoBehaviour, IPlayerController
 
     private int maxDashCount = 1;
     public int dashCount { get; set; }
-    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount)
+    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
         col = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
