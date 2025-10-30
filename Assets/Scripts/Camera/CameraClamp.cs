@@ -28,29 +28,60 @@ public class CameraClamp : MonoBehaviour
         float camHeight = cam.orthographicSize;
         float camWidth = camHeight * cam.aspect;
 
-        // 카메라 중심이 맵 경계를 벗어나지 않도록 제한
+        float mapWidth = _maxX - _minX;
+        float mapHeight = _maxY - _minY;
+
+        // 맵이 카메라보다 작은 경우, 중앙 고정
+        if (mapWidth <= camWidth * 2f && mapHeight <= camHeight * 2f)
+        {
+            float centerX = (_minX + _maxX) / 2f;
+            float centerY = (_minY + _maxY) / 2f;
+            return new Vector3(centerX, centerY, desiredPos.z);
+        }
+
+        // 가로만 작거나 세로만 작은 경우
+        if (mapWidth <= camWidth * 2f)
+            desiredPos.x = (_minX + _maxX) / 2f;
+        if (mapHeight <= camHeight * 2f)
+            desiredPos.y = (_minY + _maxY) / 2f;
+
+        // 일반적인 Clamp 동작
         float clampX = Mathf.Clamp(desiredPos.x, _minX + camWidth, _maxX - camWidth);
         float clampY = Mathf.Clamp(desiredPos.y, _minY + camHeight, _maxY - camHeight);
 
         return new Vector3(clampX, clampY, desiredPos.z);
     }
 
+
     public void SetMapBounds(StageScriptableObject stageData)
     {
-        // stage Data 에 있는 값 가져오기
         _targetMinX = stageData.minX;
         _targetMaxX = stageData.maxX;
         _targetMinY = stageData.minY;
         _targetMaxY = stageData.maxY;
 
+        float mapWidth = _targetMaxX - _targetMinX;
+        float mapHeight = _targetMaxY - _targetMinY;
 
-        var mapBoundsWidth = _targetMaxX - _targetMinX;
-        float camWidth = cam.orthographicSize * 2 * cam.aspect;
+        float aspect = cam.aspect;
 
-        var zoom = mapBoundsWidth < camWidth ? _targetZoom : _initialZoom;
+        // 현재 카메라 폭과 높이 계산
+        float currentCamHeight = cam.orthographicSize * 2f;
+        float currentCamWidth = currentCamHeight * aspect;
 
-        cam.GetComponent<CameraController>().TriggerZoom(zoom);
+        // 맵보다 카메라가 크면, 줄이기 (즉, 줌 인)
+        float sizeByWidth = (mapWidth / 2f) / aspect;
+        float sizeByHeight = mapHeight / 2f;
+        float targetSize = Mathf.Min(sizeByWidth, sizeByHeight);
+
+        // 너무 작게 줄어드는 걸 방지 (최소 줌 제한)
+        float minZoomLimit = 3f;
+        targetSize = Mathf.Max(targetSize, minZoomLimit);
+
+        cam.GetComponent<CameraController>().TriggerZoom(targetSize);
     }
+
+
 
     public List<float> GetMapBounds()
     {
