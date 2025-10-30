@@ -107,9 +107,6 @@ public class SquareController : MonoBehaviour, IPlayerController
         // ?���? ?���? ????��
         originalScale = transform.localScale;
 
-        // ?���? ?���? ????��
-        originalScale = transform.localScale;
-
         // Rigidbody ????
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.gravityScale = 0f; // ????? ???? ???
@@ -141,12 +138,13 @@ public class SquareController : MonoBehaviour, IPlayerController
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        if (PlayerManager.Instance.IsHold) return;
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         moveInput = ctx.ReadValue<Vector2>();
     }
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         jumpBufferCounter = jumpBufferTime;
         isFastFalling = false;
     }
@@ -158,6 +156,7 @@ public class SquareController : MonoBehaviour, IPlayerController
 
     private void OnDash(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         Dash();
     }
 
@@ -550,7 +549,7 @@ public class SquareController : MonoBehaviour, IPlayerController
         rb.linearVelocity = new Vector2(dampedSpeedX, dampedSpeedY);
     }
 
-    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount)
+    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
         col = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -562,11 +561,18 @@ public class SquareController : MonoBehaviour, IPlayerController
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.gravityScale = 0f; // ????? ???? ???
 
-        // 이거필요없잖아 네모로 변신이 될때 적용되는건데 이거 왜만듦
-        if (isDashing)
-            rb.linearVelocity = Vector2.zero;
+        if (facingRight)
+        {
+            facingDirection = 1;
+            transform.localScale = originalScale;
+        }
         else
-            rb.linearVelocity = new Vector2(newVelX, newVelY);
+        {
+            facingDirection = -1;
+            Vector3 flippedScale = originalScale;
+            flippedScale.x = -originalScale.x;
+            transform.localScale = flippedScale;
+        }
     }
 
 

@@ -526,17 +526,15 @@ public class KirbyController : MonoBehaviour, IPlayerController
     private int maxDashCount = 1;
     public int dashCount { get; set; }
 
-    /// <summary>
-    /// 플레이어 상태 전환 시 속도와 대시 횟수를 설정합니다.
-    /// 상태 전환 스크립트에서 호출됩니다.
-    /// </summary>
-    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount)
+    // 플레이어 상태 전환 시 속도 설정
+    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
         _rb = GetComponent<Rigidbody2D>();
         _groundCheck = GetComponent<KirbyGroundCheck>();
         _playerCollider = GetComponent<Collider2D>();
         _rb.linearVelocity = new Vector2(newVelX, newVelY);
         dashCount = currentDashCount;
+        transform.localScale = new Vector3(facingRight ? 1 : -1, 1, 1);
     }
     #endregion
 }

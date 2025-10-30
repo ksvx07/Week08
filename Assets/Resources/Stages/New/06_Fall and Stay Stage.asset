@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 06_Fall and Stay Stage
   m_EditorClassIdentifier: 
   Id: 101
-  minX: 387.5
-  maxX: 521.75305
-  minY: 65.69066
-  maxY: 86.08542
+  minX: 372.877
+  maxX: 507.13007
+  minY: 102.78308
+  maxY: 123.17784
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1

@@ -43,6 +43,7 @@ public class StarController : MonoBehaviour, IPlayerController
     [SerializeField] private float wallClimbDisableTime = 0.2f; // 점프 후 벽 등반 비활성화 시간
     // [SerializeField] private float starNormalMaxSpeed = 8f;
 
+    private Vector3 originalScale;
 
     [SerializeField] private GameObject abilityOnObject;
     [SerializeField] private GameObject abilityOffObject;
@@ -73,6 +74,7 @@ public class StarController : MonoBehaviour, IPlayerController
         rb = GetComponent<Rigidbody2D>();
         currentGravity = jumpDcceleration;
         wallLayer = LayerMask.GetMask("Ground");
+        originalScale = transform.localScale;
 
         hitWalls = new RaycastHit2D[rayCount];
         rayDirs = new Vector2[rayCount];
@@ -107,12 +109,13 @@ public class StarController : MonoBehaviour, IPlayerController
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        if (PlayerManager.Instance.IsHold) return;
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         moveInput = ctx.ReadValue<Vector2>();
     }
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         jumpBufferCounter = jumpBufferTime;
         isFastFalling = false;
     }
@@ -124,6 +127,8 @@ public class StarController : MonoBehaviour, IPlayerController
 
     private void OnDash(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
+
         if (abilityOnObject.activeSelf)
         {
             // isActiveAbility = false;
@@ -329,6 +334,7 @@ public class StarController : MonoBehaviour, IPlayerController
     //         rb.linearVelocity = new Vector2(newX, rb.linearVelocity.y);
     //     }
     // }
+    private int facingDirection = 1;
 
     private void StarMove()
     {
@@ -341,6 +347,19 @@ public class StarController : MonoBehaviour, IPlayerController
             decel *= airDecelMulti;
             turnAccel *= airAccelMulti;
         }
+        if (moveInput.x > 0)
+        {
+            facingDirection = 1;
+            transform.localScale = originalScale;
+        }
+        else if (moveInput.x < 0)
+        {
+            facingDirection = -1;
+            Vector3 flippedScale = originalScale;
+            flippedScale.x = -originalScale.x;
+            transform.localScale = flippedScale;
+        }
+
         if (moveInput.x != 0)
         {
             if (Mathf.Sign(rb.linearVelocity.x) == Mathf.Sign(moveInput.x))
@@ -526,7 +545,7 @@ public class StarController : MonoBehaviour, IPlayerController
 
     private int maxDashCount = 1;
     public int dashCount { get; set; }
-    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount)
+    public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
         col = GetComponent<CircleCollider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -542,5 +561,17 @@ public class StarController : MonoBehaviour, IPlayerController
         rb.gravityScale = 0f; // �߷��� ���� ó��
 
         rb.linearVelocity = new Vector2(newVelX, newVelY);
+        if (facingRight)
+        {
+            facingDirection = 1;
+            transform.localScale = originalScale;
+        }
+        else
+        {
+            facingDirection = -1;
+            Vector3 flippedScale = originalScale;
+            flippedScale.x = -originalScale.x;
+            transform.localScale = flippedScale;
+        }
     }
 }
