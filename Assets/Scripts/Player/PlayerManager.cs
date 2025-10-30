@@ -97,7 +97,8 @@ public class PlayerManager : MonoBehaviour
         else
         {
             inputActions.SwitchMode.Enable();
-            inputActions.SwitchMode.SwitchModeStart.performed += OnSwitchTogglePerform;
+            inputActions.SwitchMode.SwitchModeStart.performed += OnSwitchPerform;
+            inputActions.SwitchMode.SwitchModeStart.canceled += OnSwitchCanceld;
 
             inputActions.SwitchMode.SelectCircle.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Circle);
             inputActions.SwitchMode.SelectSquare.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Square);
@@ -117,7 +118,8 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            inputActions.SwitchMode.SwitchModeStart.performed -= OnSwitchTogglePerform;
+            inputActions.SwitchMode.SwitchModeStart.performed -= OnSwitchPerform;
+            inputActions.SwitchMode.SwitchModeStart.canceled -= OnSwitchCanceld;
 
             inputActions.SwitchMode.SelectCircle.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Circle);
             inputActions.SwitchMode.SelectSquare.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Square);
@@ -148,15 +150,19 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region SelectMode Input Action
-    private void OnSwitchTogglePerform(InputAction.CallbackContext context)
+    private void OnSwitchPerform(InputAction.CallbackContext context)
     {
         // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
         if (IsSelectMode == false)
         {
             OnSwithModeStart();
         }
-        // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
-        else
+
+    }
+
+    private void OnSwitchCanceld(InputAction.CallbackContext context)
+    {
+        if (IsSelectMode == true)
         {
             OnSwitchModeEnd();
         }
