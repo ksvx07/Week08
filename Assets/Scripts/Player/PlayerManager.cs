@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -41,6 +42,8 @@ public class PlayerManager : MonoBehaviour
     private Coroutine pannelActive;
 
     #region Mouse 
+    [Header("마우스 조작키")]
+    [SerializeField]
     private bool isMouseSelectMode;
     private Vector2 mouseDeltaAccumulator; // 마우스 델타 값을 누적할 변수
     [SerializeField] private float mouseDeadZone = 20f;       // 마우스가 이 거리 이상 움직여야 인식
@@ -87,9 +90,19 @@ public class PlayerManager : MonoBehaviour
         if (isMouseSelectMode == true)
         {
             inputActions.SwitchMouse.Enable();
-            inputActions.SwitchMouse.SwitchModeStart.performed += OnSwitchTogglePerform;
-            inputActions.SwitchMouse.SwitchModeEnd.performed += OnSwitchModeEndPerform;
+            inputActions.SwitchMouse.SwitchModeStart.performed += OnMouseSwitchTogglePerform;
+            inputActions.SwitchMouse.SwitchModeEnd.performed += OnMouseSwitchModeEndPerform;
             inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
+        }
+        else
+        {
+            inputActions.SwitchMode.Enable();
+            inputActions.SwitchMode.SwitchModeStart.performed += OnSwitchTogglePerform;
+
+            inputActions.SwitchMode.SelectCircle.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Circle);
+            inputActions.SwitchMode.SelectSquare.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Square);
+            inputActions.SwitchMode.SelectTriangle.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Triangle);
+            inputActions.SwitchMode.SelectStar.performed += _ => SelectShapeOnSwithcMode(PlayerShape.Star);
         }
     }
 
@@ -97,16 +110,30 @@ public class PlayerManager : MonoBehaviour
     {
         if (isMouseSelectMode == true)
         {
-            inputActions.SwitchMouse.SwitchModeStart.performed -= OnSwitchTogglePerform;
-            inputActions.SwitchMouse.SwitchModeEnd.performed -= OnSwitchModeEndPerform;
+            inputActions.SwitchMouse.SwitchModeStart.performed -= OnMouseSwitchTogglePerform;
+            inputActions.SwitchMouse.SwitchModeEnd.performed -= OnMouseSwitchModeEndPerform;
             inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
             inputActions.SwitchMouse.Disable();
+        }
+        else
+        {
+            inputActions.SwitchMode.SwitchModeStart.performed -= OnSwitchTogglePerform;
+
+            inputActions.SwitchMode.SelectCircle.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Circle);
+            inputActions.SwitchMode.SelectSquare.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Square);
+            inputActions.SwitchMode.SelectTriangle.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Triangle);
+            inputActions.SwitchMode.SelectStar.performed -= _ => SelectShapeOnSwithcMode(PlayerShape.Star);
+
+            inputActions.SwitchMode.Disable();
         }
     }
     private void Update()
     {
         ToOriginalTimeScale();
-        UpdateMouseSelection();
+        if (isMouseSelectMode == true)
+        {
+            UpdateMouseSelection();
+        }
     }
 
     #region InputAction 콜백 함수
@@ -118,10 +145,9 @@ public class PlayerManager : MonoBehaviour
     {
         changingShape = false;
     }
-
     #endregion
 
-    #region Mouse
+    #region SelectMode Input Action
     private void OnSwitchTogglePerform(InputAction.CallbackContext context)
     {
         // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
@@ -132,15 +158,65 @@ public class PlayerManager : MonoBehaviour
         // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
         else
         {
-            OnSwitchModeCancel();
+            OnSwitchModeEnd();
         }
     }
 
-    private void OnSwitchModeEndPerform(InputAction.CallbackContext context)
+    private void SelectShapeOnSwithcMode(PlayerShape newShape)
     {
         if (IsSelectMode == false) return;
 
-        OnSwitmModeEnd();
+        switch (newShape)
+        {
+            case PlayerShape.Circle: selectShape = PlayerShape.Circle; break;
+            case PlayerShape.Triangle: selectShape = PlayerShape.Triangle; break;
+            case PlayerShape.Star: selectShape = PlayerShape.Star; break;
+            case PlayerShape.Square: selectShape = PlayerShape.Square; break;
+        }
+        selectShape = newShape;
+        HighLightSelectShape(selectShape);
+    }
+
+    private void OnSwithModeStart()
+    {
+        IsSelectMode = true;
+        SlowTimeScale();
+
+        if (!isSelectUIActive)
+        {
+            AcitveSelectUI();
+        }
+    }
+
+    private void OnSwitchModeEnd()
+    {
+        IsSelectMode = false;
+        DeActiveSelectUI();
+        ActiveSelectShape(CurrentShape, selectShape);
+    }
+
+    #endregion
+
+    #region Mouse Select Mode
+    private void OnMouseSwitchTogglePerform(InputAction.CallbackContext context)
+    {
+        // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
+        if (IsSelectMode == false)
+        {
+            OnMouseSwithModeStart();
+        }
+        // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
+        else
+        {
+            OnMouseSwitchModeCancel();
+        }
+    }
+
+    private void OnMouseSwitchModeEndPerform(InputAction.CallbackContext context)
+    {
+        if (IsSelectMode == false) return;
+
+        OnMouseSwitchModeEnd();
     }
 
     private void OnMouseDelta(InputAction.CallbackContext context)
@@ -153,7 +229,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void OnSwithModeStart()
+    private void OnMouseSwithModeStart()
     {
         IsSelectMode = true;
         SlowTimeScale();
@@ -167,14 +243,14 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnSwitmModeEnd()
+    private void OnMouseSwitchModeEnd()
     {
         IsSelectMode = false;
         DeActiveSelectUI();
         ActiveSelectShape(CurrentShape, selectShape);
     }
 
-    private void OnSwitchModeCancel()
+    private void OnMouseSwitchModeCancel()
     {
         IsSelectMode = false;
         DeActiveSelectUI();

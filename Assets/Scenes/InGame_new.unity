@@ -29937,7 +29937,7 @@ MonoBehaviour:
   enableFileLogging: 0
   minimumLogLevel: 0
   setFileName: 0
-  logFileName: "\uC9C4\uC131 \uC2A4\uD53C\uB4DC\uB7F0 2"
+  logFileName: 
 --- !u!1001 &1692636310
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31733,6 +31733,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1888020421528319932, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
+      propertyPath: autosaveEnabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: camControlelr
       value: 
@@ -31740,6 +31744,10 @@ PrefabInstance:
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: mouseDeadZone
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
+      propertyPath: isMouseSelectMode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2143235623335957623, guid: 08963ef51116c654b8a81bfa90ce0fd0, type: 3}
       propertyPath: selectPlayerPanel

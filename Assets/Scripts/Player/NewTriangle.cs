@@ -149,12 +149,13 @@ public class NewTriangle : MonoBehaviour, IPlayerController
 
     private void OnMove(InputAction.CallbackContext ctx)
     {
-        if (PlayerManager.Instance.IsHold) return;
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         moveInput = ctx.ReadValue<Vector2>();
     }
 
     private void OnJump(InputAction.CallbackContext ctx)
     {
+        if (PlayerManager.Instance.IsSelectMode == true) return;
         if (isSwinging)
         {
             StopSwing();
@@ -183,7 +184,6 @@ public class NewTriangle : MonoBehaviour, IPlayerController
 
     private void OnSwing(InputAction.CallbackContext ctx)
     {
-        if (PlayerManager.Instance.IsSelectMode == true) return;
 
         if (!toggleSwing)
         {
