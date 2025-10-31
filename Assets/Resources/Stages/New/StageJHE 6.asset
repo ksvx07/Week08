@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be35d7407d4eb545885102775eb30e6, type: 3}
-  m_Name: StageLJE1
+  m_Name: StageJHE 6
   m_EditorClassIdentifier: 
-  Id: 164
-  minX: 589
-  maxX: 609.10443
-  minY: 118.23215
-  maxY: 131.55208
+  Id: 123
+  minX: 693.1692
+  maxX: 730.27075
+  minY: 115.491264
+  maxY: 141.79126
   isShapeLockStage: 0
   initailizeShape: 2
   unlockAll: 1

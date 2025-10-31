@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Dash - Wall Stage
   m_EditorClassIdentifier: 
   Id: 5
-  minX: -17.17347
-  maxX: 256.17746
-  minY: -10.001014
-  maxY: 9.998986
+  minX: 506.2
+  maxX: 608.9
+  minY: 101.700134
+  maxY: 121.70014
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1

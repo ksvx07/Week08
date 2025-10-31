@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: CJY TriangleCircleStage 2
   m_EditorClassIdentifier: 
   Id: 305
-  minX: -41.5
-  maxX: 16.34
-  minY: 36.536728
-  maxY: 94.59325
+  minX: 808.6
+  maxX: 869.8
+  minY: 179.1
+  maxY: 239.6
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1
