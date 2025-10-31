@@ -90,8 +90,8 @@ public class PlayerManager : MonoBehaviour
         if (isMouseSelectMode == true)
         {
             inputActions.SwitchMouse.Enable();
-            inputActions.SwitchMouse.SwitchModeStart.performed += OnMouseSwitchTogglePerform;
-            inputActions.SwitchMouse.SwitchModeEnd.performed += OnMouseSwitchModeEndPerform;
+            inputActions.SwitchMouse.SwitchModeStart.performed += OnMouseSwitchPerform;
+            inputActions.SwitchMouse.SwitchModeStart.canceled += OnMouseSwitchModeCanceld;
             inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
         }
         else
@@ -110,8 +110,8 @@ public class PlayerManager : MonoBehaviour
     {
         if (isMouseSelectMode == true)
         {
-            inputActions.SwitchMouse.SwitchModeStart.performed -= OnMouseSwitchTogglePerform;
-            inputActions.SwitchMouse.SwitchModeEnd.performed -= OnMouseSwitchModeEndPerform;
+            inputActions.SwitchMouse.SwitchModeStart.performed -= OnMouseSwitchPerform;
+            inputActions.SwitchMouse.SwitchModeStart.canceled -= OnMouseSwitchModeCanceld;
             inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
             inputActions.SwitchMouse.Disable();
         }
@@ -198,21 +198,16 @@ public class PlayerManager : MonoBehaviour
     #endregion
 
     #region Mouse Select Mode
-    private void OnMouseSwitchTogglePerform(InputAction.CallbackContext context)
+    private void OnMouseSwitchPerform(InputAction.CallbackContext context)
     {
         // 만약 선택 모드가 아니라면 -> 선택 모드를 켠다.
         if (IsSelectMode == false)
         {
             OnMouseSwithModeStart();
         }
-        // 이미 선택 모드라면 -> 선택 모드를 취소(끈다).
-        else
-        {
-            OnMouseSwitchModeCancel();
-        }
     }
 
-    private void OnMouseSwitchModeEndPerform(InputAction.CallbackContext context)
+    private void OnMouseSwitchModeCanceld(InputAction.CallbackContext context)
     {
         if (IsSelectMode == false) return;
 
