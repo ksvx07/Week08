@@ -554,6 +554,8 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         rb.gravityScale = 0f;
         rb.linearVelocity = new Vector2(newVelX, newVelY);
         dashCount = currentDashCount;
+        swingPointIndicator.SetActive(false);
+        cachedSwingPoint = null;
         if (facingRight)
         {
             facingDirection = 1;

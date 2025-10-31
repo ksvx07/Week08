@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,6 +9,7 @@ public class SquareController : MonoBehaviour, IPlayerController
     private Vector2 moveInput;
     private Rigidbody2D rb;
     private BoxCollider2D col;
+    private CircleCollider2D circleCol;
     private SpriteRenderer spriteRenderer;
 
     // Inspector ???? ???? ??????
@@ -98,6 +100,8 @@ public class SquareController : MonoBehaviour, IPlayerController
     {
         inputActions = new PlayerInput();
         col = GetComponent<BoxCollider2D>();
+        circleCol = GetComponent<CircleCollider2D>();
+        circleCol.enabled = false;
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         currentGravity = jumpDcceleration;
@@ -130,6 +134,8 @@ public class SquareController : MonoBehaviour, IPlayerController
         inputActions.Player.Jump.canceled -= OffJump;
         inputActions.Player.Dash.performed -= OnDash;
         inputActions.Player.Disable();
+        circleCol.enabled = false;
+        col.enabled = true;
         moveInput = Vector2.zero;
         jumpBufferCounter = -1;
         IsGrounded = false;
@@ -227,11 +233,18 @@ public class SquareController : MonoBehaviour, IPlayerController
             if (!isWallGrabbing)
                 Move();
         }
+        Dashing();
 
 
         // Debug.Log($"x: {rb.linearVelocity.x:F2}, y: {rb.linearVelocity.y:F2}");
     }
-
+    private void Dashing()
+    {
+        if (isDashing)
+        {
+            rb.linearVelocity = dashVelocity;
+        }
+    }
 
 
 
@@ -520,10 +533,14 @@ public class SquareController : MonoBehaviour, IPlayerController
     //     }
     // }
 
+    private Vector2 dashVelocity = Vector2.zero;
+
     private void Dash()
     {
         if (dashCount <= 0) return;
         if (dashCooldownCounter > 0) return;
+        circleCol.enabled = true;
+        col.enabled = false;
         isDashing = true;
         dashCount -= 1;
         ChangeColor();
@@ -533,14 +550,22 @@ public class SquareController : MonoBehaviour, IPlayerController
         rb.excludeLayers = LayerMask.GetMask("Breakable");
         // ?��?�� 바라보는 방향?���? ????��
         if (moveInput == Vector2.zero)
-            rb.linearVelocity = new Vector2(facingDirection * dashSpeed, 0);
+        {
+            dashVelocity = new Vector2(facingDirection * dashSpeed, 0);
+        }
         else
-            rb.linearVelocity = moveInput.normalized * dashSpeed;
+        {
+            dashVelocity = moveInput.normalized * dashSpeed;
+        }
+        rb.linearVelocity = dashVelocity;
     }
 
     // ??? ?? ????, ??? ?????? ????? ????
     private void dampAfterDash()
     {
+        dashVelocity = Vector2.zero;
+        circleCol.enabled = false;
+        col.enabled = true;
         float dampedSpeedX = rb.linearVelocity.x;
         float dampedSpeedY = rb.linearVelocity.y;
         rb.excludeLayers = 0;
@@ -556,6 +581,8 @@ public class SquareController : MonoBehaviour, IPlayerController
         currentGravity = jumpDcceleration;
         wallLayer = LayerMask.GetMask("Ground");
         dashCount = currentDashCount;
+        dashTimeCounter = 0f;
+        isDashing = false;
         ChangeColor();
         // Rigidbody ????
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
