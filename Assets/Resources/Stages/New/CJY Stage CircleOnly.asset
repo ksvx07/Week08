@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: CJY Stage CircleOnly
   m_EditorClassIdentifier: 
   Id: 0
-  minX: -115.1
-  maxX: -81.72
+  minX: -117.8
+  maxX: -78.4
   minY: 60.1
-  maxY: 118.6
+  maxY: 121.5
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1
