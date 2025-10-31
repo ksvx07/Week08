@@ -20005,6 +20005,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JHEMap
       objectReference: {fileID: 0}
+    - target: {fileID: 6316043196922778676, guid: d13697ae0dcf5b7488a0ffe7bac5434d, type: 3}
+      propertyPath: checkpointId
+      value: 17
+      objectReference: {fileID: 0}
     - target: {fileID: 6855787542462499312, guid: d13697ae0dcf5b7488a0ffe7bac5434d, type: 3}
       propertyPath: checkpointId
       value: 1
