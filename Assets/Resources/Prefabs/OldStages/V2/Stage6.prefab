@@ -315,6 +315,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fall and Stay Stage
       objectReference: {fileID: 0}
+    - target: {fileID: 5239592718780913033, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239592718780913033, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

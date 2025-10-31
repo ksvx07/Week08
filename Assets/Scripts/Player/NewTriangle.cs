@@ -231,6 +231,8 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     /// <summary>
     /// [수정됨] DrawRope() 제거, HandleGroundedSwingState() 유지
     /// </summary>
+
+    private Vector3 savedSwingHitColliderPosition;
     private void Update()
     {
         TimeCounters();
@@ -239,6 +241,14 @@ public class NewTriangle : MonoBehaviour, IPlayerController
 
         if (swingHitCollider != null && isSwinging)
         {
+            if (swingHitCollider.transform.position != savedSwingHitColliderPosition)
+            {
+                Vector3 offset = swingHitCollider.transform.position - savedSwingHitColliderPosition;
+                swingJoint.connectedAnchor += (Vector2)offset;
+            }
+            savedSwingHitColliderPosition = swingHitCollider.transform.position;
+
+
             if (!swingHitCollider.enabled)
             {
                 StopSwing();
@@ -613,6 +623,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
                 {
                     crumbleTile.TriggerBreak();
                     swingHitCollider = verifyHit.collider;
+                    savedSwingHitColliderPosition = swingHitCollider.transform.position;
                 }
             }
         }
@@ -630,6 +641,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
             {
                 crumbleTile.TriggerBreak();
                 swingHitCollider = hit.collider;
+                savedSwingHitColliderPosition = swingHitCollider.transform.position;
             }
         }
 
