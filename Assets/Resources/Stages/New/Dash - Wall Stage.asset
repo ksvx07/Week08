@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be35d7407d4eb545885102775eb30e6, type: 3}
-  m_Name: CJY Stage CircleOnly
+  m_Name: Dash - Wall Stage
   m_EditorClassIdentifier: 
-  Id: 0
-  minX: -117.8
-  maxX: -78.4
-  minY: 60.1
-  maxY: 121.5
+  Id: 5
+  minX: -17.17347
+  maxX: 256.17746
+  minY: -10.001014
+  maxY: 9.998986
   isShapeLockStage: 0
   initailizeShape: 0
   unlockAll: 1
