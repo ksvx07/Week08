@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: StageJHE 5
   m_EditorClassIdentifier: 
   Id: 123
-  minX: 552
-  maxX: 609
-  minY: 101.58052
-  maxY: 130
+  minX: 651.1129
+  maxX: 695.01294
+  minY: 113.90899
+  maxY: 136.709
   isShapeLockStage: 0
   initailizeShape: 2
   unlockAll: 1
