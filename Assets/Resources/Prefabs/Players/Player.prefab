@@ -1768,7 +1768,7 @@ MonoBehaviour:
   terboForce: 60
   maxCollisionAngle: 30
   fixedNormalGravity: 3.5
-  groundedNormalGravity: 10
+  groundedNormalGravity: 0.5
 --- !u!114 &11389036134527591
 MonoBehaviour:
   m_ObjectHideFlags: 0
