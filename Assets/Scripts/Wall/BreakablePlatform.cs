@@ -786,9 +786,10 @@ public class BreakablePlatform : MonoBehaviour
 
         _piece.transform.position = transform.position + new Vector3(_worldX, _worldY, 0);
 
-        // SpriteRenderer 설정
+        // SpriteRenderer 설정 (원본의 색상 복사)
         SpriteRenderer _sr = _piece.AddComponent<SpriteRenderer>();
         _sr.sprite = _pieceSprite;
+        _sr.color = spriteRenderer.color;
         _sr.sortingLayerName = _sortingLayerName;
         _sr.sortingOrder = _sortingOrder + 1;
 
