@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2076812803595054017}
   - component: {fileID: 3105958482017823499}
   - component: {fileID: 686027590257961639}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: DeathZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 7388563434372786659}
   - component: {fileID: 663992456339114717}
   - component: {fileID: 5809596472725293879}
+  - component: {fileID: 1752385586599415031}
   m_Layer: 6
   m_Name: Platform Fall and Settle
   m_TagString: Untagged
@@ -291,7 +292,45 @@ MonoBehaviour:
   boxCastDistance: 35
   damageColliderObject: {fileID: 801065677939631332}
   enableDamageColliderOnFall: 1
+  SpikeObjects: []
+  useSpikeTrapOnFreeFall: 0
+  useCrumbleEffectOnFreeFall: 1
+  crumbleGridX: 3
+  crumbleGridY: 3
+  crumbleExplosionForce: 3
+  crumbleDownwardForce: 2
+  crumbleTorqueRange: 200
+  crumbleFadeStartDelay: 0.5
+  crumbleFadeSpeed: 2
   respawn: 1
   respawnDelay: 3
   respawnCheckInterval: 0.05
   respawnAfterClearDelay: 0.2
+  respawnWhenPlayerRespawns: 1
+--- !u!50 &1752385586599415031
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7421576178817495348}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 5

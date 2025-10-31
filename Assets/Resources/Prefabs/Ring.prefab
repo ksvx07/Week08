@@ -373,7 +373,7 @@ GameObject:
   - component: {fileID: 7669963578703037725}
   - component: {fileID: 1925570564005091822}
   - component: {fileID: 3608232340793479360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: BackEnterTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -888,7 +888,7 @@ GameObject:
   - component: {fileID: 4386634427829692462}
   - component: {fileID: 3555069672708022784}
   - component: {fileID: 2197682579857244048}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FrontEnterTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ public class BreakablePlatform : MonoBehaviour
     {
         [Tooltip("화면 밖으로 떨어져 사라짐")]
         FreeFall = 0,
-        
+
         [Tooltip("바닥까지 낙하 후 새로운 플랫폼으로 안착")]
         SettleOnGround = 1
     }
@@ -36,17 +36,17 @@ public class BreakablePlatform : MonoBehaviour
     [Header("낙하 모드")]
     [Tooltip("FreeFall: 화면 밖으로 떨어져 사라짐\nSettleOnGround: 바닥까지 낙하 후 새로운 플랫폼으로 안착")]
     [SerializeField] private FallMode fallMode = FallMode.FreeFall;
-    
+
     [Tooltip("바닥 감지 활성화 (SettleOnGround 모드에서만 사용)")]
     [SerializeField] private bool enableGroundDetection = true;
-    
+
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private float boxCastDistance = 100f;
-    
+
     [Space(10)]
     [Header("데미지 콜라이더 (낙하 중 플레이어 충돌 처리)")]
     [SerializeField] private GameObject damageColliderObject;
-    
+
     [Tooltip("낙하 시작 시 데미지 콜라이더 활성화 여부 (모든 낙하 모드 공통 적용)")]
     [SerializeField] private bool enableDamageColliderOnFall = true;
 
@@ -103,7 +103,7 @@ public class BreakablePlatform : MonoBehaviour
         // 통합 bool 값을 각 모드별 내부 변수에 적용
         enableDamageColliderOnSettleMode = enableDamageColliderOnFall;
         enableDamageColliderOnFreeFall = enableDamageColliderOnFall;
-        
+
         InitializeComponents();
     }
 
@@ -221,11 +221,11 @@ public class BreakablePlatform : MonoBehaviour
         // 위치 및 회전 저장
         originalWorldPos = transform.position;
         originalAngleZ = transform.eulerAngles.z;
-        
+
         // Visual 상태 저장
         visualOriginalLocalPos = visualRoot.localPosition;
         visualOriginalLocalRot = visualRoot.localRotation;
-        
+
         // bool 옵션 초기값 저장
         originalEnableCollisionTrigger = enableCollisionTrigger;
         originalDetectByTag = detectByTag;
@@ -258,7 +258,7 @@ public class BreakablePlatform : MonoBehaviour
         // 이미 트리거되었거나 현재 떨어지고 있으면 다시 실행하지 않음
         if (isTriggered || isFalling)
             return;
-        
+
         StartCoroutine(BreakRoutine());
     }
 
@@ -338,11 +338,13 @@ public class BreakablePlatform : MonoBehaviour
         rb.gravityScale = fallGravityScale;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0;
-        rb.freezeRotation = false;
+        // rb.freezeRotation = false;
 
         // 바닥 안착 모드일 경우 FallAndSettleRoutine 실행
         if (fallMode == FallMode.SettleOnGround && enableGroundDetection)
         {
+            platformCollider.enabled = true;
+
             StartCoroutine(FallAndSettleRoutine());
         }
         // FreeFall 모드에서 크럼블 효과 활성화
@@ -359,7 +361,7 @@ public class BreakablePlatform : MonoBehaviour
                     spike.SetActive(false);
                 }
             }
-                
+
         }
     }
 
@@ -370,31 +372,70 @@ public class BreakablePlatform : MonoBehaviour
     /// - 가로는 자신과 같음, 높이는 매우 얇게 설정 (정확한 지면 감지)
     /// - 위를 향한 면(normal.y > 0.2f)만 착지면으로 인정
     /// </summary>
+    // private float CalculateSettleHeight()
+    // {
+    //     if (platformCollider == null)
+    //         return transform.position.y;
+
+    //     // 월드 스케일을 고려한 박스컬라이더 실제 크기 계산
+    //     Vector3 _lossy = transform.lossyScale;
+    //     Vector2 _colliderWorldSize = new Vector2(
+    //         platformCollider.size.x * Mathf.Abs(_lossy.x),
+    //         platformCollider.size.y * Mathf.Abs(_lossy.y)
+    //     );
+
+    //     // 월드 콜라이더 오프셋 계산
+    //     Vector2 _worldOffset = new Vector2(
+    //         platformCollider.offset.x * _lossy.x,
+    //         platformCollider.offset.y * _lossy.y
+    //     );
+
+    //     // 박스캐스트 시작점: 자신의 중심 + 콜라이더 오프셋
+    //     Vector2 _origin = (Vector2)transform.position + _worldOffset;
+
+    //     // 박스 크기: 가로는 자신과 같음, 높이는 매우 얇게 (정확한 지면 감지용)
+    //     Vector2 _size = new Vector2(_colliderWorldSize.x * 0.98f, 0.1f);
+
+    //     RaycastHit2D _hit = Physics2D.BoxCast(
+    //         _origin,
+    //         _size,
+    //         0f,
+    //         Vector2.down,
+    //         boxCastDistance,
+    //         groundLayer
+    //     );
+
+    //     if (_hit.collider != null && _hit.normal.y > 0.2f)
+    //     {
+    //         // 지면의 윗면에 플랫폼의 중심이 오도록 설정
+    //         // 최종 센터 Y = 지면 표면 + 플랫폼 높이의 절반
+    //         return _hit.point.y + (_colliderWorldSize.y / 2f);
+    //     }
+
+    //     // 히트가 없으면 현재 위치 유지
+    //     return transform.position.y;
+    // }
     private float CalculateSettleHeight()
     {
         if (platformCollider == null)
             return transform.position.y;
 
-        // 월드 스케일을 고려한 박스컬라이더 실제 크기 계산
         Vector3 _lossy = transform.lossyScale;
         Vector2 _colliderWorldSize = new Vector2(
             platformCollider.size.x * Mathf.Abs(_lossy.x),
             platformCollider.size.y * Mathf.Abs(_lossy.y)
         );
 
-        // 월드 콜라이더 오프셋 계산
         Vector2 _worldOffset = new Vector2(
             platformCollider.offset.x * _lossy.x,
             platformCollider.offset.y * _lossy.y
         );
 
-        // 박스캐스트 시작점: 자신의 중심 + 콜라이더 오프셋
         Vector2 _origin = (Vector2)transform.position + _worldOffset;
-
-        // 박스 크기: 가로는 자신과 같음, 높이는 매우 얇게 (정확한 지면 감지용)
         Vector2 _size = new Vector2(_colliderWorldSize.x * 0.98f, 0.1f);
 
-        RaycastHit2D _hit = Physics2D.BoxCast(
+        // 자기 자신(hit.collider == platformCollider)은 제외
+        RaycastHit2D[] _hits = Physics2D.BoxCastAll(
             _origin,
             _size,
             0f,
@@ -403,17 +444,17 @@ public class BreakablePlatform : MonoBehaviour
             groundLayer
         );
 
-        if (_hit.collider != null && _hit.normal.y > 0.2f)
+        foreach (var _hit in _hits)
         {
-            // 지면의 윗면에 플랫폼의 중심이 오도록 설정
-            // 최종 센터 Y = 지면 표면 + 플랫폼 높이의 절반
+            if (_hit.collider == null) continue;
+            if (_hit.collider == platformCollider) continue; // self-skip
+            if (_hit.normal.y <= 0.2f) continue;
+
             return _hit.point.y + (_colliderWorldSize.y / 2f);
         }
 
-        // 히트가 없으면 현재 위치 유지
         return transform.position.y;
     }
-
 
     /// <summary>
     /// 바닥까지 부드럽게 낙하 후 안착하는 루틴
@@ -430,7 +471,7 @@ public class BreakablePlatform : MonoBehaviour
         rb.gravityScale = fallGravityScale;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0;
-        rb.freezeRotation = false;
+        // rb.freezeRotation = false;
 
         // 초기 착지 높이 계산
         float _settleHeight = CalculateSettleHeight();
@@ -659,8 +700,8 @@ public class BreakablePlatform : MonoBehaviour
         isTriggered = false;
         isFalling = false;
         isPlayerDetectionDisabled = false;
-        
-        if(fallMode == FallMode.FreeFall && useSpikeTrapOnFreeFall == false)
+
+        if (fallMode == FallMode.FreeFall && useSpikeTrapOnFreeFall == false)
         {
             if (SpikeObjects == null)
                 return;
