@@ -49,6 +49,16 @@ public class BreakablePlatform : MonoBehaviour
     [Tooltip("낙하 시작 시 데미지 콜라이더 활성화 여부 (모든 낙하 모드 공통 적용)")]
     [SerializeField] private bool enableDamageColliderOnFall = true;
 
+    [Header("크럼블 효과 (FreeFall 모드)")]
+    [SerializeField] private bool useCrumbleEffectOnFreeFall = true;
+    [SerializeField] private int crumbleGridX = 3;
+    [SerializeField] private int crumbleGridY = 3;
+    [SerializeField] private float crumbleExplosionForce = 3f;
+    [SerializeField] private float crumbleDownwardForce = 2f;
+    [SerializeField] private float crumbleTorqueRange = 200f;
+    [SerializeField] private float crumbleFadeStartDelay = 0.5f;
+    [SerializeField] private float crumbleFadeSpeed = 2f;
+
     [Header("재생성")]
     [SerializeField] private bool respawn = true;
     [SerializeField] private float respawnDelay = 3f;
@@ -302,7 +312,7 @@ public class BreakablePlatform : MonoBehaviour
     /// 3. 데미지 콜라이더 활성화 (낙하 시작 시점)
     /// 4. fallMode에 따라 낙하 방식 결정:
     ///    - SettleOnGround: FallAndSettleRoutine으로 바닥까지 낙하
-    ///    - FreeFall: Rigidbody Dynamic으로 자유 낙하
+    ///    - FreeFall: Rigidbody Dynamic으로 자유 낙하 또는 크럼블 효과 적용
     /// </summary>
     private void StartFalling()
     {
@@ -331,6 +341,14 @@ public class BreakablePlatform : MonoBehaviour
         if (fallMode == FallMode.SettleOnGround && enableGroundDetection)
         {
             StartCoroutine(FallAndSettleRoutine());
+        }
+        // FreeFall 모드에서 크럼블 효과 활성화
+        else if (fallMode == FallMode.FreeFall && useCrumbleEffectOnFreeFall)
+        {
+            CreateCrumbleEffect();
+            // 플랫폼 자체는 숨김 (파편이 대체)
+            if (spriteRenderer != null)
+                spriteRenderer.enabled = false;
         }
     }
 
@@ -605,9 +623,10 @@ public class BreakablePlatform : MonoBehaviour
         // Visual 원복
         ResetVisualOnly();
 
-        // 투명도 원복
+        // SpriteRenderer 상태 원복 (크럼블 효과에서 disabled 되었을 수 있음)
         if (spriteRenderer != null)
         {
+            spriteRenderer.enabled = true;
             var _color = spriteRenderer.color;
             _color.a = 1f;
             spriteRenderer.color = _color;
@@ -657,5 +676,189 @@ public class BreakablePlatform : MonoBehaviour
         // 화면 밖에서도 데미지 콜라이더 확실히 비활성화
         if (damageColliderObject != null)
             damageColliderObject.SetActive(false);
+    }
+
+    /// <summary>
+    /// 원본 스프라이트를 작은 파편들로 분할하여 폭발 효과 생성
+    /// 파편은 좌/우/아래 방향으로만 날아가며 중력에 따라 낙하
+    /// FreeFall 모드에서만 호출됨
+    /// </summary>
+    private void CreateCrumbleEffect()
+    {
+        if (spriteRenderer == null)
+            return;
+
+        Sprite _sprite = spriteRenderer.sprite;
+        if (_sprite == null)
+            return;
+
+        // 파편들의 부모 오브젝트 생성
+        GameObject _piecesParent = new GameObject("CrumblePieces");
+        _piecesParent.transform.position = transform.position;
+
+        // 원본 스프라이트 정보 추출
+        Texture2D _texture = _sprite.texture;
+        Rect _spriteRect = _sprite.rect;
+        Vector2 _pivot = _sprite.pivot;
+        float _pixelsPerUnit = _sprite.pixelsPerUnit;
+
+        // 픽셀 단위로 각 파편 크기 계산
+        float _pieceWidth = _spriteRect.width / crumbleGridX;
+        float _pieceHeight = _spriteRect.height / crumbleGridY;
+
+        // 월드 좌표 단위로 파편 크기 변환 (PPU 고려)
+        Vector2 _worldPieceSize = new Vector2(_pieceWidth / _pixelsPerUnit, _pieceHeight / _pixelsPerUnit);
+
+        // 원본 스프라이트의 중심점 계산 (월드 단위)
+        Vector2 _spriteCenter = new Vector2(
+            _spriteRect.width / 2f - _pivot.x,
+            _spriteRect.height / 2f - _pivot.y
+        ) / _pixelsPerUnit;
+
+        // SpriteRenderer의 Sorting Layer 정보 가져오기
+        string _sortingLayerName = spriteRenderer.sortingLayerName;
+        int _sortingOrder = spriteRenderer.sortingOrder;
+
+        // 그리드로 분할하여 각 파편 생성
+        for (int _y = 0; _y < crumbleGridY; _y++)
+        {
+            for (int _x = 0; _x < crumbleGridX; _x++)
+            {
+                CreateCrumblePiece(
+                    _piecesParent.transform,
+                    _texture,
+                    _spriteRect,
+                    _x, _y,
+                    _pieceWidth, _pieceHeight,
+                    _pixelsPerUnit,
+                    _worldPieceSize,
+                    _spriteCenter,
+                    _sortingLayerName,
+                    _sortingOrder
+                );
+            }
+        }
+    }
+
+    /// <summary>
+    /// 개별 크럼블 파편 생성 및 물리 효과 적용
+    /// 수도코드:
+    /// 1. 파편용 GameObject 생성
+    /// 2. 텍스처에서 해당 영역의 스프라이트 추출
+    /// 3. SpriteRenderer와 Rigidbody2D 추가
+    /// 4. 중심에서 바깥쪽으로 폭발력 적용
+    /// 5. 페이드아웃 컴포넌트 추가
+    /// </summary>
+    private void CreateCrumblePiece(
+        Transform _parent,
+        Texture2D _texture,
+        Rect _spriteRect,
+        int _gridX, int _gridY,
+        float _pieceWidth, float _pieceHeight,
+        float _pixelsPerUnit,
+        Vector2 _worldPieceSize,
+        Vector2 _spriteCenter,
+        string _sortingLayerName,
+        int _sortingOrder)
+    {
+        // 파편 게임오브젝트 생성
+        GameObject _piece = new GameObject($"Piece_{_gridX}_{_gridY}");
+        _piece.transform.SetParent(_parent);
+
+        // 텍스처에서 이 파편의 픽셀 좌표 계산
+        float _pixelX = _spriteRect.x + _gridX * _pieceWidth;
+        float _pixelY = _spriteRect.y + _gridY * _pieceHeight;
+
+        // 파편 영역의 Rect 생성
+        Rect _pieceRect = new Rect(_pixelX, _pixelY, _pieceWidth, _pieceHeight);
+
+        // 파편 스프라이트 생성 (중심을 피벗으로)
+        Sprite _pieceSprite = Sprite.Create(
+            _texture,
+            _pieceRect,
+            new Vector2(0.5f, 0.5f),
+            _pixelsPerUnit
+        );
+
+        // 월드 위치 계산 (그리드 기반으로 중심 주변에 배치)
+        float _worldX = (_gridX * _worldPieceSize.x) - (_worldPieceSize.x * crumbleGridX / 2f) + (_worldPieceSize.x / 2f);
+        float _worldY = (_gridY * _worldPieceSize.y) - (_worldPieceSize.y * crumbleGridY / 2f) + (_worldPieceSize.y / 2f);
+
+        _piece.transform.position = transform.position + new Vector3(_worldX, _worldY, 0);
+
+        // SpriteRenderer 설정
+        SpriteRenderer _sr = _piece.AddComponent<SpriteRenderer>();
+        _sr.sprite = _pieceSprite;
+        _sr.sortingLayerName = _sortingLayerName;
+        _sr.sortingOrder = _sortingOrder + 1;
+
+        // Rigidbody2D 설정 (물리 시뮬레이션)
+        Rigidbody2D _rb = _piece.AddComponent<Rigidbody2D>();
+        _rb.gravityScale = 1f;
+
+        // 좌/우/아래 방향으로만 폭발 (상향 제거)
+        Vector2 _explosionDirection = (_piece.transform.position - transform.position).normalized;
+        // Y축을 음수로 강제 (아래쪽 향하게)
+        _explosionDirection.y = -Mathf.Abs(_explosionDirection.y) - crumbleDownwardForce;
+        _explosionDirection.Normalize();
+
+        _rb.linearVelocity = _explosionDirection * crumbleExplosionForce;
+        _rb.angularVelocity = Random.Range(-crumbleTorqueRange, crumbleTorqueRange);
+
+        // 페이드아웃 효과 추가
+        CrumblePieceFadeOut _fadeOut = _piece.AddComponent<CrumblePieceFadeOut>();
+        _fadeOut.SetFadeParameters(crumbleFadeStartDelay, crumbleFadeSpeed);
+    }
+}
+
+/// <summary>
+/// 크럼블 파편의 페이드아웃 효과 담당
+/// 지연 시간 후 알파값을 점진적으로 감소시켜 사라지는 효과 구현
+/// </summary>
+public class CrumblePieceFadeOut : MonoBehaviour
+{
+    private float _fadeStartDelay = 0.5f;
+    private float _fadeSpeed = 2f;
+    private SpriteRenderer _spriteRenderer;
+    private float _timer = 0f;
+    private bool _isFading = false;
+
+    /// <summary>
+    /// 페이드 파라미터 설정 (외부에서 호출)
+    /// </summary>
+    public void SetFadeParameters(float _delay, float _speed)
+    {
+        _fadeStartDelay = _delay;
+        _fadeSpeed = _speed;
+    }
+
+    private void Start()
+    {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Update()
+    {
+        _timer += Time.deltaTime;
+
+        // 지연 시간이 지나면 페이드 시작
+        if (_timer >= _fadeStartDelay && !_isFading)
+        {
+            _isFading = true;
+        }
+
+        // 페이드 진행
+        if (_isFading && _spriteRenderer != null)
+        {
+            Color _color = _spriteRenderer.color;
+            _color.a -= _fadeSpeed * Time.deltaTime;
+            _spriteRenderer.color = _color;
+
+            // 완전히 투명해지면 제거
+            if (_color.a <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }
