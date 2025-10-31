@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
@@ -50,6 +51,8 @@ public class BreakablePlatform : MonoBehaviour
     [SerializeField] private bool enableDamageColliderOnFall = true;
 
     [Header("크럼블 효과 (FreeFall 모드)")]
+    [SerializeField] private List<GameObject> SpikeObjects;
+    [SerializeField] private bool useSpikeTrapOnFreeFall = false;
     [SerializeField] private bool useCrumbleEffectOnFreeFall = true;
     [SerializeField] private int crumbleGridX = 3;
     [SerializeField] private int crumbleGridY = 3;
@@ -349,6 +352,14 @@ public class BreakablePlatform : MonoBehaviour
             // 플랫폼 자체는 숨김 (파편이 대체)
             if (spriteRenderer != null)
                 spriteRenderer.enabled = false;
+            if (useSpikeTrapOnFreeFall == false)
+            {
+                foreach (var spike in SpikeObjects)
+                {
+                    spike.SetActive(false);
+                }
+            }
+                
         }
     }
 
@@ -648,6 +659,16 @@ public class BreakablePlatform : MonoBehaviour
         isTriggered = false;
         isFalling = false;
         isPlayerDetectionDisabled = false;
+        
+        if(fallMode == FallMode.FreeFall && useSpikeTrapOnFreeFall == false)
+        {
+            if (SpikeObjects == null)
+                return;
+            foreach (var spike in SpikeObjects)
+            {
+                spike.SetActive(true);
+            }
+        }
     }
 
     /// <summary>

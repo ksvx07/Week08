@@ -235,7 +235,6 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     {
         TimeCounters();
         // DrawRope(); // LateUpdate에서 처리
-        HandleRotation();
         UpdateSwingPointIndicator();
 
         if (swingHitCollider != null && isSwinging)
@@ -315,6 +314,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     {
         WallCheck();
         DetectGround();
+        HandleRotation();
 
         if (!isSwinging)
         {
