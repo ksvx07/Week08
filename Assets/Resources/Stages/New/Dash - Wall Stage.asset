@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be35d7407d4eb545885102775eb30e6, type: 3}
-  m_Name: StageLJE3
+  m_Name: Dash - Wall Stage
   m_EditorClassIdentifier: 
-  Id: 164
-  minX: 790.3369
-  maxX: 811.49695
-  minY: 134.74783
-  maxY: 184.44785
+  Id: 5
+  minX: 506.2
+  maxX: 608.9
+  minY: 101.700134
+  maxY: 121.70014
   isShapeLockStage: 0
-  initailizeShape: 2
+  initailizeShape: 0
   unlockAll: 1

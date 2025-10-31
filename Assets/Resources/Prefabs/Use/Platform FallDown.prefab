@@ -79,7 +79,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.95, y: 0.95}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &765176942777225910
 MonoBehaviour:
@@ -113,6 +113,16 @@ MonoBehaviour:
   boxCastDistance: 35
   damageColliderObject: {fileID: 8437526509194884033}
   enableDamageColliderOnFall: 0
+  SpikeObjects: []
+  useSpikeTrapOnFreeFall: 0
+  useCrumbleEffectOnFreeFall: 1
+  crumbleGridX: 3
+  crumbleGridY: 3
+  crumbleExplosionForce: 3
+  crumbleDownwardForce: 2
+  crumbleTorqueRange: 200
+  crumbleFadeStartDelay: 0.5
+  crumbleFadeSpeed: 2
   respawn: 1
   respawnDelay: 3
   respawnCheckInterval: 0.05
