@@ -113,7 +113,15 @@ MonoBehaviour:
   boxCastDistance: 35
   damageColliderObject: {fileID: 8437526509194884033}
   enableDamageColliderOnFall: 0
-  respawn: 1
+  useCrumbleEffectOnFreeFall: 1
+  crumbleGridX: 3
+  crumbleGridY: 3
+  crumbleExplosionForce: 3
+  crumbleDownwardForce: 2
+  crumbleTorqueRange: 200
+  crumbleFadeStartDelay: 0.5
+  crumbleFadeSpeed: 2
+  respawn: 0
   respawnDelay: 3
   respawnCheckInterval: 0.05
   respawnAfterClearDelay: 0.2
