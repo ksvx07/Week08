@@ -728,13 +728,16 @@ public class BreakablePlatform : MonoBehaviour
         float _pieceHeight = _spriteRect.height / crumbleGridY;
 
         // 월드 좌표 단위로 파편 크기 변환 (PPU 고려)
-        Vector2 _worldPieceSize = new Vector2(_pieceWidth / _pixelsPerUnit, _pieceHeight / _pixelsPerUnit);
+        Vector2 _worldPieceSize = new Vector2(
+            (_pieceWidth / _pixelsPerUnit) * transform.localScale.x,
+            (_pieceHeight / _pixelsPerUnit) * transform.localScale.y
+        );
 
         // 원본 스프라이트의 중심점 계산 (월드 단위)
         Vector2 _spriteCenter = new Vector2(
-            _spriteRect.width / 2f - _pivot.x,
-            _spriteRect.height / 2f - _pivot.y
-        ) / _pixelsPerUnit;
+            (_spriteRect.width / 2f - _pivot.x) / _pixelsPerUnit * transform.localScale.x,
+            (_spriteRect.height / 2f - _pivot.y) / _pixelsPerUnit * transform.localScale.y
+        );
 
         // SpriteRenderer의 Sorting Layer 정보 가져오기
         string _sortingLayerName = spriteRenderer.sortingLayerName;
@@ -806,6 +809,9 @@ public class BreakablePlatform : MonoBehaviour
         float _worldY = (_gridY * _worldPieceSize.y) - (_worldPieceSize.y * crumbleGridY / 2f) + (_worldPieceSize.y / 2f);
 
         _piece.transform.position = transform.position + new Vector3(_worldX, _worldY, 0);
+        
+        // 파편도 부모의 X, Y 스케일을 따라가도록 설정
+        _piece.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1f);
 
         // SpriteRenderer 설정 (원본의 색상 복사)
         SpriteRenderer _sr = _piece.AddComponent<SpriteRenderer>();
