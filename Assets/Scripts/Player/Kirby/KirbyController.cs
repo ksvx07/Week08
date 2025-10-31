@@ -177,7 +177,7 @@ public class KirbyController : MonoBehaviour, IPlayerController
     // 가속도를 적용한 이동 (일반 모드)
     private void runWithAcceleration()
     {
-        _rb.gravityScale = fixeNormaldGravity;
+        _rb.gravityScale = fixedNormalGravity;
 
         // 지상/공중 여부에 따라 가속도 설정
         acceleration = onGround ? maxAcceleration : maxAirAcceleration;
@@ -230,8 +230,9 @@ public class KirbyController : MonoBehaviour, IPlayerController
     [SerializeField] private float rotationReturnSpeed = 5f; // 회전 복귀 속도
     [SerializeField] private float terboForce = 60f;
     [SerializeField] private float maxCollisionAngle = 30.0f;
-    [SerializeField] private float fixeNormaldGravity = 4.0f;
-    private float fixeterbodGravity = 0f;
+    [SerializeField] private float fixedNormalGravity = 3.5f;
+    [SerializeField] private float groundedNormalGravity = 10.0f;
+    private float fixedTurbodGravity = 0f;
     // 즉시 속도 변경 (터보 모드)
     private void runWithoutAcceleration()
     {
@@ -242,8 +243,8 @@ public class KirbyController : MonoBehaviour, IPlayerController
         {
             // if (_rb.linearVelocity.magnitude > turboSpeed / 2f)
             // {
-            _rb.gravityScale = fixeterbodGravity;
-            _rb.AddForce(9.81f * fixeNormaldGravity * terboLayRotation * _rb.mass, ForceMode2D.Force);
+            _rb.gravityScale = fixedTurbodGravity;
+            _rb.AddForce(9.81f * groundedNormalGravity * terboLayRotation * _rb.mass, ForceMode2D.Force);
             // }
             // else
             // {
@@ -254,7 +255,7 @@ public class KirbyController : MonoBehaviour, IPlayerController
         }
         else
         {
-            _rb.gravityScale = fixeNormaldGravity;
+            _rb.gravityScale = fixedNormalGravity;
             terboLayRotation = Vector2.Lerp(terboLayRotation, Vector2.down, rotationReturnSpeed * Time.fixedDeltaTime);
             moveDirection = new Vector2(Mathf.Sign(transform.localScale.x), 0);
         }
