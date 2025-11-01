@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 02_TriangleTuto
   m_EditorClassIdentifier: 
   Id: 100
-  minX: 25.85454
-  maxX: 176.18658
-  minY: 116.11595
-  maxY: 136.71597
+  minX: 46.722183
+  maxX: 179.5885
+  minY: 114.876686
+  maxY: 135.4767
   isShapeLockStage: 1
   initailizeShape: 3
   unlockAll: 0

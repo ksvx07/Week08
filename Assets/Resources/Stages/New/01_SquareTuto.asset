@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 01_SquareTuto
   m_EditorClassIdentifier: 
   Id: 1
-  minX: -64.145485
-  maxX: 25.854544
+  minX: -68.18563
+  maxX: 34.7
   minY: 114.59098
   maxY: 135.971
   isShapeLockStage: 1
