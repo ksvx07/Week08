@@ -67,8 +67,8 @@ public class CameraController : MonoBehaviour
 
         // --- Y축 오프셋 적용 (맵 위/아래 바운드 기준) ---
         float camHeight = Cam.orthographicSize * 2f;
-        float mapBottom = Clamp._minY;
-        float mapTop = Clamp._maxY;
+        float mapBottom = Clamp.MinY;
+        float mapTop = Clamp.MaxY;
 
         float offsetY = 0f;
 
@@ -117,7 +117,7 @@ public class CameraController : MonoBehaviour
 
         // --- 카메라 Clamp 적용 ---
         float camWidth = camHeight * Cam.aspect;
-        newX = Mathf.Clamp(newX, Clamp._minX + camWidth / 2f, Clamp._maxX - camWidth / 2f);
+        newX = Mathf.Clamp(newX, Clamp.MinX + camWidth / 2f, Clamp.MaxX - camWidth / 2f);
         newY = Mathf.Clamp(newY, mapBottom + camHeight / 2f, mapTop - camHeight / 2f);
 
         return new Vector3(newX, newY, camPos.z);
