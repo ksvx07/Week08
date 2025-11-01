@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3564793586661917344}
   - component: {fileID: 5177065910903408403}
   - component: {fileID: 3613514794360724073}
+  - component: {fileID: 2556805494339021996}
   m_Layer: 6
   m_Name: Stage3
   m_TagString: Untagged
@@ -263,6 +264,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &2556805494339021996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9169773632327431093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdab9083c02d6742b55d2ebcb832046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageDataArray:
+  - {fileID: 11400000, guid: f1aba2e1a080f2641ab5dd986044c78f, type: 2}
 --- !u!1001 &4905477157880614283
 PrefabInstance:
   m_ObjectHideFlags: 0

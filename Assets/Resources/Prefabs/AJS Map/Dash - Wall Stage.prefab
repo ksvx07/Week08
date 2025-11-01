@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 1947299601674244181}
   - component: {fileID: 5031899714345926306}
   - component: {fileID: 6936544242265568601}
+  - component: {fileID: 5014177674272170741}
   m_Layer: 6
   m_Name: Dash - Wall Stage
   m_TagString: Untagged
@@ -6920,6 +6921,20 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 6312946006090504294}
+--- !u!114 &5014177674272170741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6312946006090504294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acdab9083c02d6742b55d2ebcb832046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stageDataArray:
+  - {fileID: 11400000, guid: 31841769df0ce854db25033112057367, type: 2}
 --- !u!1 &6423283182573989390
 GameObject:
   m_ObjectHideFlags: 0
