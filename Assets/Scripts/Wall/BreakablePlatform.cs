@@ -453,6 +453,8 @@ public class BreakablePlatform : MonoBehaviour
             if (_hit.collider == null) continue;
             if (_hit.collider == platformCollider) continue; // self-skip
             if (_hit.normal.y <= 0.2f) continue;
+            if (_hit.transform.parent == transform) continue; // 자기 자식 오브젝트도 무시
+            if (_hit.transform.parent.parent == transform) continue; // 자기 손자 오브젝트도 무시
 
             return _hit.point.y + (_colliderWorldSize.y / 2f);
         }
