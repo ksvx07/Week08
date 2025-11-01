@@ -286,6 +286,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4572162288933740403}
     m_Modifications:
+    - target: {fileID: 2812866320150034103, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 19.820621
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812866320150034103, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 52.979
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812866320150034103, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.33
+      objectReference: {fileID: 0}
     - target: {fileID: 4554309229544805200, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -326,17 +338,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.9375
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4611439210651434647, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5208354006338012557, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
       propertyPath: m_Name
       value: Fall and Stay Stage
       objectReference: {fileID: 0}
     - target: {fileID: 5239592718780913033, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
       propertyPath: m_Size.x
-      value: 1
+      value: 1.005053
       objectReference: {fileID: 0}
     - target: {fileID: 5239592718780913033, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
       propertyPath: m_Size.y
-      value: 1
+      value: 1.0365069
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239592718780913033, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.001262188
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239592718780913033, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0076774657
+      objectReference: {fileID: 0}
+    - target: {fileID: 9208926451515933806, guid: d9562b55b920224409f73bd0fd2659cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
