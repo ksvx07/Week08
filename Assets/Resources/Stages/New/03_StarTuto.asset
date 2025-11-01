@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 03_StarTuto
   m_EditorClassIdentifier: 
   Id: 101
-  minX: -17.07338
-  maxX: -1.8
-  minY: -14.94532
-  maxY: 11.3
+  minX: 32.586483
+  maxX: 48.5
+  minY: 112
+  maxY: 137.1
   isShapeLockStage: 1
   initailizeShape: 1
   unlockAll: 0

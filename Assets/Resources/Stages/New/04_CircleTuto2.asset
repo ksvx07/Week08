@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 04_CircleTuto2
   m_EditorClassIdentifier: 
   Id: 101
-  minX: 220.9
-  maxX: 366.04
-  minY: 106.29661
-  maxY: 131.49661
+  minX: 178.1
+  maxX: 321.6
+  minY: 110.1966
+  maxY: 135.3966
   isShapeLockStage: 1
   initailizeShape: 0
   unlockAll: 0

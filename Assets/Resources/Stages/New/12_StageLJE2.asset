@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 12_StageLJE2
   m_EditorClassIdentifier: 
   Id: 164
-  minX: 779.3
-  maxX: 801.21643
-  minY: 136.89
-  maxY: 189.13722
+  minX: 737.34
+  maxX: 759.2565
+  minY: 141.48999
+  maxY: 193.73721
   isShapeLockStage: 0
   initailizeShape: 2
   unlockAll: 1
