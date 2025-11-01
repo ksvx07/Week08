@@ -182,11 +182,29 @@ public class StarController : MonoBehaviour, IPlayerController
         // StarAirControl();
         StarMove();
         StarWallClimbing();
+        StarMoveWithWall();
         StarJump();
         StarWallJump();
 
 
         //Debug.Log($"x: {rb.linearVelocity.x:F2}, y: {rb.linearVelocity.y:F2}");
+    }
+
+    private Vector3 savedAttachedHitColliderPosition = Vector3.zero;
+    private Collider2D attachedHitCollider = null;
+
+    private void StarMoveWithWall()
+    {
+        if (attachedHitCollider != null)
+        {
+            if (attachedHitCollider.transform.position != savedAttachedHitColliderPosition)
+            {
+                Vector3 offset = attachedHitCollider.transform.position - savedAttachedHitColliderPosition;
+                rb.MovePosition(rb.position + (Vector2)offset);
+            }
+            savedAttachedHitColliderPosition = attachedHitCollider.transform.position;
+        }
+
     }
 
     private void StarWallClimbing()
@@ -219,6 +237,27 @@ public class StarController : MonoBehaviour, IPlayerController
         if (count == 0) return;
 
         avgNormal.Normalize(); // ��� normal
+
+        // attachedHitCollider = null;
+
+        RaycastHit2D attachedWallHit = Physics2D.Raycast(starPivotTransform.position, -avgNormal, starRayGravityDistance, wallLayer);
+        if (attachedWallHit.collider != null)
+        {
+            if (attachedWallHit.collider.TryGetComponent<BreakablePlatform>(out BreakablePlatform crumbleTile))
+            {
+
+                if (attachedWallHit.collider != attachedHitCollider)
+                {
+                    savedAttachedHitColliderPosition = attachedWallHit.collider.transform.position;
+                }
+
+                attachedHitCollider = attachedWallHit.collider;
+            }
+        }
+        else
+        {
+            attachedHitCollider = null;
+        }
 
         if (!isActiveAbility) return;
 
@@ -255,7 +294,6 @@ public class StarController : MonoBehaviour, IPlayerController
         rb.linearVelocity = newVel;
         // Debug.Log("Wall Climbing");
     }
-
 
 
     private void StarRoll()
