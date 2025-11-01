@@ -187,7 +187,7 @@ public class StarController : MonoBehaviour, IPlayerController
         StarJump();
         StarWallJump();
 
-
+        StarSquashed();
         //Debug.Log($"x: {rb.linearVelocity.x:F2}, y: {rb.linearVelocity.y:F2}");
     }
 
@@ -205,9 +205,44 @@ public class StarController : MonoBehaviour, IPlayerController
             }
             savedAttachedHitColliderPosition = attachedHitCollider.transform.position;
         }
-
     }
 
+    [SerializeField] private float squashRayExtra = 0.05f;        // 반지름에 더할 여유 거리
+    [SerializeField] private float squashGapTolerance = 0.02f;    // 위+아래 거리 합의 여유
+
+
+    private void StarSquashed()
+    {
+        // 원의 월드 반지름 계산
+        float scale = Mathf.Max(starPivotTransform.lossyScale.x, starPivotTransform.lossyScale.y);
+        float radius = col.radius * scale;
+
+        Vector2 origin = (Vector2)starPivotTransform.position;
+        float rayLen = radius + squashRayExtra;
+
+        // 위/아래로 레이캐스트
+        RaycastHit2D hitUp = Physics2D.Raycast(origin, Vector2.up, rayLen, wallLayer);
+        RaycastHit2D hitDown = Physics2D.Raycast(origin, Vector2.down, rayLen, wallLayer);
+
+        bool upValid = hitUp.collider && !hitUp.collider.isTrigger && hitUp.collider != col;
+        bool downValid = hitDown.collider && !hitDown.collider.isTrigger && hitDown.collider != col;
+
+        // 디버그 표시
+        Debug.DrawRay(origin, Vector2.up * rayLen, upValid ? Color.blue : Color.black, Time.fixedDeltaTime);
+        Debug.DrawRay(origin, Vector2.down * rayLen, downValid ? Color.blue : Color.black, Time.fixedDeltaTime);
+
+        if (upValid && downValid)
+        {
+            // 위, 아래와의 거리 합이 지름 + 여유 이하이면 끼임으로 판정
+            float gap = hitUp.distance + hitDown.distance;
+            float maxAllowed = (radius * 2f) + (squashGapTolerance * 2f);
+
+            if (gap <= maxAllowed)
+            {
+                RespawnManager.Instance.PlayerDead();
+            }
+        }
+    }
     private void StarWallClimbing()
     {
         if (isJumping) return;
