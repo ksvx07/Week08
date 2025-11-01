@@ -105,6 +105,7 @@ public class StarController : MonoBehaviour, IPlayerController
         moveInput = Vector2.zero;
         jumpBufferCounter = -1;
         isGrounded = false;
+        attachedHitCollider = null;
     }
 
     private void OnMove(InputAction.CallbackContext ctx)
@@ -245,19 +246,30 @@ public class StarController : MonoBehaviour, IPlayerController
         {
             if (attachedWallHit.collider.TryGetComponent<BreakablePlatform>(out BreakablePlatform crumbleTile))
             {
-
-                if (attachedWallHit.collider != attachedHitCollider)
+                if (!crumbleTile.IsFreeFallMode())
                 {
-                    savedAttachedHitColliderPosition = attachedWallHit.collider.transform.position;
-                }
+                    if (attachedWallHit.collider != attachedHitCollider)
+                    {
+                        savedAttachedHitColliderPosition = attachedWallHit.collider.transform.position;
+                    }
 
-                attachedHitCollider = attachedWallHit.collider;
+                    attachedHitCollider = attachedWallHit.collider;
+                }
+                else
+                {
+                    attachedHitCollider = null;
+                }
+            }
+            else
+            {
+                attachedHitCollider = null;
             }
         }
         else
         {
             attachedHitCollider = null;
         }
+
 
         if (!isActiveAbility) return;
 

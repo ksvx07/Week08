@@ -98,6 +98,10 @@ public class BreakablePlatform : MonoBehaviour
     private BoxCollider2D platformCollider;
     private SpriteRenderer spriteRenderer;
 
+    public bool IsFreeFallMode()
+    {
+        return fallMode == FallMode.FreeFall;
+    }
     void Awake()
     {
         // 통합 bool 값을 각 모드별 내부 변수에 적용
@@ -850,7 +854,7 @@ public class BreakablePlatform : MonoBehaviour
         float _worldY = (_gridY * _worldPieceSize.y) - (_worldPieceSize.y * crumbleGridY / 2f) + (_worldPieceSize.y / 2f);
 
         _piece.transform.position = transform.position + new Vector3(_worldX, _worldY, 0);
-        
+
         // 파편도 부모의 X, Y 스케일을 따라가도록 설정
         _piece.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1f);
 
