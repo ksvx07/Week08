@@ -2,16 +2,20 @@ using UnityEngine;
 
 public class KirbyGroundCheck : MonoBehaviour
 {
-    private bool onGround;
+    public bool onGround;
 
     [Header("Collider Settings")]
     [SerializeField][Tooltip("Raycast 길이")] private float groundLength = 0.95f;
     [SerializeField][Tooltip("Raycast 오프셋")] private Vector3 colliderOffset;
     [Header("Layer Masks")]
     [SerializeField][Tooltip("바닥 Layer")] private LayerMask groundLayer;
+
+    private void OnDisable()
+    {
+        onGround = false;
+    }
     private void Update()
     {
-        
         onGround = Physics2D.Raycast(transform.position + colliderOffset, Vector2.down, groundLength, groundLayer) || Physics2D.Raycast(transform.position - colliderOffset, Vector2.down, groundLength, groundLayer);
     }
     private void OnDrawGizmos()
