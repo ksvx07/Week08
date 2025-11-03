@@ -87,7 +87,7 @@ public class RespawnManager : MonoBehaviour
 
     }
 
-    bool dead = false;
+    public bool dead = false;
 
     public void PlayerDead()
     {

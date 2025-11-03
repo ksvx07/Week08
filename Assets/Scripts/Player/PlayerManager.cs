@@ -327,6 +327,7 @@ public class PlayerManager : MonoBehaviour
     // 새 모양으로 변신하기
     private void ActiveSelectShape(PlayerShape oldShape, PlayerShape newShape)
     {
+        if (RespawnManager.Instance.dead) return;
         // 잠금된 도형으로 변경 불가능
         if (ShapeUnlockSystem.IsUnlocked(newShape) == false)
         {
@@ -391,6 +392,7 @@ public class PlayerManager : MonoBehaviour
     #region Switch Mode UI 함수
     private void AcitveSelectUI()
     {
+        if (RespawnManager.Instance.dead) return;
         if (!StageManager.Instance.unlockAll)
             return;
         HighLightSelectShape(selectShape);
