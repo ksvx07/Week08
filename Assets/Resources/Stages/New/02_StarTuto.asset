@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be35d7407d4eb545885102775eb30e6, type: 3}
-  m_Name: 03_StarTuto
+  m_Name: 02_StarTuto
   m_EditorClassIdentifier: 
   Id: 101
   minX: 32.586483

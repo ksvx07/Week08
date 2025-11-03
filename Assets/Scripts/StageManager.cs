@@ -21,7 +21,7 @@ public class StageManager : MonoBehaviour
         if (null == Instance)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            // DontDestroyOnLoad(gameObject);
         }
         else
         {

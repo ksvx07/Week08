@@ -69,7 +69,7 @@ public class GameLog : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        // DontDestroyOnLoad(gameObject);
 
         if (!enableFileLogging) return;
 
