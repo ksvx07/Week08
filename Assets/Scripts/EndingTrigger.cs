@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,11 +11,26 @@ public class EndingTrigger : MonoBehaviour
     [SerializeField] private Button EndGame;
     [SerializeField] private Button RestartButton;
 
+    public float totalPlayTime { get; private set; }
+    public TextMeshProUGUI timeText;
+    private bool isEnd;
+
+
     private void Awake()
     {
         EndGame.onClick.AddListener(() => Application.Quit());
         RestartButton.onClick.AddListener(ReloadCurrentScene);
+        isEnd = false;
+        totalPlayTime = 0;
     }
+    private void Update()
+    {
+        if (isEnd == false)
+        {
+        totalPlayTime += Time.unscaledDeltaTime;
+        }
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -36,6 +52,8 @@ public class EndingTrigger : MonoBehaviour
 
     private IEnumerator FadeOutAndShowEnding()
     {
+        isEnd = true;
+        FormatTime();
         float fadeDuration = 2f;
         float elapsedTime = 0f;
         Color color = FadeOutImage.color;
@@ -52,4 +70,11 @@ public class EndingTrigger : MonoBehaviour
         
         EndingUI.SetActive(true);
     }
+    private void FormatTime()
+    {
+        int minutes = Mathf.FloorToInt(totalPlayTime / 60);
+        int seconds = Mathf.FloorToInt(totalPlayTime % 60);
+        timeText.text = string.Format("총 걸린 시간: {0:00}:{1:00}", minutes, seconds);
+    }
+
 }
