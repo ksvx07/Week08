@@ -576,17 +576,19 @@ public class SquareController : MonoBehaviour, IPlayerController
 
     public void OnEnableSetVelocity(float newVelX, float newVelY, int currentDashCount, bool facingRight)
     {
-        isDashing = false;
         col = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
         currentGravity = jumpDcceleration;
         wallLayer = LayerMask.GetMask("Ground");
         dashCount = currentDashCount;
         dashTimeCounter = 0f;
+        isDashing = false;
         ChangeColor();
         // Rigidbody ????
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
         rb.gravityScale = 0f; // ????? ???? ???
+        rb.linearVelocity = new Vector2(newVelX, newVelY);
+
 
         if (facingRight)
         {
