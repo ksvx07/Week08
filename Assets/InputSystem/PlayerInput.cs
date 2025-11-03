@@ -404,6 +404,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GamePadRightStick"",
+                    ""type"": ""Value"",
+                    ""id"": ""cf45a3f5-9144-488e-9744-a121745dba3b"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -486,12 +495,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""97e0ecf2-6a04-44f1-bee3-832e38e8f257"",
+                    ""id"": ""bb233e8a-4df0-4854-a7fa-1c0714ec1e83"",
                     ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MouseDelta"",
+                    ""action"": ""GamePadRightStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -517,6 +526,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_SwitchMouse_SwitchModeStart = m_SwitchMouse.FindAction("SwitchModeStart", throwIfNotFound: true);
         m_SwitchMouse_SwitchModeEnd = m_SwitchMouse.FindAction("SwitchModeEnd", throwIfNotFound: true);
         m_SwitchMouse_MouseDelta = m_SwitchMouse.FindAction("MouseDelta", throwIfNotFound: true);
+        m_SwitchMouse_GamePadRightStick = m_SwitchMouse.FindAction("GamePadRightStick", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -860,6 +870,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_SwitchMouse_SwitchModeStart;
     private readonly InputAction m_SwitchMouse_SwitchModeEnd;
     private readonly InputAction m_SwitchMouse_MouseDelta;
+    private readonly InputAction m_SwitchMouse_GamePadRightStick;
     /// <summary>
     /// Provides access to input actions defined in input action map "SwitchMouse".
     /// </summary>
@@ -883,6 +894,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "SwitchMouse/MouseDelta".
         /// </summary>
         public InputAction @MouseDelta => m_Wrapper.m_SwitchMouse_MouseDelta;
+        /// <summary>
+        /// Provides access to the underlying input action "SwitchMouse/GamePadRightStick".
+        /// </summary>
+        public InputAction @GamePadRightStick => m_Wrapper.m_SwitchMouse_GamePadRightStick;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -918,6 +933,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MouseDelta.started += instance.OnMouseDelta;
             @MouseDelta.performed += instance.OnMouseDelta;
             @MouseDelta.canceled += instance.OnMouseDelta;
+            @GamePadRightStick.started += instance.OnGamePadRightStick;
+            @GamePadRightStick.performed += instance.OnGamePadRightStick;
+            @GamePadRightStick.canceled += instance.OnGamePadRightStick;
         }
 
         /// <summary>
@@ -938,6 +956,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MouseDelta.started -= instance.OnMouseDelta;
             @MouseDelta.performed -= instance.OnMouseDelta;
             @MouseDelta.canceled -= instance.OnMouseDelta;
+            @GamePadRightStick.started -= instance.OnGamePadRightStick;
+            @GamePadRightStick.performed -= instance.OnGamePadRightStick;
+            @GamePadRightStick.canceled -= instance.OnGamePadRightStick;
         }
 
         /// <summary>
@@ -1071,5 +1092,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseDelta(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "GamePadRightStick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnGamePadRightStick(InputAction.CallbackContext context);
     }
 }
