@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: 16_StageJHE6
   m_EditorClassIdentifier: 
   Id: 123
-  minX: 877.34375
-  maxX: 916.64996
-  minY: 266.12268
-  maxY: 301.7227
+  minX: 879.7407
+  maxX: 917.2
+  minY: 270.7
+  maxY: 302.5
   isShapeLockStage: 0
   initailizeShape: 2
   unlockAll: 1

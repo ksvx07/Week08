@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Ending
   m_EditorClassIdentifier: 
   Id: 123
-  minX: 920.40485
-  maxX: 946
-  minY: 279.3
-  maxY: 291.9
+  minX: 948.2369
+  maxX: 973.83203
+  minY: 292.94672
+  maxY: 305.54672
   isShapeLockStage: 0
   initailizeShape: 2
   unlockAll: 1
