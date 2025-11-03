@@ -223,7 +223,6 @@ public class PlayerManager : MonoBehaviour
         {
             mouseDeltaAccumulator += context.ReadValue<Vector2>();
             mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
-            Debug.Log($"누적된 마우스 델타: {mouseDeltaAccumulator}");
         }
     }
 
@@ -234,7 +233,6 @@ public class PlayerManager : MonoBehaviour
         {
             mouseDeltaAccumulator = context.ReadValue<Vector2>() * maxAccumulatedMouseDistance;
             mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
-            Debug.Log($"누적된 패드 델타: {mouseDeltaAccumulator}");
         }
     }
 
