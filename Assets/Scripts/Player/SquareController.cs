@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -534,7 +533,7 @@ public class SquareController : MonoBehaviour, IPlayerController
     // }
 
     private Vector2 dashVelocity = Vector2.zero;
-    private float diagonalDashFactor = Mathf.Sqrt(2);
+    private float diagonalDashFactor = 1.2f;
     private float diagonalDashRange = 45f / 2f;
 
     private void Dash()
@@ -550,6 +549,7 @@ public class SquareController : MonoBehaviour, IPlayerController
         dashCooldownCounter = dashCooldown;
         playerDataLog.OnPlayerUseAbility();
         rb.excludeLayers = LayerMask.GetMask("Breakable");
+
         // ?��?�� 바라보는 방향?���? ????��
         if (moveInput == Vector2.zero)
         {
@@ -557,18 +557,47 @@ public class SquareController : MonoBehaviour, IPlayerController
         }
         else
         {
-            if (Mathf.Abs(Vector2.Angle(moveInput, new Vector2(1, 1))) <= diagonalDashRange ||
-                Mathf.Abs(Vector2.Angle(moveInput, new Vector2(-1, 1))) <= diagonalDashRange ||
-                Mathf.Abs(Vector2.Angle(moveInput, new Vector2(1, -1))) <= diagonalDashRange ||
-                Mathf.Abs(Vector2.Angle(moveInput, new Vector2(-1, -1))) <= diagonalDashRange)
+            Vector2 dashDirection = SnapToEightDirections(moveInput);
+            if (Mathf.Abs(Vector2.Angle(dashDirection, new Vector2(1, 1))) <= diagonalDashRange ||
+                Mathf.Abs(Vector2.Angle(dashDirection, new Vector2(-1, 1))) <= diagonalDashRange ||
+                Mathf.Abs(Vector2.Angle(dashDirection, new Vector2(1, -1))) <= diagonalDashRange ||
+                Mathf.Abs(Vector2.Angle(dashDirection, new Vector2(-1, -1))) <= diagonalDashRange)
             {
-                dashVelocity = moveInput.normalized * (dashSpeed * diagonalDashFactor);
+                dashVelocity = dashDirection.normalized * (dashSpeed * diagonalDashFactor);
             }
             else
-                dashVelocity = moveInput.normalized * dashSpeed;
+                dashVelocity = dashDirection.normalized * dashSpeed;
         }
         rb.linearVelocity = dashVelocity;
     }
+
+    // 입력을 8방향으로 스냅하는 함수
+    private Vector2 SnapToEightDirections(Vector2 input)
+    {
+        if (input == Vector2.zero) return Vector2.zero;
+
+        float angle = Mathf.Atan2(input.y, input.x) * Mathf.Rad2Deg;
+
+        // 8방향: 0°, 45°, 90°, 135°, 180°, -135°, -90°, -45°
+        // 각 방향의 범위: ±22.5도
+        if (angle >= -22.5f && angle < 22.5f)
+            return Vector2.right;           // 0° (우)
+        else if (angle >= 22.5f && angle < 67.5f)
+            return new Vector2(1, 1);       // 45° (우상)
+        else if (angle >= 67.5f && angle < 112.5f)
+            return Vector2.up;              // 90° (상)
+        else if (angle >= 112.5f && angle < 157.5f)
+            return new Vector2(-1, 1);      // 135° (좌상)
+        else if (angle >= 157.5f || angle < -157.5f)
+            return Vector2.left;            // 180° (좌)
+        else if (angle >= -157.5f && angle < -112.5f)
+            return new Vector2(-1, -1);     // -135° (좌하)
+        else if (angle >= -112.5f && angle < -67.5f)
+            return Vector2.down;            // -90° (하)
+        else // angle >= -67.5f && angle < -22.5f
+            return new Vector2(1, -1);      // -45° (우하)
+    }
+
 
     // ??? ?? ????, ??? ?????? ????? ????
     private void dampAfterDash()
