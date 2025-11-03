@@ -336,6 +336,8 @@ public class PlayerManager : MonoBehaviour
         _currentPlayerPrefab.GetComponent<IPlayerController>().OnEnableSetVelocity(lastVelocity.x, lastVelocity.y, lastDashCount, facingRight);
 
         CurrentShape = selectShape;
+
+        playerDataLog.OnPlayerQuickSwitch(newShape); // Hack : 게임 Log 용
         InitChangingShape();
     }
 
