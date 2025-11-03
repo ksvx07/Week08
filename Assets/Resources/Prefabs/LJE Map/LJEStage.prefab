@@ -35,6 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1080189172916314456}
   - {fileID: 6933883982076255150}
   - {fileID: 1054174323886829520}
   - {fileID: 5011856312630176055}
@@ -91,7 +92,6 @@ Transform:
   - {fileID: 1691932177860121095}
   - {fileID: 4601557514151150768}
   - {fileID: 8897632338178777719}
-  - {fileID: 1080189172916314456}
   - {fileID: 4438317092009124737}
   - {fileID: 4001081498119710932}
   - {fileID: 3395309603250762396}
@@ -12234,6 +12234,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7336791436471908265, guid: f2b10105235992545af3fa84d6bfae95, type: 3}
+      propertyPath: stageData
+      value: 
+      objectReference: {fileID: 11400000, guid: c68d7e9c43d66974eb34f1051e6fd498, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
