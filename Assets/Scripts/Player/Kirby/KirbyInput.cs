@@ -50,17 +50,17 @@ public class KirbyInput : MonoBehaviour
 
     void OnJumpClicked(InputAction.CallbackContext context)
     {
-        if (PlayerManager.Instance.IsSelectMode == true) return;
+        // if (PlayerManager.Instance.IsSelectMode == true) return;
         _playerJump.OnJumpClicked();
     }
     void OnTurboClicked(InputAction.CallbackContext context)
     {
-        if (PlayerManager.Instance.IsSelectMode == true) return;
+        // if (PlayerManager.Instance.IsSelectMode == true) return;
         _playerMove.OnTurboModePressed();
     }
     void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (PlayerManager.Instance.IsSelectMode == true) return;
+        // if (PlayerManager.Instance.IsSelectMode == true) return;
 
         _playerMove.OnMoveInput(context.ReadValue<Vector2>());
     }
