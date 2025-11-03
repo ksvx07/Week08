@@ -21,6 +21,7 @@ public class EndingTrigger : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             StartCoroutine(FadeOutAndShowEnding());
+            Cursor.visible = true;
         }
     }
 
