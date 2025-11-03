@@ -43,8 +43,9 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     [SerializeField] private float airDecelMulti = 0.65f;
 
     [Header("Rope Swing")]
-    [SerializeField] private bool toggleSwing = true;
+    [SerializeField] private bool holdSwing = true;
     [SerializeField] private GameObject swingPointIndicator;
+    [SerializeField] private SpriteRenderer swingRangeIndicator;
     [SerializeField] private LayerMask swingableLayer;
     [SerializeField] private float swingTangentialForce = 5f;
     [SerializeField] private float swingBrakeForceMultiplier = 2.0f;
@@ -111,7 +112,9 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         swingJoint.enabled = false;
         swingJoint.autoConfigureDistance = false;
         swingJoint.maxDistanceOnly = true;
-
+        swingRangeIndicator.enabled = false;
+        pressingSwing = false;
+        swingPointIndicator.SetActive(false);
         ConfigureLineRenderer();
     }
 
@@ -122,7 +125,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         inputActions.Player.Move.performed += OnMove;
         inputActions.Player.Jump.started += OnJump;
         inputActions.Player.Jump.canceled += OffJump;
-        inputActions.Player.Dash.performed += OnSwing;
+        inputActions.Player.Dash.started += OnSwing;
         inputActions.Player.Dash.canceled += OffSwing;
     }
 
@@ -132,12 +135,14 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         inputActions.Player.Move.performed -= OnMove;
         inputActions.Player.Jump.started -= OnJump;
         inputActions.Player.Jump.canceled -= OffJump;
-        inputActions.Player.Dash.performed -= OnSwing;
+        inputActions.Player.Dash.started -= OnSwing;
         inputActions.Player.Dash.canceled -= OffSwing;
         inputActions.Player.Disable();
         jumpBufferCounter = -1;
         moveInput = Vector2.zero;
         IsGrounded = false;
+        pressingSwing = false;
+        swingRangeIndicator.enabled = false;
 
         StopSwing();
 
@@ -182,10 +187,11 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         FastFall();
     }
 
-    private void OnSwing(InputAction.CallbackContext ctx)
+    private void SwingReady()
     {
+        if (!pressingSwing) return;
 
-        if (!toggleSwing)
+        if (!holdSwing)
         {
             if (isSwinging)
             {
@@ -203,20 +209,34 @@ public class NewTriangle : MonoBehaviour, IPlayerController
             }
             else
             {
+                if (!isSwinging)
+                    swingRangeIndicator.enabled = true;
                 StartSwing();
             }
         }
         else
         {
             if (!isSwinging)
+            {
+                swingRangeIndicator.enabled = true;
                 StartSwing();
-        }
+            }
 
+        }
+    }
+
+    private bool pressingSwing = false;
+
+    private void OnSwing(InputAction.CallbackContext ctx)
+    {
+        pressingSwing = true;
     }
 
     private void OffSwing(InputAction.CallbackContext ctx)
     {
-        if (!toggleSwing) return;
+        pressingSwing = false;
+        swingRangeIndicator.enabled = false;
+        if (!holdSwing) return;
         if (isSwinging)
         {
             StopSwing();
@@ -236,6 +256,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     private void Update()
     {
         TimeCounters();
+        SwingReady();
         // DrawRope(); // LateUpdate에서 처리
         UpdateSwingPointIndicator();
 
@@ -254,6 +275,8 @@ public class NewTriangle : MonoBehaviour, IPlayerController
                 StopSwing();
             }
         }
+        if (isSwinging)
+            swingRangeIndicator.enabled = false;
     }
     private void UpdateSwingPointIndicator()
     {
@@ -263,7 +286,10 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         if (isSwinging)
         {
             if (swingPointIndicator.activeSelf)
+            {
                 swingPointIndicator.SetActive(false);
+            }
+
             cachedSwingPoint = null; // 캐시 초기화
             return;
         }
@@ -300,9 +326,12 @@ public class NewTriangle : MonoBehaviour, IPlayerController
     /// <summary>
     /// [새로 추가] 물리 계산이 끝난 후 로프 비주얼을 갱신합니다.
     /// </summary>
+
+    private float swingRangeIndicatorOffsetY = 3.023994f;
     private void LateUpdate()
     {
         UpdateRopeVisuals();
+        swingRangeIndicator.transform.position = transform.position + Vector3.up * swingRangeIndicatorOffsetY;
     }
 
     private void TimeCounters()
@@ -565,6 +594,7 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         rb.linearVelocity = new Vector2(newVelX, newVelY);
         dashCount = currentDashCount;
         swingPointIndicator.SetActive(false);
+        swingRangeIndicator.enabled = false;
         cachedSwingPoint = null;
         if (facingRight)
         {
@@ -648,7 +678,6 @@ public class NewTriangle : MonoBehaviour, IPlayerController
         // 스윙 시작 시 인디케이터 숨김
         if (swingPointIndicator != null && swingPointIndicator.activeSelf)
             swingPointIndicator.SetActive(false);
-
         playerDataLog.OnPlayerUseAbility();
         isSwinging = true;
         swingJoint.connectedAnchor = swingPoint;
