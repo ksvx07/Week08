@@ -10916,7 +10916,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1490885042131699276, guid: e0ca191718a01844d8a3522a1b441da6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 60.000004
+      value: 63.8
       objectReference: {fileID: 0}
     - target: {fileID: 1490885042131699276, guid: e0ca191718a01844d8a3522a1b441da6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10961,6 +10961,14 @@ PrefabInstance:
     - target: {fileID: 6638082324000817016, guid: e0ca191718a01844d8a3522a1b441da6, type: 3}
       propertyPath: m_Name
       value: DeathZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190357945209966276, guid: e0ca191718a01844d8a3522a1b441da6, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9190357945209966276, guid: e0ca191718a01844d8a3522a1b441da6, type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
