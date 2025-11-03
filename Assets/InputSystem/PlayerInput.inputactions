@@ -318,6 +318,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "GamePadRightStick",
+                    "type": "Value",
+                    "id": "cf45a3f5-9144-488e-9744-a121745dba3b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -400,12 +409,12 @@
                 },
                 {
                     "name": "",
-                    "id": "97e0ecf2-6a04-44f1-bee3-832e38e8f257",
+                    "id": "bb233e8a-4df0-4854-a7fa-1c0714ec1e83",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MouseDelta",
+                    "action": "GamePadRightStick",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

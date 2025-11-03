@@ -93,6 +93,7 @@ public class PlayerManager : MonoBehaviour
             inputActions.SwitchMouse.SwitchModeStart.performed += OnMouseSwitchPerform;
             inputActions.SwitchMouse.SwitchModeStart.canceled += OnMouseSwitchModeCanceld;
             inputActions.SwitchMouse.MouseDelta.performed += OnMouseDelta;
+            inputActions.SwitchMouse.GamePadRightStick.performed += OnGamePadRightStick;
         }
         else
         {
@@ -113,6 +114,7 @@ public class PlayerManager : MonoBehaviour
             inputActions.SwitchMouse.SwitchModeStart.performed -= OnMouseSwitchPerform;
             inputActions.SwitchMouse.SwitchModeStart.canceled -= OnMouseSwitchModeCanceld;
             inputActions.SwitchMouse.MouseDelta.performed -= OnMouseDelta;
+            inputActions.SwitchMouse.GamePadRightStick.performed -= OnGamePadRightStick;
             inputActions.SwitchMouse.Disable();
         }
         else
@@ -220,6 +222,16 @@ public class PlayerManager : MonoBehaviour
         if (IsSelectMode)
         {
             mouseDeltaAccumulator += context.ReadValue<Vector2>();
+            mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
+        }
+    }
+
+    private void OnGamePadRightStick(InputAction.CallbackContext context)
+    {
+        // 선택 모드일 때만 델타 값을 누적합니다.
+        if (IsSelectMode)
+        {
+            mouseDeltaAccumulator = context.ReadValue<Vector2>() * maxAccumulatedMouseDistance;
             mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
         }
     }
