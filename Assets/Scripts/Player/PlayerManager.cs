@@ -231,6 +231,8 @@ public class PlayerManager : MonoBehaviour
         // 선택 모드일 때만 델타 값을 누적합니다.
         if (IsSelectMode)
         {
+            if (context.ReadValue<Vector2>().magnitude < 0.5f) return; // 데드존 처리
+            Debug.Log($"GamePad Right Stick Input: {context.ReadValue<Vector2>()}");
             mouseDeltaAccumulator = context.ReadValue<Vector2>() * maxAccumulatedMouseDistance;
             mouseDeltaAccumulator = Vector2.ClampMagnitude(mouseDeltaAccumulator, maxAccumulatedMouseDistance);
         }
@@ -285,7 +287,7 @@ public class PlayerManager : MonoBehaviour
         else if (angle > 45 && angle <= 135) mouseSelecteShape = PlayerShape.Triangle; // 좌
         else if (angle > -135 && angle <= -45) mouseSelecteShape = PlayerShape.Star; ; // 우
 
-        Debug.Log($"선택된 모양: {mouseSelecteShape.ToString()}, 각도: {angle}");
+        // Debug.Log($"선택된 모양: {mouseSelecteShape.ToString()}, 각도: {angle}");
 
         selectShape = mouseSelecteShape;
         HighLightSelectShape(selectShape);
