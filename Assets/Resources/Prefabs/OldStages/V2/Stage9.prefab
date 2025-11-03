@@ -14037,6 +14037,8 @@ MonoBehaviour:
   FadeOutImage: {fileID: 0}
   EndingUI: {fileID: 0}
   EndGame: {fileID: 0}
+  RestartButton: {fileID: 0}
+  timeText: {fileID: 0}
 --- !u!1001 &957340889364283147
 PrefabInstance:
   m_ObjectHideFlags: 0
