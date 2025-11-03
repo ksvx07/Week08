@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3be35d7407d4eb545885102775eb30e6, type: 3}
-  m_Name: 14_StageJHE4
+  m_Name: 13_TriangleCircleStage 1
   m_EditorClassIdentifier: 
-  Id: 123
-  minX: 831.61816
-  maxX: 853.51807
-  minY: 250.61441
-  maxY: 273.21445
+  Id: 305
+  minX: 755.16077
+  maxX: 790
+  minY: 187.00902
+  maxY: 211.6
   isShapeLockStage: 0
-  initailizeShape: 2
+  initailizeShape: 0
   unlockAll: 1
