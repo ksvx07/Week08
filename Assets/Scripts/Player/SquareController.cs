@@ -534,6 +534,8 @@ public class SquareController : MonoBehaviour, IPlayerController
     // }
 
     private Vector2 dashVelocity = Vector2.zero;
+    private float diagonalDashFactor = Mathf.Sqrt(2);
+    private float diagonalDashRange = 45f / 2f;
 
     private void Dash()
     {
@@ -555,7 +557,15 @@ public class SquareController : MonoBehaviour, IPlayerController
         }
         else
         {
-            dashVelocity = moveInput.normalized * dashSpeed;
+            if (Mathf.Abs(Vector2.Angle(moveInput, new Vector2(1, 1))) <= diagonalDashRange ||
+                Mathf.Abs(Vector2.Angle(moveInput, new Vector2(-1, 1))) <= diagonalDashRange ||
+                Mathf.Abs(Vector2.Angle(moveInput, new Vector2(1, -1))) <= diagonalDashRange ||
+                Mathf.Abs(Vector2.Angle(moveInput, new Vector2(-1, -1))) <= diagonalDashRange)
+            {
+                dashVelocity = moveInput.normalized * (dashSpeed * diagonalDashFactor);
+            }
+            else
+                dashVelocity = moveInput.normalized * dashSpeed;
         }
         rb.linearVelocity = dashVelocity;
     }
